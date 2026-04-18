@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rootsi keel — Illiamri materjalid</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f0f1a;--card:#1a1a2e;--gold:#f5c518;
+    --swedish:#006AA7;--sw-light:#38bdf8;
+    --text:#f1f5f9;--muted:#94a3b8;--border:#2d2d4e;
+    --green:#16a34a;--green-light:#14532d;
+    --teal:#0d9488;--teal-light:#2dd4bf;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+  .hero{
+    background:linear-gradient(135deg,#0a2d45 0%,#006AA7 50%,#0f0f1a 100%);
+    padding:48px 32px 40px;text-align:center;
+    border-bottom:3px solid var(--gold);position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background-image:radial-gradient(circle at 80% 30%,rgba(245,197,24,0.1) 0%,transparent 40%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:1;}
+  .hero-back{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.3);
+    border-radius:999px;padding:4px 14px;font-size:0.8rem;font-weight:700;
+    text-decoration:none;color:var(--gold);margin-bottom:18px;
+  }
+  .hero-flag{font-size:3rem;display:block;margin-bottom:12px;}
+  .hero h1{font-size:2.2rem;font-weight:900;margin-bottom:8px;}
+  .hero h1 span{color:var(--gold);}
+  .hero-sub{font-size:1rem;color:rgba(255,255,255,0.75);max-width:480px;margin:0 auto 20px;}
+  .hero-stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+  .stat{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:12px;padding:8px 18px;text-align:center;}
+  .stat-num{font-size:1.4rem;font-weight:900;color:var(--gold);line-height:1;}
+  .stat-label{font-size:0.7rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.06em;margin-top:2px;}
+
+  .container{max-width:960px;margin:0 auto;padding:40px 24px 60px;}
+
+  .section-label{
+    font-size:0.72rem;font-weight:800;text-transform:uppercase;
+    letter-spacing:0.1em;color:var(--muted);
+    margin-bottom:18px;margin-top:36px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+
+  .mat-card{
+    background:var(--card);border-radius:18px;border:2px solid var(--border);
+    overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.3);
+    transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s;
+    display:flex;flex-direction:column;
+  }
+  .mat-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,0.4);border-color:var(--swedish);}
+
+  .mat-header{padding:20px 22px 14px;background:linear-gradient(135deg,#0a2d45,#1a1a2e);position:relative;}
+  .mat-icon{font-size:2rem;margin-bottom:8px;display:block;}
+  .mat-badge{
+    position:absolute;top:16px;right:16px;
+    font-size:0.68rem;font-weight:800;text-transform:uppercase;
+    letter-spacing:0.07em;border-radius:999px;padding:3px 10px;
+    background:rgba(0,106,167,0.4);color:var(--sw-light);
+  }
+  .mat-title{font-size:1.1rem;font-weight:900;margin-bottom:4px;}
+  .mat-subtitle{font-size:0.8rem;color:var(--muted);font-weight:600;}
+
+  .mat-topics{padding:0 22px 16px;flex:1;}
+  .topic-item{
+    display:flex;align-items:flex-start;gap:7px;
+    padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);
+    font-size:0.82rem;color:var(--muted);
+  }
+  .topic-item:last-child{border-bottom:none;}
+  .topic-dot{width:6px;height:6px;border-radius:50%;background:var(--swedish);flex-shrink:0;margin-top:5px;}
+
+  .mat-footer{
+    padding:12px 22px;border-top:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+  }
+  .mat-file{font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .btn-row{display:flex;gap:6px;flex-shrink:0;}
+  .open-btn{
+    display:inline-flex;align-items:center;gap:4px;
+    padding:6px 12px;border-radius:8px;font-size:0.78rem;font-weight:800;
+    text-decoration:none;color:#0f0f1a;background:var(--gold);transition:opacity 0.15s;
+  }
+  .open-btn:hover{opacity:0.85;}
+  .open-btn.secondary{background:var(--swedish);color:white;}
+
+  /* Coming soon */
+  .mat-card.coming{opacity:0.45;}
+  .mat-card.coming .mat-badge{background:rgba(255,255,255,0.1);color:var(--muted);}
+
+  .tip-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+  .tip-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;gap:10px;}
+  .tip-icon{font-size:1.3rem;flex-shrink:0;}
+  .tip-title{font-size:0.82rem;font-weight:800;margin-bottom:3px;}
+  .tip-text{font-size:0.78rem;color:var(--muted);line-height:1.5;}
+
+  footer{text-align:center;padding:28px 20px;color:var(--muted);font-size:0.8rem;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <a href="index.html" class="hero-back">← Avaleht</a>
+    <span class="hero-flag">🇸🇪</span>
+    <h1>Rootsi <span>keel</span></h1>
+    <p class="hero-sub">Algtase · Grammatika · Sõnavara · Lauseehitus</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">materjal</div></div>
+      <div class="stat"><div class="stat-num">+</div><div class="stat-label">kasvab</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">📂 Materjalid</div>
+
+  <div class="grid">
+
+    <!-- Almas dag -->
+    <div class="mat-card">
+      <div class="mat-header">
+        <span class="mat-icon">📖</span>
+        <span class="mat-badge">Kodutöö</span>
+        <div class="mat-title">Almas dag — verbid</div>
+        <div class="mat-subtitle">Tegusõnad tekstist + lausemallid</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Mis on verb — definitsioon</div>
+        <div class="topic-item"><div class="topic-dot"></div>28 verbi tekstist + hääldus</div>
+        <div class="topic-item"><div class="topic-dot"></div>Rootsi sõnajärje reegel</div>
+        <div class="topic-item"><div class="topic-dot"></div>5 omaloomelause moodustamine</div>
+        <div class="topic-item"><div class="topic-dot"></div>Interaktiivne verbivalik</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">rootsi_almas_dag.html</div>
+        <div class="btn-row">
+          <a class="open-btn" href="rootsi_almas_dag.html">Ava →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tulemas 1 -->
+    <div class="mat-card coming">
+      <div class="mat-header">
+        <span class="mat-icon">🔤</span>
+        <span class="mat-badge">Tulemas</span>
+        <div class="mat-title">Põhisõnavara</div>
+        <div class="mat-subtitle">Arvsõnad, värvid, nädalapäevad</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Arvsõnad 1–100</div>
+        <div class="topic-item"><div class="topic-dot"></div>Nädalapäevad ja kuud</div>
+        <div class="topic-item"><div class="topic-dot"></div>Värvid ja kirjeldused</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">tulemas</div>
+        <div class="btn-row"><span class="open-btn" style="background:var(--border);color:var(--muted);">Tulemas</span></div>
+      </div>
+    </div>
+
+    <!-- Tulemas 2 -->
+    <div class="mat-card coming">
+      <div class="mat-header">
+        <span class="mat-icon">💬</span>
+        <span class="mat-badge">Tulemas</span>
+        <div class="mat-title">Grammatika alused</div>
+        <div class="mat-subtitle">Asesõnad, artiklid, põhilaused</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Jag, du, han, hon...</div>
+        <div class="topic-item"><div class="topic-dot"></div>En / ett artiklid</div>
+        <div class="topic-item"><div class="topic-dot"></div>Eituslaused med inte</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">tulemas</div>
+        <div class="btn-row"><span class="open-btn" style="background:var(--border);color:var(--muted);">Tulemas</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- NIPID -->
+  <div class="section-label">💡 Rootsi keele õppimise nipid</div>
+  <div class="tip-row">
+    <div class="tip-card">
+      <div class="tip-icon">🔤</div>
+      <div>
+        <div class="tip-title">å = "oo", ä = "ä", ö = "ö"</div>
+        <div class="tip-text">Kolm eritähte on rootsi keele alus. går = "goor", äter = "äter".</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📐</div>
+      <div>
+        <div class="tip-title">Verb on ALATI teisel kohal</div>
+        <div class="tip-text">Jag äter. / På morgonen äter jag. Sõnajärg muutub aga verb jääb teiseks.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎮</div>
+      <div>
+        <div class="tip-title">Kasuta tuttavat konteksti</div>
+        <div class="tip-text">Mõtle rootsikeelseid lauseid oma huvidega seoses — see kinnistub paremini.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Rootsi keel · Illiamri õppematerjalid · 10. klass · 2026</footer>
+
+</body>
+</html>

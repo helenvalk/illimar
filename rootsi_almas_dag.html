@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rootsi keel — Almas dag verbid</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;
+    --gold:#f5c518;--purple:#7b2fff;--purple-light:#a855f7;
+    --teal:#0d9488;--teal-light:#2dd4bf;
+    --red:#ef4444;--green:#22c55e;--green-dark:#15803d;--blue:#3b82f6;
+    --text:#f1f5f9;--muted:#94a3b8;--border:#2d2d4e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  .hero{background:linear-gradient(135deg,#0f0f1a 0%,#1a0533 50%,#0f1a33 100%);padding:40px 24px 36px;text-align:center;border-bottom:3px solid var(--gold);}
+  .hero-back{display:inline-flex;align-items:center;gap:6px;background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.3);border-radius:999px;padding:4px 14px;font-size:0.8rem;font-weight:700;text-decoration:none;color:var(--gold);margin-bottom:16px;}
+  .hero-title{font-size:1rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
+  .hero h1{font-size:2rem;font-weight:900;color:white;margin-bottom:14px;}
+  .hero-steps{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+  .hero-step{background:rgba(245,197,24,0.15);border:1px solid var(--gold);border-radius:999px;padding:4px 14px;font-size:0.78rem;font-weight:700;color:var(--gold);}
+  .container{max-width:720px;margin:0 auto;padding:32px 20px 60px;}
+  .sec-header{display:flex;align-items:center;gap:12px;margin:36px 0 18px;}
+  .sec-num{width:36px;height:36px;border-radius:10px;background:var(--gold);color:#0f0f1a;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900;flex-shrink:0;}
+  .sec-title{font-size:1.1rem;font-weight:900;}
+
+  /* RULE CARDS */
+  .rule-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:20px;margin-bottom:12px;}
+  .rule-card.gold{border-color:var(--gold);}
+  .rule-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:10px;}
+  .rule-text{font-size:0.95rem;line-height:1.65;}
+  .rule-text strong{color:var(--gold);}
+  .jojo-box{background:rgba(123,47,255,0.15);border:2px solid var(--purple);border-radius:12px;padding:14px 16px;margin-top:12px;}
+  .jojo-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--purple-light);margin-bottom:10px;}
+  .jojo-row{margin-bottom:8px;}
+  .jojo-sw{font-family:'Space Mono',monospace;font-weight:700;color:white;font-size:0.9rem;margin-bottom:2px;}
+  .jojo-hl{background:var(--purple);color:white;padding:1px 6px;border-radius:4px;font-family:'Space Mono',monospace;font-weight:700;}
+  .jojo-et{color:var(--muted);font-size:0.82rem;}
+  .spot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
+  @media(max-width:500px){.spot-grid{grid-template-columns:repeat(2,1fr);}}
+  .spot-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;}
+  .spot-end{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--teal-light);margin-bottom:4px;}
+  .spot-ex{font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;line-height:1.5;}
+
+  /* PROGRESS */
+  .progress-wrap{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:14px;}
+  .prog-bg{flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;}
+  .prog-fill{height:100%;background:var(--gold);border-radius:999px;transition:width 0.3s ease;width:0%;}
+  .prog-text{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;color:var(--gold);white-space:nowrap;}
+
+  /* VERB GRID */
+  .verb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px;}
+  .verb-item{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;transition:all 0.15s;user-select:none;display:flex;gap:8px;align-items:flex-start;}
+  .verb-item:hover{border-color:var(--gold);}
+  .verb-item.checked{background:rgba(245,197,24,0.08);border-color:var(--gold);}
+  .vcb{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;transition:all 0.15s;}
+  .verb-item.checked .vcb{background:var(--gold);border-color:var(--gold);color:#0f0f1a;}
+  .vsw{font-family:'Space Mono',monospace;font-weight:700;color:var(--teal-light);font-size:0.88rem;margin-bottom:2px;}
+  .vpron{font-size:0.7rem;color:var(--purple-light);font-style:italic;margin-bottom:2px;}
+  .vet{font-size:0.75rem;color:var(--muted);}
+
+  .done-banner{display:none;background:linear-gradient(135deg,var(--green-dark),var(--teal));border-radius:12px;padding:14px 20px;text-align:center;font-weight:800;font-size:0.95rem;margin-top:12px;animation:slideIn 0.3s ease;}
+  .done-banner.visible{display:block;}
+
+  /* SENTENCE GUIDE */
+  .sg-card{background:var(--card2);border:2px solid var(--purple);border-radius:14px;padding:18px 20px;margin-bottom:14px;}
+  .sg-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--purple-light);margin-bottom:12px;}
+  .word-order{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
+  .wo{border-radius:8px;padding:6px 10px;font-size:0.75rem;font-weight:800;text-align:center;border:2px solid transparent;}
+  .wo-s{background:rgba(59,130,246,0.2);border-color:var(--blue);color:#93c5fd;}
+  .wo-v{background:rgba(239,68,68,0.2);border-color:var(--red);color:#fca5a5;}
+  .wo-o{background:rgba(34,197,94,0.2);border-color:var(--green);color:#86efac;}
+  .wo-t{background:rgba(245,197,24,0.15);border-color:var(--gold);color:var(--gold);}
+  .wo-arr{color:var(--muted);font-size:1rem;}
+  .mini{font-family:'Space Mono',monospace;font-size:0.82rem;line-height:1.9;}
+  .mini-sw{color:white;}
+  .mini-pr{color:var(--purple-light);font-style:italic;}
+  .mini-et{color:var(--muted);}
+  .useful-words{font-size:0.78rem;color:var(--muted);margin-top:10px;line-height:1.8;}
+  .uw{color:var(--teal-light);font-family:'Space Mono',monospace;}
+
+  /* SLOTS */
+  .sentence-slots{display:flex;flex-direction:column;gap:12px;}
+  .slot{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:16px 18px;transition:border-color 0.2s;}
+  .slot.has-verb{border-color:var(--gold);}
+  .slot-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .slot-n{width:30px;height:30px;border-radius:8px;background:var(--gold);color:#0f0f1a;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;flex-shrink:0;}
+  .slot-vd{font-family:'Space Mono',monospace;font-weight:700;color:var(--red);font-size:0.88rem;}
+  .slot-ve{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+  .slot-tpl{font-size:0.8rem;color:var(--muted);font-style:italic;margin-bottom:8px;line-height:1.5;}
+  .slot-tpl span{color:var(--teal-light);font-style:normal;font-weight:700;}
+  .slot-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;min-height:24px;}
+  .vchip{font-family:'Space Mono',monospace;font-size:0.73rem;font-weight:700;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--teal-light);cursor:pointer;transition:all 0.15s;display:none;}
+  .vchip.show{display:inline-block;}
+  .vchip:hover{background:var(--teal);color:white;border-color:var(--teal);}
+  .vchip.used{opacity:0.25;cursor:not-allowed;pointer-events:none;}
+  .slot-line{border-bottom:2px dashed var(--border);height:28px;width:100%;}
+  .slot-hint{font-size:0.72rem;color:var(--muted);margin-top:5px;text-align:right;}
+
+  @keyframes slideIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  footer{text-align:center;padding:28px 20px;color:var(--muted);font-size:0.8rem;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="illimar_materjalikogu.html" class="hero-back">← Tagasi kogusse</a>
+  <div class="hero-title">🇸🇪 Rootsi keel</div>
+  <h1>Almas dag — verbid</h1>
+  <div class="hero-steps">
+    <div class="hero-step">1 · Mis on verb?</div>
+    <div class="hero-step">2 · Leia verbid tekstist</div>
+    <div class="hero-step">3 · Moodusta 5 lauset</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SAMM 1 -->
+  <div class="sec-header">
+    <div class="sec-num">1</div>
+    <div class="sec-title">Mis on verb (tegusõna)?</div>
+  </div>
+
+  <div class="rule-card gold">
+    <div class="rule-label">📌 Põhidefinitsioon</div>
+    <div class="rule-text">
+      Verb = sõna mis ütleb <strong>mida keegi teeb</strong>.<br>
+      Küsi iga sõna kohta: <em>"Mida ta teeb?"</em> — kui saad vastuse, on see verb.
+    </div>
+    <div class="jojo-box">
+      <div class="jojo-label">⭐ JoJo näited rootsi keeles</div>
+      <div class="jojo-row">
+        <div class="jojo-sw">Jotaro <span class="jojo-hl">går</span> till skolan.</div>
+        <div class="jojo-et">Jotaro <strong>läheb</strong> kooli. → går = verb</div>
+      </div>
+      <div class="jojo-row">
+        <div class="jojo-sw">Giorno <span class="jojo-hl">äter</span> pizza.</div>
+        <div class="jojo-et">Giorno <strong>sööb</strong> pitsat. → äter = verb</div>
+      </div>
+      <div class="jojo-row">
+        <div class="jojo-sw">Josuke <span class="jojo-hl">lyssnar</span> på musik.</div>
+        <div class="jojo-et">Josuke <strong>kuulab</strong> muusikat. → lyssnar = verb</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rule-card">
+    <div class="rule-label">🔍 Kuidas verbi tekstist ära tunda — lõpud</div>
+    <div class="spot-grid">
+      <div class="spot-card">
+        <div class="spot-end">-ar</div>
+        <div class="spot-ex">vaknar<br>tittar<br>lyssnar</div>
+      </div>
+      <div class="spot-card">
+        <div class="spot-end">-er</div>
+        <div class="spot-ex">dricker<br>ligger<br>sitter</div>
+      </div>
+      <div class="spot-card">
+        <div class="spot-end">-r</div>
+        <div class="spot-ex">går<br>tar<br>läser</div>
+      </div>
+      <div class="spot-card">
+        <div class="spot-end">erand</div>
+        <div class="spot-ex">är = on<br>har = omab<br>gör = teeb</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAMM 2 -->
+  <div class="sec-header">
+    <div class="sec-num">2</div>
+    <div class="sec-title">Leia kõik verbid tekstist</div>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="prog-bg"><div class="prog-fill" id="pFill"></div></div>
+    <div class="prog-text" id="pText">0 / 28</div>
+  </div>
+
+  <div style="font-size:0.83rem;color:var(--muted);margin-bottom:12px;">Klõpsa verbil kui leiad selle tekstist. ✓ = leitud.</div>
+
+  <div class="verb-grid" id="verbGrid"></div>
+  <div class="done-banner" id="doneBanner">✅ Kõik 28 verbi leitud! Liigu edasi lausete juurde.</div>
+
+  <!-- SAMM 3 -->
+  <div class="sec-header">
+    <div class="sec-num">3</div>
+    <div class="sec-title">Moodusta 5 lauset</div>
+  </div>
+
+  <div class="sg-card">
+    <div class="sg-label">📐 Lausemall — verb on alati teisel kohal</div>
+    <div class="word-order">
+      <div class="wo wo-s">MINA<br><small>jag</small></div>
+      <div class="wo-arr">+</div>
+      <div class="wo wo-v">VERB</div>
+      <div class="wo-arr">+</div>
+      <div class="wo wo-o">OBJEKT</div>
+      <div class="wo-arr">+</div>
+      <div class="wo wo-t">MILLAL/KUS</div>
+    </div>
+    <div class="mini">
+      <div class="mini-sw">Jag äter pizza varje dag.</div>
+      <div class="mini-pr">"Jaag äter pitsa varrje daag."</div>
+      <div class="mini-et">→ Mina söön pitsat iga päev.</div>
+    </div>
+    <div class="useful-words">
+      <span class="uw">jag</span> (mina) &nbsp;·&nbsp;
+      <span class="uw">varje dag</span> (iga päev) &nbsp;·&nbsp;
+      <span class="uw">på kvällen</span> (õhtul) &nbsp;·&nbsp;
+      <span class="uw">hemma</span> (kodus) &nbsp;·&nbsp;
+      <span class="uw">ofta</span> (sageli) &nbsp;·&nbsp;
+      <span class="uw">musik / fotboll</span> (muusika / jalgpall)
+    </div>
+  </div>
+
+  <div style="font-size:0.83rem;color:var(--muted);margin-bottom:12px;">
+    Vali igale lausele verb (klõpsa sinist nuppu allpool) → kirjuta lause paberile.
+  </div>
+
+  <div class="sentence-slots" id="sSlots"></div>
+
+</div>
+
+<footer>Rootsi keel · Almas dag · Verbid · Illimar</footer>
+
+<script>
+const verbs=[
+  {sw:"är",pron:'"äär"',et:"on (olema)"},
+  {sw:"går",pron:'"goor"',et:"läheb, käib"},
+  {sw:"vaknar",pron:'"vaknar"',et:"ärkab"},
+  {sw:"ligger",pron:'"liger"',et:"lamab"},
+  {sw:"tittar",pron:'"tittar"',et:"vaatab"},
+  {sw:"kollar",pron:'"kollar"',et:"kontrollib"},
+  {sw:"duschar",pron:'"dušar"',et:"duššib"},
+  {sw:"klär",pron:'"kläär"',et:"riietub"},
+  {sw:"äter",pron:'"äter"',et:"sööb"},
+  {sw:"dricker",pron:'"driker"',et:"joob"},
+  {sw:"lyssnar",pron:'"lüsnar"',et:"kuulab"},
+  {sw:"tar",pron:'"taar"',et:"võtab"},
+  {sw:"chattar",pron:'"šattar"',et:"jututab"},
+  {sw:"skickar",pron:'"šikar"',et:"saadab"},
+  {sw:"träffar",pron:'"träffar"',et:"kohtub"},
+  {sw:"läser",pron:'"läser"',et:"loeb, õpib"},
+  {sw:"sitter",pron:'"siter"',et:"istub"},
+  {sw:"pratar",pron:'"praatar"',et:"räägib"},
+  {sw:"skrattar",pron:'"skratar"',et:"naerab"},
+  {sw:"planerar",pron:'"planeerar"',et:"planeerib"},
+  {sw:"pluggar",pron:'"pluggar"',et:"õpib"},
+  {sw:"älskar",pron:'"älskar"',et:"armastab"},
+  {sw:"gillar",pron:'"gilar"',et:"meeldib"},
+  {sw:"har",pron:'"haar"',et:"omab, on"},
+  {sw:"spelar",pron:'"spelar"',et:"mängib"},
+  {sw:"gör",pron:'"jöör"',et:"teeb"},
+  {sw:"lägger",pron:'"läger"',et:"paneb/heidab"},
+  {sw:"somnar",pron:'"somnar"',et:"jääb magama"}
+];
+
+let checked=new Set();
+let slotVerbs=[null,null,null,null,null];
+
+// Build grid
+const grid=document.getElementById('verbGrid');
+verbs.forEach((v,i)=>{
+  const el=document.createElement('div');
+  el.className='verb-item';el.id='vi'+i;
+  el.innerHTML=`<div class="vcb" id="cb${i}"></div><div><div class="vsw">${v.sw}</div><div class="vpron">${v.pron}</div><div class="vet">${v.et}</div></div>`;
+  el.onclick=()=>toggle(i);
+  grid.appendChild(el);
+});
+
+function toggle(i){
+  const el=document.getElementById('vi'+i),cb=document.getElementById('cb'+i);
+  if(checked.has(i)){checked.delete(i);el.classList.remove('checked');cb.textContent='';}
+  else{checked.add(i);el.classList.add('checked');cb.textContent='✓';}
+  const n=checked.size;
+  document.getElementById('pFill').style.width=(n/28*100)+'%';
+  document.getElementById('pText').textContent=n+' / 28';
+  if(n===28)document.getElementById('doneBanner').classList.add('visible');
+  else document.getElementById('doneBanner').classList.remove('visible');
+  rebuildChips();
+}
+
+// Build slots
+const ss=document.getElementById('sSlots');
+for(let i=0;i<5;i++){
+  const d=document.createElement('div');
+  d.className='slot';d.id='slot'+i;
+  d.innerHTML=`<div class="slot-top"><div class="slot-n">${i+1}</div><div><div class="slot-vd" id="svd${i}">— vali verb allpool —</div><div class="slot-ve" id="sve${i}"></div></div></div><div class="slot-tpl"><span>Jag</span> + <span id="stpl${i}">[verb]</span> + objekt + aeg/koht</div><div class="slot-chips" id="sc${i}"></div><div class="slot-line"></div><div class="slot-hint">kirjuta lause paberile</div>`;
+  ss.appendChild(d);
+}
+
+function rebuildChips(){
+  for(let s=0;s<5;s++){
+    const c=document.getElementById('sc'+s);c.innerHTML='';
+    verbs.forEach((v,vi)=>{
+      if(!checked.has(vi))return;
+      const ch=document.createElement('div');
+      ch.className='vchip show';ch.textContent=v.sw;
+      const used=slotVerbs.some((sv,si)=>si!==s&&sv===vi);
+      if(used)ch.classList.add('used');
+      ch.onclick=()=>{if(!used)pick(s,vi);};
+      c.appendChild(ch);
+    });
+  }
+}
+
+function pick(s,vi){
+  slotVerbs[s]=vi;
+  const v=verbs[vi];
+  document.getElementById('svd'+s).textContent=v.sw;
+  document.getElementById('sve'+s).textContent=v.et;
+  document.getElementById('stpl'+s).textContent=v.sw;
+  document.getElementById('slot'+s).classList.add('has-verb');
+  rebuildChips();
+}
+</script>
+</body>
+</html>
