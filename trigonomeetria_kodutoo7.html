@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonomeetria – Kodutöö VII õppematerjal</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1928;
+    --surface2: #22203a;
+    --border: #2e2b4e;
+    --cyan: #00d4ff;
+    --cyan-dim: rgba(0,212,255,0.12);
+    --pink: #ff6b9d;
+    --pink-dim: rgba(255,107,157,0.12);
+    --green: #00e5a0;
+    --green-dim: rgba(0,229,160,0.12);
+    --yellow: #ffd166;
+    --yellow-dim: rgba(255,209,102,0.12);
+    --purple: #b388ff;
+    --purple-dim: rgba(179,136,255,0.12);
+    --orange: #ff9a3c;
+    --orange-dim: rgba(255,154,60,0.12);
+    --text: #e8e6f0;
+    --muted: #8b87a8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .hero {
+    background: linear-gradient(135deg, #0f0e17 0%, #1a0533 50%, #0a1a2e 100%);
+    padding: 56px 32px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 70%);
+    top: -200px; left: 50%; transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--cyan-dim);
+    border: 1px solid rgba(0,212,255,0.3);
+    color: var(--cyan);
+    border-radius: 999px;
+    padding: 5px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--cyan), var(--purple), var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 1.05rem; max-width: 540px; margin: 0 auto; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 70px; }
+
+  .sec-label {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 22px; margin-top: 52px;
+  }
+  .sec-label:first-child { margin-top: 0; }
+  .sec-icon {
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .sec-label h2 { font-size: 1.35rem; font-weight: 800; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+  }
+  .formula-box {
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 12px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 2.1;
+    border-left: 3px solid;
+  }
+  .info-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 0.92rem; line-height: 1.55;
+  }
+  .step-dot {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 800; flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media(max-width:620px) { .grid2, .grid3 { grid-template-columns: 1fr; } .hero h1 { font-size: 2rem; } }
+
+  .trig-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    margin-top: 12px;
+  }
+  .trig-table th {
+    background: var(--surface2);
+    color: var(--cyan);
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 700;
+    border: 1px solid var(--border);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+  }
+  .trig-table td {
+    padding: 9px 12px;
+    text-align: center;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .trig-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .trig-table .angle-col { color: var(--yellow); font-weight: 700; }
+
+  .veerand-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-top: 12px;
+  }
+  .veerand-card {
+    border-radius: 10px; padding: 16px;
+    border: 1px solid;
+    text-align: center;
+  }
+  .veerand-card .num { font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
+  .veerand-card .range { font-size: 0.78rem; opacity: 0.7; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .veerand-card .signs { font-size: 0.88rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+  .reduction-table {
+    width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 14px;
+  }
+  .reduction-table th {
+    background: var(--surface2); color: var(--purple);
+    padding: 10px; text-align: center;
+    border: 1px solid var(--border); font-size: 0.78rem;
+  }
+  .reduction-table td {
+    padding: 8px 12px; border: 1px solid var(--border);
+    text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem;
+  }
+  .reduction-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .reduction-table .formula-col { color: var(--pink); font-weight: 700; }
+  .reduction-table .note-col { color: var(--muted); font-size: 0.75rem; }
+
+  .example-label {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; opacity: 0.55; margin-bottom: 6px;
+  }
+  .answer-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.9rem;
+    margin-top: 8px;
+  }
+
+  /* color helpers */
+  .c-cyan { color: var(--cyan); }
+  .c-pink { color: var(--pink); }
+  .c-green { color: var(--green); }
+  .c-yellow { color: var(--yellow); }
+  .c-purple { color: var(--purple); }
+  .c-orange { color: var(--orange); }
+
+  .cyan-icon { background: var(--cyan-dim); color: var(--cyan); }
+  .pink-icon { background: var(--pink-dim); color: var(--pink); }
+  .green-icon { background: var(--green-dim); color: var(--green); }
+  .yellow-icon { background: var(--yellow-dim); color: var(--yellow); }
+  .purple-icon { background: var(--purple-dim); color: var(--purple); }
+  .orange-icon { background: var(--orange-dim); color: var(--orange); }
+
+  .formula-box.cyan { background: var(--cyan-dim); border-color: var(--cyan); color: #c0f7ff; }
+  .formula-box.pink { background: var(--pink-dim); border-color: var(--pink); color: #ffd6e8; }
+  .formula-box.green { background: var(--green-dim); border-color: var(--green); color: #b0fff0; }
+  .formula-box.yellow { background: var(--yellow-dim); border-color: var(--yellow); color: #fff0c0; }
+  .formula-box.purple { background: var(--purple-dim); border-color: var(--purple); color: #e8d8ff; }
+  .formula-box.orange { background: var(--orange-dim); border-color: var(--orange); color: #ffe5c0; }
+
+  .info-box.cyan { background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.25); }
+  .info-box.green { background: var(--green-dim); border: 1px solid rgba(0,229,160,0.25); }
+  .info-box.yellow { background: var(--yellow-dim); border: 1px solid rgba(255,209,102,0.25); }
+  .info-box.pink { background: var(--pink-dim); border: 1px solid rgba(255,107,157,0.25); }
+  .info-box.purple { background: var(--purple-dim); border: 1px solid rgba(179,136,255,0.25); }
+
+  .answer-pill.cyan { background: var(--cyan); color: #0a1a2e; }
+  .answer-pill.pink { background: var(--pink); color: #2a0010; }
+  .answer-pill.green { background: var(--green); color: #002a1a; }
+  .answer-pill.yellow { background: var(--yellow); color: #2a1a00; }
+  .answer-pill.purple { background: var(--purple); color: #1a0a40; }
+
+  .step-dot.cyan { background: var(--cyan); color: #0a1a2e; }
+  .step-dot.pink { background: var(--pink); color: #2a0010; }
+  .step-dot.green { background: var(--green); color: #002a1a; }
+  .step-dot.yellow { background: var(--yellow); color: #2a1a00; }
+  .step-dot.purple { background: var(--purple); color: #1a0a40; }
+  .step-dot.orange { background: var(--orange); color: #2a0e00; }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 22px 0; }
+
+  .big-formula {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 14px 0;
+    letter-spacing: 0.03em;
+  }
+  .conversion-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin: 8px 0; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem;
+  }
+  .arrow-badge {
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 4px 12px; border-radius: 6px; font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .conversion-example {
+    background: var(--surface2); border-radius: 10px; padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; line-height: 2;
+    margin: 10px 0;
+  }
+  .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .pill {
+    padding: 5px 14px; border-radius: 6px;
+    font-size: 0.82rem; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+  }
+  .special-angles-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 12px;
+  }
+  @media(max-width:620px){ .special-angles-grid { grid-template-columns: repeat(3,1fr); } }
+  .sa-card {
+    border-radius: 10px; padding: 12px 8px; text-align: center;
+    border: 1px solid;
+  }
+  .sa-card .sa-angle { font-weight: 900; font-size: 1rem; margin-bottom: 8px; }
+  .sa-card .sa-vals { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; line-height: 1.9; }
+  .summary-row {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 10px;
+  }
+  @media(max-width:620px){ .summary-row { grid-template-columns: 1fr; } }
+  .sum-card {
+    border-radius: 12px; padding: 18px; text-align: center; border: 1px solid;
+  }
+  .sum-card .s-emoji { font-size: 1.8rem; margin-bottom: 8px; }
+  .sum-card h4 { font-size: 0.88rem; font-weight: 800; margin-bottom: 6px; }
+  .sum-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">📐 Kodutöö VII · Trigonomeetria</div>
+  <h1>Trigonomeetria<br>Täielik Juhend</h1>
+  <p>Taanduvalemid · Kraadid & radiaanid · Kaare pikkus · Sektori pindala · Põhiidentiteedid</p>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════ SECTION 1: VEERANDID ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon cyan-icon">🧭</div>
+    <h2 class="c-cyan">Trigonomeetriliste funktsioonide märgid veerandites</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-cyan">⟨ 1 ⟩ Koordinaattasandi veerandid ja märgid</div>
+    <div class="veerand-grid">
+      <div class="veerand-card" style="border-color:rgba(0,212,255,0.4); background:var(--cyan-dim);">
+        <div class="num c-cyan">I veerand</div>
+        <div class="range">0° – 90°</div>
+        <div class="signs c-cyan">sin + &nbsp; cos + &nbsp; tan +</div>
+      </div>
+      <div class="veerand-card" style="border-color:rgba(255,107,157,0.4); background:var(--pink-dim);">
+        <div class="num c-pink">II veerand</div>
+        <div class="range">90° – 180°</div>
+        <div class="signs c-pink">sin + &nbsp; cos − &nbsp; tan −</div>
+      </div>
+      <div class="veerand-card" style="border-color:rgba(255,209,102,0.4); background:var(--yellow-dim);">
+        <div class="num c-yellow">III veerand</div>
+        <div class="range">180° – 270°</div>
+        <div class="signs c-yellow">sin − &nbsp; cos − &nbsp; tan +</div>
+      </div>
+      <div class="veerand-card" style="border-color:rgba(0,229,160,0.4); background:var(--green-dim);">
+        <div class="num c-green">IV veerand</div>
+        <div class="range">270° – 360°</div>
+        <div class="signs c-green">sin − &nbsp; cos + &nbsp; tan −</div>
+      </div>
+    </div>
+    <div class="info-box cyan" style="margin-top:14px;">
+      <span>💡</span>
+      <div><strong>Meeldejätmiseks:</strong> &nbsp;"<span class="c-cyan">Kõik</span> <span class="c-pink">Sõidavad</span> <span class="c-yellow">Teed</span> <span class="c-green">Käies</span>" → I: kõik +, II: sin+, III: tan+, IV: cos+</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 2: TEISENDA TERAVNURKADEKS ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon pink-icon">🔄</div>
+    <h2 class="c-pink">Teisenda teravnurkadeks (Ülesanne 1)</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-pink">⟨ 2 ⟩ Reeglid</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot pink">1</div>
+        <div>Leia, <strong>mitmendas veerandis</strong> nurk asub (0°–90°, 90°–180°, 180°–270°, 270°–360°)</div>
+      </div>
+      <div class="step">
+        <div class="step-dot pink">2</div>
+        <div>Arvuta <strong>teravnurk</strong> (referentsnurk): vahe lähimast telgnurgast (180° või 360°)</div>
+      </div>
+      <div class="step">
+        <div class="step-dot pink">3</div>
+        <div>Pane <strong>märk</strong> vastavalt veerandile, kus algne nurk asub</div>
+      </div>
+    </div>
+
+    <div class="formula-box pink" style="margin-top:18px;">
+      II veerand (90°–180°): &nbsp; sin α = sin(180°−α) &nbsp;→ +<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cos α = −cos(180°−α) → −<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tan α = −tan(180°−α) → −<br>
+      <br>
+      III veerand (180°–270°): sin α = −sin(α−180°) → −<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tan α = +tan(α−180°) → +<br>
+      <br>
+      IV veerand (270°–360°): sin α = −sin(360°−α) → −<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cos α = +cos(360°−α) → +
+    </div>
+
+    <hr class="divider">
+    <div class="grid2" style="gap:14px;">
+      <div>
+        <div class="example-label">näide 1</div>
+        <div class="formula-box pink" style="font-size:0.85rem; line-height:2;">
+          sin 160°<br>
+          = sin(180°−160°)<br>
+          = sin 20° &nbsp;✓<br>
+          <span style="opacity:0.6;">(II veerand → sin +)</span>
+        </div>
+      </div>
+      <div>
+        <div class="example-label">näide 2</div>
+        <div class="formula-box pink" style="font-size:0.85rem; line-height:2;">
+          cos 250°<br>
+          = −cos(250°−180°)<br>
+          = −cos 70° &nbsp;✓<br>
+          <span style="opacity:0.6;">(III veerand → cos −)</span>
+        </div>
+      </div>
+      <div>
+        <div class="example-label">näide 3</div>
+        <div class="formula-box pink" style="font-size:0.85rem; line-height:2;">
+          tan 130°<br>
+          = −tan(180°−130°)<br>
+          = −tan 50° &nbsp;✓<br>
+          <span style="opacity:0.6;">(II veerand → tan −)</span>
+        </div>
+      </div>
+      <div>
+        <div class="example-label">näide 4</div>
+        <div class="formula-box pink" style="font-size:0.85rem; line-height:2;">
+          cot 315°<br>
+          = −cot(360°−315°)<br>
+          = −cot 45° &nbsp;✓<br>
+          <span style="opacity:0.6;">(IV veerand → cot −)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 3: TAANDUVALEMID ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon purple-icon">📋</div>
+    <h2 class="c-purple">Taanduvalemid (Ülesanne 2)</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-purple">⟨ 3 ⟩ Täielik tabel</div>
+    <div class="info-box purple">
+      <span>🔑</span>
+      <div>
+        <strong>Kuldreegel:</strong>
+        <br>• <strong>180°·k ± α</strong> (k täisarv) → funktsioon <strong>EI muutu</strong> (sin jääb sinuks, cos jääb kosinuseks)
+        <br>• <strong>90°·k ± α</strong> (k paaritu) → funktsioon <strong>MUUTUB</strong> (sin↔cos, tan↔cot)
+        <br>• Märk sõltub sellest, milline algne funktsioon on vastavas veerandis
+      </div>
+    </div>
+    <div style="overflow-x:auto; margin-top:4px;">
+      <table class="reduction-table">
+        <tr>
+          <th>Avaldis</th>
+          <th>= (funktsioon)</th>
+          <th>Muutub?</th>
+          <th>Märgi reegel</th>
+        </tr>
+        <tr><td>sin(180°−α)</td><td class="formula-col">+sin α</td><td>Ei</td><td class="note-col">II veerand, sin +</td></tr>
+        <tr><td>cos(180°−α)</td><td class="formula-col">−cos α</td><td>Ei</td><td class="note-col">II veerand, cos −</td></tr>
+        <tr><td>tan(180°−α)</td><td class="formula-col">−tan α</td><td>Ei</td><td class="note-col">II veerand, tan −</td></tr>
+        <tr><td>sin(180°+α)</td><td class="formula-col">−sin α</td><td>Ei</td><td class="note-col">III veerand, sin −</td></tr>
+        <tr><td>cos(180°+α)</td><td class="formula-col">−cos α</td><td>Ei</td><td class="note-col">III veerand, cos −</td></tr>
+        <tr><td>tan(180°+α)</td><td class="formula-col">+tan α</td><td>Ei</td><td class="note-col">III veerand, tan +</td></tr>
+        <tr><td>sin(360°−α)</td><td class="formula-col">−sin α</td><td>Ei</td><td class="note-col">IV veerand, sin −</td></tr>
+        <tr><td>cos(360°−α)</td><td class="formula-col">+cos α</td><td>Ei</td><td class="note-col">IV veerand, cos +</td></tr>
+        <tr><td>sin(90°−α)</td><td class="formula-col">+cos α</td><td>Jah!</td><td class="note-col">I veerand, sin→cos</td></tr>
+        <tr><td>cos(90°−α)</td><td class="formula-col">+sin α</td><td>Jah!</td><td class="note-col">I veerand, cos→sin</td></tr>
+        <tr><td>sin(90°+α)</td><td class="formula-col">+cos α</td><td>Jah!</td><td class="note-col">II veerand, sin +</td></tr>
+        <tr><td>cos(90°+α)</td><td class="formula-col">−sin α</td><td>Jah!</td><td class="note-col">II veerand, cos −</td></tr>
+        <tr><td>tan(90°+α)</td><td class="formula-col">−cot α</td><td>Jah!</td><td class="note-col">II veerand, tan −</td></tr>
+        <tr><td>sin(−α)</td><td class="formula-col">−sin α</td><td>Ei</td><td class="note-col">Paaritu funktsioon</td></tr>
+        <tr><td>cos(−α)</td><td class="formula-col">+cos α</td><td>Ei</td><td class="note-col">Paaris funktsioon</td></tr>
+        <tr><td>tan(−α)</td><td class="formula-col">−tan α</td><td>Ei</td><td class="note-col">Paaritu funktsioon</td></tr>
+      </table>
+    </div>
+
+    <hr class="divider">
+    <div class="example-label">Näide – Ülesanne 2.2: sin(180°+x) : tan(180°+x)</div>
+    <div class="formula-box purple" style="font-size:0.85rem; line-height:2;">
+      sin(180°+x) = −sin x<br>
+      tan(180°+x) = +tan x = sin x / cos x<br>
+      <br>
+      (−sin x) : (sin x / cos x)<br>
+      = (−sin x) · (cos x / sin x)<br>
+      = <strong>−cos x</strong>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 4: TÄPPISVÄÄRTUSED ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon yellow-icon">⭐</div>
+    <h2 class="c-yellow">Täppisväärtuste tabel (Ülesanne 3)</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-yellow">⟨ 4 ⟩ Põhilised väärtused</div>
+    <div style="overflow-x:auto;">
+      <table class="trig-table">
+        <tr>
+          <th>Nurk</th>
+          <th>sin</th>
+          <th>cos</th>
+          <th>tan</th>
+          <th>cot</th>
+        </tr>
+        <tr>
+          <td class="angle-col">0°</td>
+          <td>0</td><td>1</td><td>0</td><td>—</td>
+        </tr>
+        <tr>
+          <td class="angle-col">30°</td>
+          <td>½</td><td>√3/2</td><td>√3/3</td><td>√3</td>
+        </tr>
+        <tr>
+          <td class="angle-col">45°</td>
+          <td>√2/2</td><td>√2/2</td><td>1</td><td>1</td>
+        </tr>
+        <tr>
+          <td class="angle-col">60°</td>
+          <td>√3/2</td><td>½</td><td>√3</td><td>√3/3</td>
+        </tr>
+        <tr>
+          <td class="angle-col">90°</td>
+          <td>1</td><td>0</td><td>—</td><td>0</td>
+        </tr>
+        <tr>
+          <td class="angle-col">120°</td>
+          <td>√3/2</td><td>−½</td><td>−√3</td><td>−√3/3</td>
+        </tr>
+        <tr>
+          <td class="angle-col">135°</td>
+          <td>√2/2</td><td>−√2/2</td><td>−1</td><td>−1</td>
+        </tr>
+        <tr>
+          <td class="angle-col">150°</td>
+          <td>½</td><td>−√3/2</td><td>−√3/3</td><td>−√3</td>
+        </tr>
+        <tr>
+          <td class="angle-col">180°</td>
+          <td>0</td><td>−1</td><td>0</td><td>—</td>
+        </tr>
+      </table>
+    </div>
+    <div class="info-box yellow" style="margin-top:14px;">
+      <span>💡</span>
+      <div>Nurke üle 360° vähenda: <strong>α mod 360°</strong> &nbsp;(nt sin 390° = sin 30°, sest 390°−360°=30°)</div>
+    </div>
+
+    <hr class="divider">
+    <div class="example-label">Näide – Ülesanne 3.1: tan135°·tan315°−cos0°+sin150°·cos120°</div>
+    <div class="formula-box yellow" style="font-size:0.85rem; line-height:2.1;">
+      tan 135° = −tan 45° = −1<br>
+      tan 315° = −tan 45° = −1<br>
+      cos 0° = 1<br>
+      sin 150° = sin 30° = ½<br>
+      cos 120° = −cos 60° = −½<br>
+      <br>
+      = (−1)·(−1) − 1 + ½·(−½)<br>
+      = 1 − 1 − ¼<br>
+      = <strong>−¼</strong>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 5: PÕHIIDENTITEEDID + ARVUTA ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon green-icon">🔢</div>
+    <h2 class="c-green">Põhiidentiteedid & arvuta (Ülesanne 4)</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-green">⟨ 5 ⟩ Pythagorase identiteet</div>
+    <div class="big-formula" style="background:var(--green-dim); border:1px solid rgba(0,229,160,0.3); color:var(--green);">
+      sin²α + cos²α = 1
+    </div>
+    <div class="grid2">
+      <div class="formula-box green" style="font-size:0.88rem; line-height:2;">
+        cos α = ±√(1 − sin²α)<br>
+        <span style="opacity:0.7;">Märk veerandist!</span>
+      </div>
+      <div class="formula-box green" style="font-size:0.88rem; line-height:2;">
+        tan α = sin α / cos α<br>
+        cot α = cos α / sin α
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="example-label">Ülesanne 4.1 – sin α = 5/13, α on II veerandis → leia cos α ja tan α</div>
+    <div class="formula-box green" style="font-size:0.85rem; line-height:2.2;">
+      cos²α = 1 − sin²α = 1 − (5/13)² = 1 − 25/169 = 144/169<br>
+      <br>
+      cos α = ±12/13<br>
+      II veerand → cos α &lt; 0 → <strong>cos α = −12/13</strong><br>
+      <br>
+      tan α = sin α / cos α = (5/13) / (−12/13) = <strong>−5/12</strong>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <div class="answer-pill green">cos α = −12/13</div>
+      <div class="answer-pill green">tan α = −5/12</div>
+    </div>
+
+    <hr class="divider">
+    <div class="example-label">Ülesanne 4.2 – tan α = −8/13, α on IV veerandis → leia sin α ja cos α</div>
+    <div class="formula-box green" style="font-size:0.85rem; line-height:2.2;">
+      Kasuta: 1 + tan²α = 1/cos²α<br>
+      1 + (−8/13)² = 1/cos²α<br>
+      1 + 64/169 = 233/169 = 1/cos²α<br>
+      cos²α = 169/233<br>
+      <br>
+      IV veerand → cos α &gt; 0 → <strong>cos α = 13/√233</strong><br>
+      <br>
+      sin α = tan α · cos α = (−8/13) · (13/√233) = <strong>−8/√233</strong>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <div class="answer-pill green">sin α = −8/√233</div>
+      <div class="answer-pill green">cos α = 13/√233</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 6: KRAADID ↔ RADIAANID ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon cyan-icon">🔁</div>
+    <h2 class="c-cyan">Kraadid ↔ Radiaanid (Ülesanne 5)</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-cyan">⟨ 6 ⟩ Põhivalemid</div>
+    <div class="grid2">
+      <div>
+        <div class="example-label">Kraadid → radiaanid</div>
+        <div class="big-formula" style="background:var(--cyan-dim); border:1px solid rgba(0,212,255,0.3); color:var(--cyan); font-size:1rem;">
+          rad = kraad × π/180
+        </div>
+      </div>
+      <div>
+        <div class="example-label">Radiaanid → kraadid</div>
+        <div class="big-formula" style="background:var(--cyan-dim); border:1px solid rgba(0,212,255,0.3); color:var(--cyan); font-size:1rem;">
+          kraad = rad × 180/π
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="card-title c-cyan" style="margin-bottom:12px;">Lahendused ülesandele 5</div>
+    <div style="overflow-x:auto;">
+      <table class="trig-table">
+        <tr>
+          <th>Kraadid</th><th>Radiaanid (täpne)</th>
+          <th>Radiaanid</th><th>Kraadid</th>
+        </tr>
+        <tr><td class="angle-col">50°</td><td>5π/18</td>
+            <td class="angle-col">2,2 rad</td><td>≈ 126,1°</td></tr>
+        <tr><td class="angle-col">335°</td><td>67π/36</td>
+            <td class="angle-col">0,75π rad</td><td>135°</td></tr>
+        <tr><td class="angle-col">220°</td><td>11π/9</td>
+            <td class="angle-col">3π rad</td><td>540°</td></tr>
+        <tr><td class="angle-col">120°</td><td>2π/3</td>
+            <td class="angle-col">1,25π rad</td><td>225°</td></tr>
+        <tr><td class="angle-col">90°</td><td>π/2</td>
+            <td class="angle-col">0,74 rad</td><td>≈ 42,4°</td></tr>
+        <tr><td class="angle-col">150°</td><td>5π/6</td>
+            <td class="angle-col">2,5π rad</td><td>450°</td></tr>
+        <tr><td class="angle-col">75°</td><td>5π/12</td>
+            <td class="angle-col">0,25π rad</td><td>45°</td></tr>
+        <tr><td class="angle-col">290°</td><td>29π/18</td>
+            <td class="angle-col">1,5π rad</td><td>270°</td></tr>
+      </table>
+    </div>
+
+    <div class="info-box cyan" style="margin-top:14px;">
+      <span>💡</span>
+      <div><strong>Trikk π-ga:</strong> Kui radiaanides on "kπ rad", lihtsalt korruta k × 180°. Nt 1,5π × 180° = 270°</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 7: KAARE PIKKUS JA SEKTORI PINDALA ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon orange-icon">📏</div>
+    <h2 class="c-orange">Kaare pikkus & sektori pindala (Ülesanne 6)</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-title c-orange">⟨ 7 ⟩ Põhivalemid</div>
+    <div class="grid2">
+      <div>
+        <div class="example-label">Kaare pikkus</div>
+        <div class="big-formula" style="background:var(--orange-dim); border:1px solid rgba(255,154,60,0.3); color:var(--orange);">
+          l = r · α
+        </div>
+        <div class="formula-box orange" style="font-size:0.82rem; line-height:2;">
+          l – kaare pikkus<br>
+          r – raadius<br>
+          α – nurk <strong>radiaanides!</strong>
+        </div>
+      </div>
+      <div>
+        <div class="example-label">Sektori pindala</div>
+        <div class="big-formula" style="background:var(--orange-dim); border:1px solid rgba(255,154,60,0.3); color:var(--orange);">
+          S = ½ · r² · α
+        </div>
+        <div class="formula-box orange" style="font-size:0.82rem; line-height:2;">
+          S – sektori pindala<br>
+          r – raadius<br>
+          α – nurk <strong>radiaanides!</strong>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="card-title c-orange" style="margin-bottom:14px;">Lahendused ülesandele 6</div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-dot orange">1</div>
+        <div>
+          <strong>Kaare pikkus (r=3cm, α=120°)</strong><br>
+          <span class="mono">α = 120° × π/180 = 2π/3 rad</span><br>
+          <span class="mono">l = 3 · 2π/3 = <strong>2π cm</strong></span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot orange">2</div>
+        <div>
+          <strong>Sektori pindala (r=6cm, α=30°)</strong><br>
+          <span class="mono">α = 30° × π/180 = π/6 rad</span><br>
+          <span class="mono">S = ½ · 6² · π/6 = ½ · 36 · π/6 = <strong>3π cm²</strong></span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot orange">3</div>
+        <div>
+          <strong>Sektori pindala 15π cm², α=150° → leia r</strong><br>
+          <span class="mono">α = 150° × π/180 = 5π/6 rad</span><br>
+          <span class="mono">15π = ½ · r² · 5π/6</span><br>
+          <span class="mono">r² = 15π · 2 · 6 / (5π) = 36</span><br>
+          <span class="mono">r = <strong>6 cm</strong></span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot orange">4</div>
+        <div>
+          <strong>Kaare pikkus 20π cm, r=15cm → leia nurk</strong><br>
+          <span class="mono">α = l/r = 20π/15 = 4π/3 rad</span><br>
+          <span class="mono">4π/3 × 180°/π = <strong>240°</strong></span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-dot orange">5</div>
+        <div>
+          <strong>Sektori pindala 120π cm², α=300° → leia r</strong><br>
+          <span class="mono">α = 300° × π/180 = 5π/3 rad</span><br>
+          <span class="mono">120π = ½ · r² · 5π/3</span><br>
+          <span class="mono">r² = 120π · 2 · 3 / (5π) = 144</span><br>
+          <span class="mono">r = <strong>12 cm</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ KOKKUVÕTE ═══════════════ -->
+  <div class="sec-label">
+    <div class="sec-icon" style="background:linear-gradient(135deg,var(--cyan-dim),var(--purple-dim)); color:var(--purple);">✨</div>
+    <h2 style="background:linear-gradient(90deg,var(--cyan),var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Kiire meelespea</h2>
+  </div>
+
+  <div class="summary-row">
+    <div class="sum-card" style="border-color:rgba(0,212,255,0.3); background:var(--cyan-dim);">
+      <div class="s-emoji">🔄</div>
+      <h4 class="c-cyan">Taanduvalemid</h4>
+      <p>180°·k → f ei muutu<br>90°·k (paaritu) → f muutub<br>Märk veerandist</p>
+    </div>
+    <div class="sum-card" style="border-color:rgba(255,209,102,0.3); background:var(--yellow-dim);">
+      <div class="s-emoji">⭐</div>
+      <h4 class="c-yellow">Täppisväärtused</h4>
+      <p>Nurke üle 360° vähenda<br>Negat. nurgad: f(−α)<br>Tabel meelde!</p>
+    </div>
+    <div class="sum-card" style="border-color:rgba(0,229,160,0.3); background:var(--green-dim);">
+      <div class="s-emoji">🔢</div>
+      <h4 class="c-green">sin²+cos²=1</h4>
+      <p>Leia puuduv funktsioon<br>Märk alati veerandist<br>tan = sin/cos</p>
+    </div>
+    <div class="sum-card" style="border-color:rgba(0,212,255,0.3); background:var(--cyan-dim);">
+      <div class="s-emoji">🔁</div>
+      <h4 class="c-cyan">Kraadid↔Radiaanid</h4>
+      <p>° → rad: × π/180<br>rad → °: × 180/π<br>π rad = 180°</p>
+    </div>
+    <div class="sum-card" style="border-color:rgba(255,154,60,0.3); background:var(--orange-dim);">
+      <div class="s-emoji">📏</div>
+      <h4 class="c-orange">Kaare & sektor</h4>
+      <p>l = r·α<br>S = ½·r²·α<br>α peab olema rad!</p>
+    </div>
+    <div class="sum-card" style="border-color:rgba(255,107,157,0.3); background:var(--pink-dim);">
+      <div class="s-emoji">🧭</div>
+      <h4 class="c-pink">Veerandid</h4>
+      <p>I: kõik +<br>II: sin+, III: tan+<br>IV: cos+</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:50px; padding:30px; border-radius:16px; background:linear-gradient(135deg, #0a1a2e, #1a0533, #0a0a1a); border:1px solid var(--border);">
+    <div style="font-size:2.2rem; margin-bottom:10px;">🚀</div>
+    <div style="font-size:1.25rem; font-weight:900; background:linear-gradient(90deg,var(--cyan),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:8px;">Head õppimist!</div>
+    <div style="color:var(--muted); font-size:0.9rem;">Harjuta sammude kaupa – iga ülesande tüüp on õpitav! 💪</div>
+  </div>
+
+</div>
+</body>
+</html>

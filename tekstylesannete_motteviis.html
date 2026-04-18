@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tekstülesannete mõtteviis</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --paper: #ffffff;
+    --ink: #1c1917;
+    --ink-light: #57534e;
+    --rule: #e7e5e4;
+
+    --think: #1d4ed8;      /* blue – mõtlemine */
+    --think-bg: #eff6ff;
+    --think-border: #bfdbfe;
+
+    --write: #15803d;      /* green – kirjutamine */
+    --write-bg: #f0fdf4;
+    --write-border: #bbf7d0;
+
+    --formula: #7c2d12;    /* brown – valemid */
+    --formula-bg: #fff7ed;
+    --formula-border: #fed7aa;
+
+    --warn: #b45309;       /* amber – tähelepanu */
+    --warn-bg: #fffbeb;
+    --warn-border: #fde68a;
+
+    --accent: #0f172a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.65;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink);
+    color: white;
+    padding: 52px 40px 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.04) 39px,
+      rgba(255,255,255,0.04) 40px
+    );
+    pointer-events: none;
+  }
+  .header-inner { max-width: 820px; margin: 0 auto; position: relative; }
+  .header-tag {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #a8a29e;
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: 2.5rem; font-weight: 700;
+    line-height: 1.15; margin-bottom: 12px;
+  }
+  .header p { color: #a8a29e; font-size: 1rem; max-width: 480px; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 820px; margin: 0 auto; padding: 48px 24px 72px; }
+
+  /* ── SECTION HEADERS ── */
+  .sec {
+    display: flex; align-items: center; gap: 14px;
+    margin: 52px 0 22px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .sec:first-of-type { margin-top: 0; }
+  .sec-num {
+    font-family: 'Lora', serif;
+    font-size: 2.2rem; font-weight: 700;
+    line-height: 1; color: var(--ink-light);
+    flex-shrink: 0;
+  }
+  .sec h2 {
+    font-size: 1.3rem; font-weight: 800; line-height: 1.2;
+  }
+  .sec .sub { font-size: 0.85rem; color: var(--ink-light); margin-top: 2px; }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.8rem; font-weight: 600;
+  }
+  .legend-dot {
+    width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0;
+  }
+
+  /* ── TWO-COLUMN STEP ROW ── */
+  .step-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 4px;
+    border: 1.5px solid var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .step-row + .step-row { margin-top: 10px; }
+
+  .col-think {
+    background: var(--think-bg);
+    border-right: 1.5px solid var(--think-border);
+    padding: 18px 20px;
+  }
+  .col-write {
+    background: var(--write-bg);
+    padding: 18px 20px;
+  }
+  .col-header {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .col-header.think { color: var(--think); }
+  .col-header.write { color: var(--write); }
+  .col-content {
+    font-size: 0.88rem; line-height: 1.65;
+  }
+  .col-content.mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem; line-height: 1.9;
+  }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: var(--formula-bg);
+    border: 1.5px solid var(--formula-border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 2;
+    color: var(--formula);
+    margin: 12px 0;
+  }
+  .formula-box .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--warn); margin-bottom: 6px;
+  }
+
+  /* ── ATTENTION BOX ── */
+  .attention {
+    background: var(--warn-bg);
+    border: 1.5px solid var(--warn-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 14px 0;
+    display: flex; gap: 10px;
+  }
+  .attention .icon { flex-shrink: 0; font-size: 1.1rem; }
+
+  /* ── ANSWER BOX ── */
+  .answer {
+    background: var(--ink);
+    color: white;
+    border-radius: 10px;
+    padding: 16px 22px;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 14px 0;
+  }
+  .answer .label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #a8a29e; margin-bottom: 6px;
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1.5px dashed var(--rule); margin: 22px 0; }
+
+  /* ── PROBLEM CARD ── */
+  .problem-card {
+    background: var(--paper);
+    border: 1.5px solid var(--rule);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .problem-header {
+    background: var(--ink);
+    color: white;
+    padding: 14px 22px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .problem-body { padding: 20px 22px; }
+  .problem-text {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    border-left: 3px solid var(--rule);
+  }
+
+  /* ── STEP NUMBER ── */
+  .step-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ink-light);
+    margin: 16px 0 6px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .step-label::after {
+    content: '';
+    flex: 1; height: 1px; background: var(--rule);
+  }
+
+  /* ── CHECK BOX ── */
+  .check-box {
+    background: var(--write-bg);
+    border: 1.5px solid var(--write-border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.83rem;
+    line-height: 2;
+    margin: 12px 0;
+    color: var(--write);
+  }
+  .check-box .label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--write); margin-bottom: 6px;
+  }
+
+  /* ── GENERAL GUIDE BOXES ── */
+  .guide-row {
+    display: grid; grid-template-columns: 180px 1fr; gap: 0;
+    border: 1.5px solid var(--rule); border-radius: 10px;
+    overflow: hidden; margin-bottom: 8px;
+  }
+  .guide-left {
+    background: var(--ink);
+    color: white;
+    padding: 16px 16px;
+    font-size: 0.82rem; font-weight: 700; line-height: 1.5;
+    display: flex; align-items: center;
+  }
+  .guide-right {
+    background: var(--paper);
+    padding: 14px 18px;
+    font-size: 0.88rem; line-height: 1.65;
+  }
+  .guide-right .mono { font-family: 'DM Mono', monospace; font-size: 0.82rem; line-height: 2; }
+
+  @media (max-width: 600px) {
+    .step-row { grid-template-columns: 1fr; }
+    .col-think { border-right: none; border-bottom: 1.5px solid var(--think-border); }
+    .header h1 { font-size: 1.8rem; }
+    .guide-row { grid-template-columns: 1fr; }
+    .guide-left { padding: 12px 16px; }
+  }
+
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+  .mono-inline { font-family: 'DM Mono', monospace; font-size: 0.85em; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">Tekstülesannete lahendamise juhend</div>
+    <h1>Mõtteviis + lahenduskäik<br>koos valemitega</h1>
+    <p>Iga samm: mida mõtled → mida kirjutad → mis valem → miks</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#1d4ed8;"></div>
+      <span style="color:#1d4ed8;">Mõtlemine — küsimused, mida endalt küsida</span>
+    </div>
+    <div class="legend-dot" style="background:#e2e8f0; width:1px; height:16px;"></div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#15803d;"></div>
+      <span style="color:#15803d;">Kirjutamine — mida paberile paned</span>
+    </div>
+    <div class="legend-dot" style="background:#e2e8f0; width:1px; height:16px;"></div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#7c2d12;"></div>
+      <span style="color:#7c2d12;">Valem — mis valem ja miks</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       OSA 1 — ÜLDINE MÕTTEVIIS
+  ══════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-num">1</div>
+    <div>
+      <h2>Üldine mõtteviis — iga tekstülesande jaoks</h2>
+      <div class="sub">5 küsimust, mida alati küsida</div>
+    </div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Mida ülesanne küsib?</div>
+    <div class="guide-right">Loe viimane lause. See ongi vastus, mida otsid → need saavad <strong>tundmatuteks</strong>.<br>
+    <span class="mono">Kirjuta: "Oletame, et [otsitav] on [täht]."</span></div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Mis on teada?</div>
+    <div class="guide-right">Loe kõik arvud ja suhted ülesandest välja. Iga arv/suhe = üks tingimus = üks võrrand tulevikus.</div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Mis seob teadaolevat tundmatutega?</div>
+    <div class="guide-right">Siin on <strong>valem</strong>. Kiirus? → kiirus = teekond ÷ aeg. Töö? → töö = kiirus × aeg. Arv? → 10a + b.<br>
+    Kirjuta valem lahti tundmatute kaudu.</div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Mitu tundmatut on? Mitu võrrandit vajan?</div>
+    <div class="guide-right">2 tundmatut → vajad 2 võrrandit.<br>
+    Kui sul on rohkem tingimusi kui tundmatuid, vali lihtsaimad 2.</div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Kas vastus on mõistlik?</div>
+    <div class="guide-right">Negatiivsed ajad, kiirused, pikkused <strong>ei sobi</strong>. Kontrolli alati algse tekstiga, mitte võrrandiga.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       OSA 2 — KIIRUS/AEG/TEEKOND
+  ══════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-num">2</div>
+    <div>
+      <h2>Kiirus · Aeg · Teekond (Ülesanne 3)</h2>
+      <div class="sub">Valem, mõtteviis ja täielik lahenduskäik</div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">🔑 Põhivalem — see käib alati kaasas</div>
+    kiirus = teekond ÷ aeg &nbsp;&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;&nbsp; v = s / t<br>
+    aeg &nbsp;&nbsp; = teekond ÷ kiirus &nbsp;→&nbsp;&nbsp;&nbsp;&nbsp; t = s / v<br>
+    teekond = kiirus × aeg &nbsp;&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;&nbsp; s = v · t<br>
+    <br>
+    Minutid → tunnid: &nbsp;t (tundides) = t (minutites) ÷ 60
+  </div>
+
+  <div class="problem-card">
+    <div class="problem-header">📋 Ülesanne 3</div>
+    <div class="problem-body">
+      <div class="problem-text">
+        "Tartust Tallinna on ligikaudu 180 km. Ühel ajal startisid Tartust sõiduauto ja buss. Sõiduauto keskmine kiirus oli 5 km/h suurem kui bussil ning sõiduauto jõudis Tallinna 9 minutit varem kui buss. Kui suure keskmise kiirusega liikus kumbki sõiduk?"
+      </div>
+
+      <!-- SAMM 1 -->
+      <div class="step-label">Samm 1 — Tundmatute nimetamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Ülesanne küsib: <em>"kui suure kiirusega?"</em><br><br>
+            Seega tundmatuteks on <strong>kiirused</strong>.<br><br>
+            Kas ma vajan kahte tundmatut? Jah — buss ja auto. Aga kuna auto on bussist 5 võrra kiirem, saan <strong>ühe tundmatuga</strong> hakkama.
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Oletame, et bussi kiirus on<br>
+            v km/h.<br>
+            <br>
+            Siis auto kiirus on v + 5 km/h.
+          </div>
+        </div>
+      </div>
+
+      <!-- SAMM 2 -->
+      <div class="step-label">Samm 2 — Võrrandi koostamine (ajavahe)</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Tingimus: auto jõuab <strong>9 minutit varem</strong>.<br><br>
+            9 minutit = 9/60 tundi = 3/20 tundi.<br><br>
+            Aeg = teekond ÷ kiirus.<br>
+            Bussi aeg = 180/v<br>
+            Auto aeg = 180/(v+5)<br><br>
+            Kui buss sõidab <em>kauem</em>, siis bussi aeg <em>miinus</em> auto aeg = 9 min.
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Kuna auto jõuab 9 min<br>
+            ehk 3/20 tundi varem,<br>
+            siis bussi sõiduaeg on<br>
+            auto sõiduajast 3/20 h<br>
+            pikem:<br>
+            <br>
+            180/v − 180/(v+5)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;= 3/20
+          </div>
+        </div>
+      </div>
+
+      <!-- SAMM 3 -->
+      <div class="step-label">Samm 3 — Algebraline lahendamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Murdudest lahtisaamiseks korrutame <strong>mõlemad pooled</strong> läbi kõigi nimetajate korrutisega.<br><br>
+            Nimetajad on: v, (v+5) ja 20.<br>
+            Korrutame läbi <strong>20·v·(v+5)</strong>.<br><br>
+            Saame ruutvõrrandi → lahutan (otsin kahte arvu).
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Korrutame läbi 20·v·(v+5):<br>
+            <br>
+            20·180·(v+5) − 20·180·v<br>
+            &nbsp;&nbsp;= 3·v·(v+5)<br>
+            <br>
+            3600v + 18000 − 3600v<br>
+            &nbsp;&nbsp;= 3v² + 15v<br>
+            <br>
+            18000 = 3v² + 15v &nbsp;|÷3<br>
+            <br>
+            v² + 5v − 6000 = 0
+          </div>
+        </div>
+      </div>
+
+      <!-- SAMM 4 -->
+      <div class="step-label">Samm 4 — Ruutvõrrandi lahutamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            v² + 5v − 6000 = 0<br><br>
+            Lahutatav? Otsin kahte arvu:<br>
+            • korrutis = <strong>−6000</strong><br>
+            • summa = <strong>+5</strong><br><br>
+            Proovime: 80 ja −75<br>
+            80 · (−75) = −6000 ✓<br>
+            80 + (−75) = 5 ✓<br><br>
+            → Lahutub!
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Otsime arve, mille<br>
+            korrutis on −6000<br>
+            ja summa on +5:<br>
+            80 ja −75 sobivad.<br>
+            <br>
+            (v + 80)(v − 75) = 0<br>
+            <br>
+            v = −80 ← ei sobi,<br>
+            kiirus ei saa olla<br>
+            negatiivne.<br>
+            <br>
+            v = 75
+          </div>
+        </div>
+      </div>
+
+      <div class="check-box">
+        <div class="label">✅ Kontroll</div>
+        Bussi kiirus = 75 km/h &nbsp;→&nbsp; aeg = 180/75 = 2,4 h = 144 min<br>
+        Auto kiirus &nbsp;= 80 km/h &nbsp;→&nbsp; aeg = 180/80 = 2,25 h = 135 min<br>
+        Kiiruste vahe: 80 − 75 = 5 km/h ✓<br>
+        Ajavahe: 144 − 135 = 9 minutit ✓
+      </div>
+
+      <div class="answer">
+        <div class="label">Vastus</div>
+        Bussi keskmine kiirus on 75 km/h ja auto keskmine kiirus on 80 km/h.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       OSA 3 — TÖÖ ÜLESANNE
+  ══════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-num">3</div>
+    <div>
+      <h2>Töö · Aeg (Ülesanne 4)</h2>
+      <div class="sub">Valem, mõtteviis ja täielik lahenduskäik</div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">🔑 Põhivalem — töö ülesannetes</div>
+    ühe tunniga tehtud töö = 1 ÷ kogu tööaeg<br>
+    <br>
+    Kui isik A teeb töö a tunniga → teeb tunnis 1/a osa<br>
+    Kui isik B teeb töö b tunniga → teeb tunnis 1/b osa<br>
+    <br>
+    Koos töötades 1 tunnis: 1/a + 1/b<br>
+    Koos töö valmis t tunniga: t · (1/a + 1/b) = 1<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ehk: &nbsp;&nbsp;1/a + 1/b = 1/t
+  </div>
+
+  <div class="problem-card">
+    <div class="problem-header">📋 Ülesanne 4</div>
+    <div class="problem-body">
+      <div class="problem-text">
+        "Kaks naist rohiksid põllu koos töötades ära 6 tunniga. Sama põllu rohimiseks üksi kuluks esimesel töölisel 5 tundi rohkem kui teisel töölisel. Mitu tundi kuluks põllu rohimiseks kummalgi töölisel üksi töötades?"
+      </div>
+
+      <div class="step-label">Samm 1 — Tundmatute nimetamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Küsitakse: <em>"mitu tundi kummalgi üksi?"</em><br><br>
+            Tundmatu = aeg.<br><br>
+            Kaks töölist → kaks aega. Aga kuna esimene võtab <strong>5 tundi rohkem</strong>, saan kasutada ühte tundmatut T.
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Oletame, et teine töölinen<br>
+            teeb töö üksi T tunniga.<br>
+            <br>
+            Siis esimene töölinen<br>
+            teeb töö üksi T+5<br>
+            tunniga.
+          </div>
+        </div>
+      </div>
+
+      <div class="step-label">Samm 2 — Võrrandi koostamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Tingimus: koos teevad valmis <strong>6 tunniga</strong>.<br><br>
+            Ühe tunniga:<br>
+            • teine teeb 1/T osa<br>
+            • esimene teeb 1/(T+5) osa<br><br>
+            Koos ühe tunniga: 1/T + 1/(T+5)<br><br>
+            Koos 6 tunniga = 1 terve töö:<br>
+            → 1/T + 1/(T+5) = 1/6
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Kuna koos tehakse töö<br>
+            valmis 6 tunniga, siis<br>
+            tunnis tehakse 1/6<br>
+            tööst:<br>
+            <br>
+            1/T + 1/(T+5) = 1/6
+          </div>
+        </div>
+      </div>
+
+      <div class="step-label">Samm 3 — Lahendamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Murdudest lahtisaamiseks korrutame läbi nimetajate korrutisega.<br><br>
+            Nimetajad on: T, (T+5), 6<br>
+            Korrutame läbi <strong>6T(T+5)</strong>.<br><br>
+            Saan ruutvõrrandi → kontrollin, kas lahutatav.
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Korrutame läbi 6T(T+5):<br>
+            <br>
+            6(T+5) + 6T = T(T+5)<br>
+            6T+30+6T = T²+5T<br>
+            12T+30 = T²+5T<br>
+            T²−7T−30 = 0<br>
+            <br>
+            Otsime: korrutis −30,<br>
+            summa −7:<br>
+            −10 ja +3: −30 ✓, −7 ✓<br>
+            <br>
+            (T−10)(T+3) = 0<br>
+            T=10 või T=−3<br>
+            T=−3 ei sobi (aeg&lt;0)<br>
+            <br>
+            T = 10 tundi
+          </div>
+        </div>
+      </div>
+
+      <div class="check-box">
+        <div class="label">✅ Kontroll</div>
+        Teine töölinen: 10 tundi → tunnis teeb 1/10<br>
+        Esimene töölinen: 15 tundi → tunnis teeb 1/15<br>
+        Koos: 1/10 + 1/15 = 3/30 + 2/30 = 5/30 = 1/6 → valmis 6 tunniga ✓<br>
+        Vahe: 15 − 10 = 5 tundi ✓
+      </div>
+
+      <div class="answer">
+        <div class="label">Vastus</div>
+        Esimesel töölisel kulub põllu rohimiseks üksi 15 tundi ja teisel töölisel 10 tundi.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       OSA 4 — KAHEKOHALINE ARV
+  ══════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-num">4</div>
+    <div>
+      <h2>Kahekohaline arv (Ülesanne 5)</h2>
+      <div class="sub">Valem, mõtteviis ja täielik lahenduskäik</div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="label">🔑 Põhivalem — kahekohaliste arvudega</div>
+    Kahekohaline arv = 10a + b<br>
+    &nbsp;&nbsp;kus a = kümnete number (esimene number)<br>
+    &nbsp;&nbsp;     b = ühtede number (teine number)<br>
+    <br>
+    Näide: arv 47 → a=4, b=7 → 10·4 + 7 = 47 ✓<br>
+    <br>
+    Numbrite vahetamisel saadud arv = 10b + a<br>
+    Näide: 47 → 74 → 10·7 + 4 = 74 ✓<br>
+    <br>
+    Ristsumma (numbrite summa) = a + b
+  </div>
+
+  <div class="problem-card">
+    <div class="problem-header">📋 Ülesanne 5</div>
+    <div class="problem-body">
+      <div class="problem-text">
+        "Kahekohalise arvu ristsumma on 10. Kui selles arvus numbrid vahetada, siis saame arvu, mis on esialgsest arvust 54 võrra suurem. Leia esialgne arv."
+      </div>
+
+      <div class="step-label">Samm 1 — Tundmatute nimetamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Otsin <strong>kahekohaline arv</strong> → arv koosneb kahest numbrist.<br><br>
+            Nimetan numbrid, mitte arvu ise.<br><br>
+            Kasutan valemit: arv = 10a + b
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Oletame, et otsitava arvu<br>
+            kümnete number on a<br>
+            ja ühtede number on b.<br>
+            <br>
+            Esialgne arv = 10a + b<br>
+            Pööratud arv = 10b + a
+          </div>
+        </div>
+      </div>
+
+      <div class="step-label">Samm 2 — Kaks võrrandit tekstist</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Tekstis on <strong>kaks tingimust</strong>:<br><br>
+            ① "ristsumma on 10"<br>
+            → numbrite summa = 10<br><br>
+            ② "pööratud arv on 54 suurem"<br>
+            → pööratud arv = esialgne + 54<br><br>
+            2 tundmatut, 2 tingimust → saan süsteemi koostada.
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Tingimus 1 — ristsumma:<br>
+            Kuna a+b = 10, siis:<br>
+            a + b = 10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(I)<br>
+            <br>
+            Tingimus 2 — pööramine:<br>
+            Kuna pööratud arv on<br>
+            54 võrra suurem:<br>
+            10b+a = 10a+b+54<br>
+            9b−9a = 54 &nbsp;|÷9<br>
+            b − a = 6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(II)
+          </div>
+        </div>
+      </div>
+
+      <div class="step-label">Samm 3 — Süsteemi lahendamine</div>
+      <div class="step-row">
+        <div class="col-think">
+          <div class="col-header think">🧠 Mõtlen</div>
+          <div class="col-content">
+            Süsteem:<br>
+            { a + b = 10<br>
+            { b − a = 6<br><br>
+            Liitmismeetod — liidan võrrandid:<br>
+            a ja −a kustuvad ära.
+          </div>
+        </div>
+        <div class="col-write">
+          <div class="col-header write">✏️ Kirjutan</div>
+          <div class="col-content mono">
+            Liidan (I) ja (II):<br>
+            (a+b) + (b−a) = 10+6<br>
+            2b = 16<br>
+            b = 8<br>
+            <br>
+            Asendan b=8 võrrandisse (I):<br>
+            a + 8 = 10<br>
+            a = 2<br>
+            <br>
+            Esialgne arv = 10·2+8 = 28
+          </div>
+        </div>
+      </div>
+
+      <div class="check-box">
+        <div class="label">✅ Kontroll</div>
+        Esialgne arv = 28<br>
+        Ristsumma: 2 + 8 = 10 ✓<br>
+        Pööratud arv: 82 &nbsp;|&nbsp; 82 − 28 = 54 ✓
+      </div>
+
+      <div class="answer">
+        <div class="label">Vastus</div>
+        Otsitav kahekohaline arv on 28.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       KOKKUVÕTE
+  ══════════════════════════════════════ -->
+  <div class="sec">
+    <div class="sec-num">5</div>
+    <div>
+      <h2>Kiire meelespea — valemid</h2>
+      <div class="sub">Mis valem, mis ülesande tüübi juures</div>
+    </div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Kiirus /<br>aeg /<br>teekond</div>
+    <div class="guide-right">
+      <span class="mono-inline">v = s/t &nbsp; t = s/v &nbsp; s = v·t</span><br>
+      Tundmatu = kiirus. Kirjuta mõlema sõiduki aeg kiiruse kaudu. Ajavahe → võrrand.
+    </div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Töö<br>koos / eraldi</div>
+    <div class="guide-right">
+      <span class="mono-inline">1/a + 1/b = 1/t</span><br>
+      1/a = ühe isiku töö tunnis. Liida mõlema töökiirused, võrdsusta 1/koos.
+    </div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Kahekohaline<br>arv</div>
+    <div class="guide-right">
+      <span class="mono-inline">arv = 10a+b &nbsp; pööratud = 10b+a &nbsp; ristsumma = a+b</span><br>
+      Nimeta numbrid (mitte arv ise). Koosta tingimused numbrite kaudu.
+    </div>
+  </div>
+
+  <div class="guide-row">
+    <div class="guide-left">Ruutvõrrandi<br>lahutamine</div>
+    <div class="guide-right">
+      Otsi kahte arvu: <strong>korrutis = vabaliige</strong>, <strong>summa = x-i kordaja</strong>.<br>
+      <span class="mono-inline">x² + px + q = 0 → (x+n)(x+m) = 0, kus nm=q ja n+m=p</span><br>
+      Kui ei lahuta → kasuta diskriminanti: D = p² − 4q
+    </div>
+  </div>
+
+  <div style="margin-top:52px; padding:28px 32px; background:var(--ink); border-radius:14px; color:white; text-align:center;">
+    <div style="font-family:'Lora',serif; font-size:1.3rem; font-weight:700; margin-bottom:8px;">Iga ülesanne on sama struktuuriga.</div>
+    <div style="color:#a8a29e; font-size:0.9rem;">Nimeta → põhjenda → kirjuta → lahenda → kontrolli → vastus lausena.</div>
+  </div>
+
+</div>
+</body>
+</html>

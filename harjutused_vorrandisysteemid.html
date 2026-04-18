@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harjutused — Võrrandisüsteemid</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0d9488 100%);
+    color: white;
+    padding: 40px 32px 36px;
+    text-align: center;
+  }
+  .hero-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 0.8rem; font-weight: 700;
+    text-decoration: none; color: white;
+    margin-bottom: 18px;
+    transition: background 0.15s;
+  }
+  .hero-back:hover { background: rgba(255,255,255,0.25); }
+  .hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 6px; }
+  .hero p { font-size: 0.95rem; opacity: 0.8; }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    max-width: 700px; margin: 0 auto;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px; height: 8px;
+    margin-top: 20px; overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; background: white;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 0.78rem; opacity: 0.75;
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .container { max-width: 700px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  /* ===== EXERCISE CARD ===== */
+  .ex-card {
+    background: var(--card);
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: border-color 0.3s;
+  }
+  .ex-card.solved { border-color: var(--green); }
+
+  .ex-header {
+    padding: 20px 24px 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .ex-num {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: var(--blue); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 900; flex-shrink: 0;
+  }
+  .ex-meta { flex: 1; }
+  .ex-badges { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+  .badge {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.06em; border-radius: 999px; padding: 2px 10px;
+  }
+  .badge-easy { background: var(--green-light); color: var(--green); }
+  .badge-medium { background: var(--yellow-light); color: var(--yellow); }
+  .badge-hard { background: var(--red-light); color: var(--red); }
+  .badge-method { background: var(--blue-light); color: var(--blue); }
+  .badge-text { background: var(--purple-light); color: var(--purple); }
+  .ex-title { font-size: 0.95rem; font-weight: 800; color: var(--muted); }
+
+  /* Problem */
+  .ex-problem {
+    padding: 20px 24px;
+    border-bottom: 1.5px dashed var(--border);
+  }
+  .ex-problem-label {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px;
+  }
+  .problem-text {
+    font-size: 1rem; line-height: 1.6; font-weight: 600;
+  }
+  .equations {
+    background: var(--bg);
+    border-radius: 10px; padding: 12px 16px;
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem; line-height: 1.9;
+  }
+  .eq-brace {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .eq-brace-sym {
+    font-size: 2.2rem; color: var(--blue); line-height: 1;
+    font-weight: 300;
+  }
+  .eq-lines { display: flex; flex-direction: column; }
+
+  /* Controls */
+  .ex-controls {
+    padding: 16px 24px;
+    display: flex; gap: 10px; flex-wrap: wrap;
+    align-items: center;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem; font-weight: 800;
+    border: 2px solid transparent;
+    cursor: pointer; transition: all 0.15s;
+    line-height: 1;
+  }
+  .btn-hint {
+    background: var(--yellow-light); color: var(--yellow);
+    border-color: var(--yellow);
+  }
+  .btn-hint:hover { background: var(--yellow); color: white; }
+  .btn-step {
+    background: var(--blue-light); color: var(--blue);
+    border-color: var(--blue);
+  }
+  .btn-step:hover { background: var(--blue); color: white; }
+  .btn-step:disabled {
+    opacity: 0.35; cursor: not-allowed;
+    background: var(--bg); border-color: var(--border); color: var(--muted);
+  }
+  .btn-solve {
+    background: var(--green-light); color: var(--green);
+    border-color: var(--green); margin-left: auto;
+  }
+  .btn-solve:hover { background: var(--green); color: white; }
+  .btn-reset {
+    background: transparent; color: var(--muted);
+    border-color: var(--border); font-size: 0.78rem;
+  }
+  .btn-reset:hover { border-color: var(--red); color: var(--red); }
+
+  /* Reveal area */
+  .ex-reveal { padding: 0 24px; }
+
+  /* Hint box */
+  .hint-box {
+    display: none;
+    background: var(--yellow-light);
+    border: 2px solid var(--yellow);
+    border-radius: 12px; padding: 14px 16px;
+    margin-bottom: 12px;
+    animation: slideIn 0.25s ease;
+  }
+  .hint-box.visible { display: flex; gap: 10px; }
+  .hint-label {
+    font-size: 0.75rem; font-weight: 800; color: var(--yellow);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .hint-text { font-size: 0.9rem; line-height: 1.5; }
+
+  /* Steps */
+  .steps-area { margin-bottom: 16px; }
+  .step-block {
+    display: none;
+    background: #f8fafc;
+    border-left: 4px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    animation: slideIn 0.25s ease;
+  }
+  .step-block.visible { display: block; }
+  .step-block.correct { border-left-color: var(--green); }
+  .step-num-label {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--blue); margin-bottom: 5px;
+  }
+  .step-block.correct .step-num-label { color: var(--green); }
+  .step-math {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem; line-height: 1.7; font-weight: 700;
+  }
+  .step-verbal {
+    font-size: 0.83rem; color: var(--muted);
+    font-style: italic; margin-top: 3px; line-height: 1.4;
+  }
+
+  /* Answer box */
+  .answer-box {
+    display: none;
+    background: var(--green-light);
+    border: 2px solid var(--green);
+    border-radius: 12px; padding: 14px 18px;
+    margin-bottom: 16px;
+    animation: slideIn 0.25s ease;
+  }
+  .answer-box.visible { display: block; }
+  .answer-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--green); margin-bottom: 6px;
+  }
+  .answer-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem; font-weight: 700; line-height: 1.6;
+  }
+  .answer-verbal { font-size: 0.88rem; color: #166534; margin-top: 4px; }
+
+  /* Solved badge */
+  .solved-badge {
+    display: none;
+    align-items: center; gap: 8px;
+    padding: 10px 16px;
+    background: var(--green);
+    color: white;
+    font-size: 0.85rem; font-weight: 800;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    animation: slideIn 0.3s ease;
+  }
+  .solved-badge.visible { display: flex; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Summary */
+  .summary-card {
+    background: linear-gradient(135deg, #1e3a8a, #0d9488);
+    border-radius: 20px;
+    padding: 28px;
+    color: white;
+    text-align: center;
+    margin-top: 12px;
+  }
+  .summary-card h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 8px; }
+  .summary-card p { opacity: 0.85; font-size: 0.95rem; margin-bottom: 20px; }
+  .summary-btn {
+    display: inline-block;
+    background: white;
+    color: #1e3a8a;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-weight: 900; font-size: 0.95rem;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .summary-btn:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <a href="illimar_materjalikogu.html" class="hero-back">← Tagasi kogusse</a>
+  <h1>⚡ Harjutused</h1>
+  <p>Võrrandisüsteemid · 4 ülesannet · lahenda ise, siis kontrolli</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 / 4 lahendatud</div>
+</div>
+
+<div class="container">
+
+<!-- ==============================
+     ÜLESANNE 1
+     ============================== -->
+<div class="ex-card" id="card-1">
+  <div class="ex-header">
+    <div class="ex-num">1</div>
+    <div class="ex-meta">
+      <div class="ex-badges">
+        <span class="badge badge-easy">Lihtne</span>
+        <span class="badge badge-method">Liitmismeetod</span>
+      </div>
+      <div class="ex-title">Lahenda võrrandisüsteem</div>
+    </div>
+  </div>
+
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="equations">
+      <div class="eq-brace">
+        <div class="eq-brace-sym">{</div>
+        <div class="eq-lines">
+          <span>2x + y = 8</span>
+          <span>x − y = 1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(1)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-1" onclick="nextStep(1)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(1)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(1)">↺ Alusta uuesti</button>
+  </div>
+
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-1">
+      <div>
+        <div class="hint-label">💡 Vihje</div>
+        <div class="hint-text">Vaata y-koefitsiente: esimeses võrrandis <strong>+y</strong>, teises <strong>−y</strong>. Mis juhtub, kui need kaks võrrandit kokku liita?</div>
+      </div>
+    </div>
+
+    <div class="steps-area" id="steps-1">
+      <div class="step-block" id="step-1-1">
+        <div class="step-num-label">Samm 1 — Liidalda võrrandid</div>
+        <div class="step-math">(2x + y) + (x − y) = 8 + 1</div>
+        <div class="step-verbal">Liidan võrrandid rida-realt. y taandub (+y ja −y).</div>
+      </div>
+      <div class="step-block" id="step-1-2">
+        <div class="step-num-label">Samm 2 — Leiame x</div>
+        <div class="step-math">3x = 9  →  x = 3</div>
+        <div class="step-verbal">Jagame mõlemad pooled 3-ga.</div>
+      </div>
+      <div class="step-block" id="step-1-3">
+        <div class="step-num-label">Samm 3 — Leiame y</div>
+        <div class="step-math">Asendame x = 3 teise võrrandisse:<br>3 − y = 1  →  y = 2</div>
+        <div class="step-verbal">Asendame leitud x väärtuse kumba tahes algvõrrandisse.</div>
+      </div>
+      <div class="step-block correct" id="step-1-4">
+        <div class="step-num-label">Samm 4 — Kontroll</div>
+        <div class="step-math">2·3 + 2 = 8 ✓ &nbsp;&nbsp; 3 − 2 = 1 ✓</div>
+        <div class="step-verbal">Asendame saadud x = 3 ja y = 2 mõlemasse algvõrrandisse. Mõlemad kehtivad.</div>
+      </div>
+    </div>
+
+    <div class="answer-box" id="answer-1">
+      <div class="answer-label">✅ Vastus</div>
+      <div class="answer-text">x = 3, &nbsp; y = 2</div>
+      <div class="answer-verbal">Süsteemi lahend on punkt (3; 2).</div>
+    </div>
+    <div class="solved-badge" id="solved-1">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+
+<!-- ==============================
+     ÜLESANNE 2
+     ============================== -->
+<div class="ex-card" id="card-2">
+  <div class="ex-header">
+    <div class="ex-num" style="background:var(--green);">2</div>
+    <div class="ex-meta">
+      <div class="ex-badges">
+        <span class="badge badge-easy">Lihtne</span>
+        <span class="badge badge-method">Asendusmeetod</span>
+      </div>
+      <div class="ex-title">Lahenda võrrandisüsteem</div>
+    </div>
+  </div>
+
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="equations">
+      <div class="eq-brace">
+        <div class="eq-brace-sym">{</div>
+        <div class="eq-lines">
+          <span>x + 3y = 10</span>
+          <span>x = 2y</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(2)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-2" onclick="nextStep(2)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(2)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(2)">↺ Alusta uuesti</button>
+  </div>
+
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-2">
+      <div>
+        <div class="hint-label">💡 Vihje</div>
+        <div class="hint-text">Teine võrrand ütleb juba <strong>x = 2y</strong> — x on otse antud! Asenda see esimesse võrrandisse.</div>
+      </div>
+    </div>
+
+    <div class="steps-area" id="steps-2">
+      <div class="step-block" id="step-2-1">
+        <div class="step-num-label">Samm 1 — Asenda x teise võrrandi abil</div>
+        <div class="step-math">Teine võrrand: x = 2y<br>Asenda esimesse: 2y + 3y = 10</div>
+        <div class="step-verbal">Kuna x = 2y, kirjutan esimeses võrrandis x asemele 2y.</div>
+      </div>
+      <div class="step-block" id="step-2-2">
+        <div class="step-num-label">Samm 2 — Leiame y</div>
+        <div class="step-math">5y = 10  →  y = 2</div>
+        <div class="step-verbal">Koondame sarnased liikmed ja jagame 5-ga.</div>
+      </div>
+      <div class="step-block" id="step-2-3">
+        <div class="step-num-label">Samm 3 — Leiame x</div>
+        <div class="step-math">x = 2y = 2 · 2 = 4</div>
+        <div class="step-verbal">Asendame leitud y = 2 teise võrrandisse.</div>
+      </div>
+      <div class="step-block correct" id="step-2-4">
+        <div class="step-num-label">Samm 4 — Kontroll</div>
+        <div class="step-math">4 + 3·2 = 10 ✓ &nbsp;&nbsp; 4 = 2·2 ✓</div>
+        <div class="step-verbal">Mõlemad algvõrrandid kehtivad. Lahend on õige.</div>
+      </div>
+    </div>
+
+    <div class="answer-box" id="answer-2">
+      <div class="answer-label">✅ Vastus</div>
+      <div class="answer-text">x = 4, &nbsp; y = 2</div>
+      <div class="answer-verbal">Süsteemi lahend on punkt (4; 2).</div>
+    </div>
+    <div class="solved-badge" id="solved-2">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+
+<!-- ==============================
+     ÜLESANNE 3
+     ============================== -->
+<div class="ex-card" id="card-3">
+  <div class="ex-header">
+    <div class="ex-num" style="background:var(--orange);">3</div>
+    <div class="ex-meta">
+      <div class="ex-badges">
+        <span class="badge badge-medium">Keskmine</span>
+        <span class="badge badge-method">Liitmismeetod</span>
+      </div>
+      <div class="ex-title">Lahenda võrrandisüsteem</div>
+    </div>
+  </div>
+
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="equations">
+      <div class="eq-brace">
+        <div class="eq-brace-sym">{</div>
+        <div class="eq-lines">
+          <span>3x + 2y = 16</span>
+          <span>2x − y = 6</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(3)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-3" onclick="nextStep(3)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(3)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(3)">↺ Alusta uuesti</button>
+  </div>
+
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-3">
+      <div>
+        <div class="hint-label">💡 Vihje</div>
+        <div class="hint-text">y-koefitsiendid on <strong>+2</strong> ja <strong>−1</strong>. Kuidas need taanduksid? Korrutame teise võrrandi <strong>2-ga</strong> — siis saame +2y ja −2y.</div>
+      </div>
+    </div>
+
+    <div class="steps-area" id="steps-3">
+      <div class="step-block" id="step-3-1">
+        <div class="step-num-label">Samm 1 — Korrutame II võrrandi 2-ga</div>
+        <div class="step-math">I:  3x + 2y = 16<br>II×2:  4x − 2y = 12</div>
+        <div class="step-verbal">Korrutame teise võrrandi mõlemad pooled 2-ga, et y-koefitsiendid võrdseks muuta.</div>
+      </div>
+      <div class="step-block" id="step-3-2">
+        <div class="step-num-label">Samm 2 — Liidame võrrandid</div>
+        <div class="step-math">(3x + 2y) + (4x − 2y) = 16 + 12<br>7x = 28</div>
+        <div class="step-verbal">y taandub. Liidame rida-realt.</div>
+      </div>
+      <div class="step-block" id="step-3-3">
+        <div class="step-num-label">Samm 3 — Leiame x</div>
+        <div class="step-math">x = 28 ÷ 7 = 4</div>
+      </div>
+      <div class="step-block" id="step-3-4">
+        <div class="step-num-label">Samm 4 — Leiame y</div>
+        <div class="step-math">Asenda x = 4 teise algvõrrandisse:<br>2·4 − y = 6  →  8 − y = 6  →  y = 2</div>
+      </div>
+      <div class="step-block correct" id="step-3-5">
+        <div class="step-num-label">Samm 5 — Kontroll</div>
+        <div class="step-math">3·4 + 2·2 = 12 + 4 = 16 ✓<br>2·4 − 2 = 8 − 2 = 6 ✓</div>
+        <div class="step-verbal">Mõlemad algvõrrandid kehtivad.</div>
+      </div>
+    </div>
+
+    <div class="answer-box" id="answer-3">
+      <div class="answer-label">✅ Vastus</div>
+      <div class="answer-text">x = 4, &nbsp; y = 2</div>
+    </div>
+    <div class="solved-badge" id="solved-3">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+
+<!-- ==============================
+     ÜLESANNE 4
+     ============================== -->
+<div class="ex-card" id="card-4">
+  <div class="ex-header">
+    <div class="ex-num" style="background:var(--purple);">4</div>
+    <div class="ex-meta">
+      <div class="ex-badges">
+        <span class="badge badge-hard">Keerukam</span>
+        <span class="badge badge-text">Tekstülesanne</span>
+      </div>
+      <div class="ex-title">Sõnalisest ülesandest võrrandisüsteemini</div>
+    </div>
+  </div>
+
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="problem-text">
+      Kahe arvu summa on 20. Suurema arvu ja väiksema kolmekordse vahe on 4. Leia mõlemad arvud.
+    </div>
+  </div>
+
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(4)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-4" onclick="nextStep(4)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(4)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(4)">↺ Alusta uuesti</button>
+  </div>
+
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-4">
+      <div>
+        <div class="hint-label">💡 Vihje</div>
+        <div class="hint-text">Tähistame arvud <strong>x</strong> (suurem) ja <strong>y</strong> (väiksem). Esimene tingimus: x + y = 20. Mis on teine tingimus sõnadest "suurema ja väiksema kolmekordse vahe on 4"?</div>
+      </div>
+    </div>
+
+    <div class="steps-area" id="steps-4">
+      <div class="step-block" id="step-4-1">
+        <div class="step-num-label">Samm 1 — Tähistame</div>
+        <div class="step-math">Olgu x = suurem arv<br>Olgu y = väiksem arv</div>
+        <div class="step-verbal">Tekstülesandes alustame alati tähistamisest.</div>
+      </div>
+      <div class="step-block" id="step-4-2">
+        <div class="step-num-label">Samm 2 — Koostan süsteemi</div>
+        <div class="step-math">I:  x + y = 20 &nbsp;&nbsp; ("summa on 20")<br>II: x − 3y = 4 &nbsp;&nbsp; ("suurema ja väiksema kolmekordse vahe on 4")</div>
+        <div class="step-verbal">Iga tingimus annab ühe võrrandi.</div>
+      </div>
+      <div class="step-block" id="step-4-3">
+        <div class="step-num-label">Samm 3 — Lahendame (liitmismeetod)</div>
+        <div class="step-math">I − II: (x+y) − (x−3y) = 20 − 4<br>4y = 16  →  y = 4</div>
+        <div class="step-verbal">Lahutan II võrrandi I-st, et x taanduks.</div>
+      </div>
+      <div class="step-block" id="step-4-4">
+        <div class="step-num-label">Samm 4 — Leiame x</div>
+        <div class="step-math">x + 4 = 20  →  x = 16</div>
+        <div class="step-verbal">Asendame y = 4 esimesse võrrandisse.</div>
+      </div>
+      <div class="step-block correct" id="step-4-5">
+        <div class="step-num-label">Samm 5 — Kontroll ja vastus lausena</div>
+        <div class="step-math">16 + 4 = 20 ✓ &nbsp;&nbsp; 16 − 3·4 = 4 ✓</div>
+        <div class="step-verbal">Vastus: Otsitavad arvud on 16 ja 4.</div>
+      </div>
+    </div>
+
+    <div class="answer-box" id="answer-4">
+      <div class="answer-label">✅ Vastus</div>
+      <div class="answer-text">Otsitavad arvud on 16 ja 4.</div>
+      <div class="answer-verbal">NB! Tekstülesandes kirjuta vastus täislausena, koos sisuga — mitte ainult "x = 16, y = 4".</div>
+    </div>
+    <div class="solved-badge" id="solved-4">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary-card" id="summaryCard" style="display:none;">
+  <h2>🏆 Kõik lahendatud!</h2>
+  <p>Tubli! Oled läbinud kõik 4 võrrandisüsteemide harjutust.</p>
+  <a href="illimar_materjalikogu.html" class="summary-btn">← Tagasi kogusse</a>
+</div>
+
+</div><!-- /container -->
+
+<script>
+  // State per exercise: how many steps shown
+  const state = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  const maxSteps = { 1: 4, 2: 4, 3: 5, 4: 5 };
+  const solved = { 1: false, 2: false, 3: false, 4: false };
+
+  function toggleHint(n) {
+    const box = document.getElementById('hint-' + n);
+    box.classList.toggle('visible');
+  }
+
+  function nextStep(n) {
+    const current = state[n];
+    const max = maxSteps[n];
+    if (current >= max) return;
+
+    const next = current + 1;
+    state[n] = next;
+
+    // Show the step
+    const stepEl = document.getElementById('step-' + n + '-' + next);
+    if (stepEl) stepEl.classList.add('visible');
+
+    // Update button
+    const btn = document.getElementById('stepBtn-' + n);
+    if (next >= max) {
+      // All steps shown — show answer
+      showAnswer(n);
+      btn.disabled = true;
+      btn.textContent = '✓ Kõik sammud nähtud';
+    } else {
+      btn.textContent = 'Samm ' + (next + 1) + ' →';
+    }
+  }
+
+  function showAnswer(n) {
+    document.getElementById('answer-' + n).classList.add('visible');
+    document.getElementById('solved-' + n).classList.add('visible');
+    document.getElementById('card-' + n).classList.add('solved');
+    if (!solved[n]) {
+      solved[n] = true;
+      updateProgress();
+    }
+  }
+
+  function showAll(n) {
+    // Show hint
+    document.getElementById('hint-' + n).classList.add('visible');
+    // Show all steps
+    for (let i = 1; i <= maxSteps[n]; i++) {
+      const el = document.getElementById('step-' + n + '-' + i);
+      if (el) el.classList.add('visible');
+    }
+    state[n] = maxSteps[n];
+    // Disable step button
+    const btn = document.getElementById('stepBtn-' + n);
+    btn.disabled = true;
+    btn.textContent = '✓ Kõik sammud nähtud';
+    showAnswer(n);
+  }
+
+  function reset(n) {
+    // Hide hint
+    document.getElementById('hint-' + n).classList.remove('visible');
+    // Hide all steps
+    for (let i = 1; i <= maxSteps[n]; i++) {
+      const el = document.getElementById('step-' + n + '-' + i);
+      if (el) el.classList.remove('visible');
+    }
+    // Hide answer
+    document.getElementById('answer-' + n).classList.remove('visible');
+    document.getElementById('solved-' + n).classList.remove('visible');
+    document.getElementById('card-' + n).classList.remove('solved');
+    // Reset button
+    const btn = document.getElementById('stepBtn-' + n);
+    btn.disabled = false;
+    btn.textContent = 'Samm 1 →';
+    // Reset state
+    state[n] = 0;
+    if (solved[n]) {
+      solved[n] = false;
+      updateProgress();
+    }
+  }
+
+  function updateProgress() {
+    const count = Object.values(solved).filter(Boolean).length;
+    const total = 4;
+    const pct = (count / total) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = count + ' / ' + total + ' lahendatud';
+    if (count === total) {
+      document.getElementById('summaryCard').style.display = 'block';
+      document.getElementById('summaryCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+</script>
+</body>
+</html>

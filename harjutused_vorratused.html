@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harjutused — Võrratused</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f0f4ff;--card:#fff;--blue:#2563eb;--blue-light:#dbeafe;--green:#16a34a;--green-light:#dcfce7;--orange:#ea580c;--orange-light:#ffedd5;--purple:#7c3aed;--purple-light:#ede9fe;--yellow:#ca8a04;--yellow-light:#fef9c3;--red:#dc2626;--red-light:#fee2e2;--teal:#0d9488;--teal-light:#ccfbf1;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  .hero{background:linear-gradient(135deg,#7c2d12 0%,#ea580c 60%,#ca8a04 100%);color:white;padding:40px 32px 36px;text-align:center;}
+  .hero-back{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:999px;padding:4px 14px;font-size:0.8rem;font-weight:700;text-decoration:none;color:white;margin-bottom:18px;}
+  .hero h1{font-size:2rem;font-weight:900;margin-bottom:6px;}
+  .hero p{font-size:0.95rem;opacity:0.8;}
+  .progress-bar-wrap{max-width:700px;margin:0 auto;background:rgba(255,255,255,0.15);border-radius:999px;height:8px;margin-top:20px;overflow:hidden;}
+  .progress-bar-fill{height:100%;background:white;border-radius:999px;transition:width 0.4s ease;width:0%;}
+  .progress-label{font-size:0.78rem;opacity:0.75;margin-top:6px;text-align:center;}
+  .container{max-width:700px;margin:0 auto;padding:40px 20px 60px;}
+  .ex-card{background:var(--card);border-radius:20px;border:2px solid var(--border);margin-bottom:28px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);transition:border-color 0.3s;}
+  .ex-card.solved{border-color:var(--green);}
+  .ex-header{padding:20px 24px 16px;display:flex;align-items:flex-start;gap:14px;border-bottom:1.5px solid var(--border);}
+  .ex-num{width:40px;height:40px;border-radius:12px;background:var(--orange);color:white;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;flex-shrink:0;}
+  .ex-meta{flex:1;}
+  .ex-badges{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
+  .badge{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;border-radius:999px;padding:2px 10px;}
+  .badge-easy{background:var(--green-light);color:var(--green);}
+  .badge-medium{background:var(--yellow-light);color:var(--yellow);}
+  .badge-hard{background:var(--red-light);color:var(--red);}
+  .badge-type{background:var(--orange-light);color:var(--orange);}
+  .badge-warn{background:var(--red-light);color:var(--red);}
+  .ex-title{font-size:0.95rem;font-weight:800;color:var(--muted);}
+  .ex-problem{padding:20px 24px;border-bottom:1.5px dashed var(--border);}
+  .ex-problem-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:10px;}
+  .problem-text{font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;line-height:1.6;}
+  .ex-controls{padding:16px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:800;border:2px solid transparent;cursor:pointer;transition:all 0.15s;line-height:1;}
+  .btn-hint{background:var(--yellow-light);color:var(--yellow);border-color:var(--yellow);}
+  .btn-hint:hover{background:var(--yellow);color:white;}
+  .btn-step{background:var(--blue-light);color:var(--blue);border-color:var(--blue);}
+  .btn-step:hover{background:var(--blue);color:white;}
+  .btn-step:disabled{opacity:0.35;cursor:not-allowed;background:var(--bg);border-color:var(--border);color:var(--muted);}
+  .btn-solve{background:var(--green-light);color:var(--green);border-color:var(--green);margin-left:auto;}
+  .btn-solve:hover{background:var(--green);color:white;}
+  .btn-reset{background:transparent;color:var(--muted);border-color:var(--border);font-size:0.78rem;}
+  .btn-reset:hover{border-color:var(--red);color:var(--red);}
+  .ex-reveal{padding:0 24px;}
+  .hint-box{display:none;background:var(--yellow-light);border:2px solid var(--yellow);border-radius:12px;padding:14px 16px;margin-bottom:12px;animation:slideIn 0.25s ease;}
+  .hint-box.visible{display:flex;gap:10px;}
+  .hint-label{font-size:0.75rem;font-weight:800;color:var(--yellow);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+  .hint-text{font-size:0.9rem;line-height:1.5;}
+  .steps-area{margin-bottom:16px;}
+  .step-block{display:none;background:#f8fafc;border-left:4px solid var(--blue);border-radius:0 10px 10px 0;padding:12px 16px;margin-bottom:8px;animation:slideIn 0.25s ease;}
+  .step-block.visible{display:block;}
+  .step-block.warn{border-left-color:var(--red);background:var(--red-light);}
+  .step-block.correct{border-left-color:var(--green);}
+  .step-num-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--blue);margin-bottom:5px;}
+  .step-block.warn .step-num-label{color:var(--red);}
+  .step-block.correct .step-num-label{color:var(--green);}
+  .step-math{font-family:'Space Mono',monospace;font-size:0.88rem;line-height:1.7;font-weight:700;}
+  .step-verbal{font-size:0.83rem;color:var(--muted);font-style:italic;margin-top:3px;line-height:1.4;}
+  .step-block.warn .step-verbal{color:#991b1b;}
+  .answer-box{display:none;background:var(--green-light);border:2px solid var(--green);border-radius:12px;padding:14px 18px;margin-bottom:16px;animation:slideIn 0.25s ease;}
+  .answer-box.visible{display:block;}
+  .answer-label{font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--green);margin-bottom:6px;}
+  .answer-text{font-family:'Space Mono',monospace;font-size:0.95rem;font-weight:700;line-height:1.6;}
+  .answer-verbal{font-size:0.88rem;color:#166534;margin-top:4px;}
+  .solved-badge{display:none;align-items:center;gap:8px;padding:10px 16px;background:var(--green);color:white;font-size:0.85rem;font-weight:800;margin-bottom:16px;border-radius:10px;animation:slideIn 0.3s ease;}
+  .solved-badge.visible{display:flex;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+  .summary-card{background:linear-gradient(135deg,#7c2d12,#ca8a04);border-radius:20px;padding:28px;color:white;text-align:center;margin-top:12px;}
+  .summary-card h2{font-size:1.5rem;font-weight:900;margin-bottom:8px;}
+  .summary-card p{opacity:0.85;font-size:0.95rem;margin-bottom:20px;}
+  .summary-btn{display:inline-block;background:white;color:#7c2d12;border-radius:12px;padding:10px 24px;font-weight:900;font-size:0.95rem;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <a href="illimar_materjalikogu.html" class="hero-back">← Tagasi kogusse</a>
+  <h1>⚡ Harjutused</h1>
+  <p>Võrratused · 4 ülesannet · lahenda ise, siis kontrolli</p>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressBar"></div></div>
+  <div class="progress-label" id="progressLabel">0 / 4 lahendatud</div>
+</div>
+<div class="container">
+
+<!-- ÜLESANNE 1 -->
+<div class="ex-card" id="card-1">
+  <div class="ex-header">
+    <div class="ex-num">1</div>
+    <div class="ex-meta">
+      <div class="ex-badges"><span class="badge badge-easy">Lihtne</span><span class="badge badge-type">Lineaarne võratus</span></div>
+      <div class="ex-title">Lahenda ja kirjuta vastus intervalliga</div>
+    </div>
+  </div>
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="problem-text">3x − 7 &gt; 2</div>
+  </div>
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(1)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-1" onclick="nextStep(1)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(1)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(1)">↺ Alusta uuesti</button>
+  </div>
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-1"><div><div class="hint-label">💡 Vihje</div><div class="hint-text">Tõsta −7 paremale poole. Märk ei pöördu, sest jagad positiivse arvuga.</div></div></div>
+    <div class="steps-area" id="steps-1">
+      <div class="step-block" id="step-1-1"><div class="step-num-label">Samm 1 — Isoleeri x</div><div class="step-math">3x − 7 &gt; 2<br>3x &gt; 2 + 7<br>3x &gt; 9</div><div class="step-verbal">Liidan mõlemale poolele 7.</div></div>
+      <div class="step-block" id="step-1-2"><div class="step-num-label">Samm 2 — Jaga 3-ga</div><div class="step-math">x &gt; 3</div><div class="step-verbal">Jagan positiivse arvuga → märk ei pöördu.</div></div>
+      <div class="step-block correct" id="step-1-3"><div class="step-num-label">Samm 3 — Vastus intervalliga</div><div class="step-math">x ∈ (3; +∞)</div><div class="step-verbal">Avatud sulg — 3 ise lahendusse EI kuulu (märk on &gt;, mitte ≥).</div></div>
+    </div>
+    <div class="answer-box" id="answer-1"><div class="answer-label">✅ Vastus</div><div class="answer-text">x &gt; 3 &nbsp; ehk &nbsp; x ∈ (3; +∞)</div></div>
+    <div class="solved-badge" id="solved-1">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+<!-- ÜLESANNE 2 -->
+<div class="ex-card" id="card-2">
+  <div class="ex-header">
+    <div class="ex-num" style="background:var(--red);">2</div>
+    <div class="ex-meta">
+      <div class="ex-badges"><span class="badge badge-easy">Lihtne</span><span class="badge badge-type">Lineaarne võratus</span><span class="badge badge-warn">⚠️ Märgi pöördumine</span></div>
+      <div class="ex-title">Tähelepanu — jagamine negatiivse arvuga!</div>
+    </div>
+  </div>
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="problem-text">−2x + 5 ≤ 11</div>
+  </div>
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(2)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-2" onclick="nextStep(2)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(2)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(2)">↺ Alusta uuesti</button>
+  </div>
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-2"><div><div class="hint-label">💡 Vihje</div><div class="hint-text">Lõpuks jagad <strong>−2</strong>-ga. Negatiivse arvuga jagades pöördub ≤ märk → ≥.</div></div></div>
+    <div class="steps-area" id="steps-2">
+      <div class="step-block" id="step-2-1"><div class="step-num-label">Samm 1 — Tõsta konstant</div><div class="step-math">−2x ≤ 11 − 5<br>−2x ≤ 6</div><div class="step-verbal">Lahutan mõlemalt poolelt 5.</div></div>
+      <div class="step-block warn" id="step-2-2"><div class="step-num-label">⚠️ Samm 2 — Jaga NEGATIIVSE arvuga → märk pöördub!</div><div class="step-math">x ≥ 6 ÷ (−2)<br>x ≥ −3</div><div class="step-verbal">Jagasin −2-ga → ≤ muutub ≥-ks. See on kõige levinum viga!</div></div>
+      <div class="step-block correct" id="step-2-3"><div class="step-num-label">Samm 3 — Vastus</div><div class="step-math">x ≥ −3 &nbsp; ehk &nbsp; x ∈ [−3; +∞)</div><div class="step-verbal">Suletud sulg — −3 kuulub lahendusse (märk on ≥).</div></div>
+    </div>
+    <div class="answer-box" id="answer-2"><div class="answer-label">✅ Vastus</div><div class="answer-text">x ≥ −3 &nbsp; ehk &nbsp; x ∈ [−3; +∞)</div></div>
+    <div class="solved-badge" id="solved-2">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+<!-- ÜLESANNE 3 -->
+<div class="ex-card" id="card-3">
+  <div class="ex-header">
+    <div class="ex-num" style="background:var(--yellow);">3</div>
+    <div class="ex-meta">
+      <div class="ex-badges"><span class="badge badge-medium">Keskmine</span><span class="badge badge-type">Ruutvõratus</span></div>
+      <div class="ex-title">Ruutvõratus — intervalltabel</div>
+    </div>
+  </div>
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="problem-text">x² − 5x + 6 &lt; 0</div>
+  </div>
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(3)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-3" onclick="nextStep(3)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(3)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(3)">↺ Alusta uuesti</button>
+  </div>
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-3"><div><div class="hint-label">💡 Vihje</div><div class="hint-text">Leia kõigepealt nullid (kus avaldis = 0). Siis vaata: parabolil a &gt; 0, mis tähendab, et see on <strong>allapoole lahti</strong>. Kus on parabolil allpool x-telge?</div></div></div>
+    <div class="steps-area" id="steps-3">
+      <div class="step-block" id="step-3-1"><div class="step-num-label">Samm 1 — Leia nullid</div><div class="step-math">x² − 5x + 6 = 0<br>(x − 2)(x − 3) = 0<br>x₁ = 2, &nbsp; x₂ = 3</div><div class="step-verbal">Faktoriseerin või kasutan diskriminanti.</div></div>
+      <div class="step-block" id="step-3-2"><div class="step-num-label">Samm 2 — Paraboli suund</div><div class="step-math">a = 1 &gt; 0 → parabolil on miinimum<br>Parabolil on kuju ∪ (naerunägu)</div><div class="step-verbal">Kuna a &gt; 0, on parabolil allpool x-telge ainult nullide vahel.</div></div>
+      <div class="step-block" id="step-3-3"><div class="step-num-label">Samm 3 — Intervalltabel</div><div class="step-math">x &lt; 2: (+) positiivne<br>2 &lt; x &lt; 3: (−) negatiivne  ← see on lahend<br>x &gt; 3: (+) positiivne</div><div class="step-verbal">Võratus &lt; 0 tähendab, et otsime negatiivseid väärtusi.</div></div>
+      <div class="step-block correct" id="step-3-4"><div class="step-num-label">Samm 4 — Vastus</div><div class="step-math">x ∈ (2; 3)</div><div class="step-verbal">Avatud sulud — nullid ise EI kuulu lahendusse (märk on &lt;, mitte ≤).</div></div>
+    </div>
+    <div class="answer-box" id="answer-3"><div class="answer-label">✅ Vastus</div><div class="answer-text">x ∈ (2; 3)</div></div>
+    <div class="solved-badge" id="solved-3">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+<!-- ÜLESANNE 4 -->
+<div class="ex-card" id="card-4">
+  <div class="ex-header">
+    <div class="ex-num" style="background:var(--purple);">4</div>
+    <div class="ex-meta">
+      <div class="ex-badges"><span class="badge badge-hard">Keerukam</span><span class="badge badge-type">Absoluutväärtus</span></div>
+      <div class="ex-title">Absoluutväärtuse võratus — kaks juhtu</div>
+    </div>
+  </div>
+  <div class="ex-problem">
+    <div class="ex-problem-label">📋 Ülesanne</div>
+    <div class="problem-text">|2x − 3| ≤ 5</div>
+  </div>
+  <div class="ex-controls">
+    <button class="btn btn-hint" onclick="toggleHint(4)">💡 Vihje</button>
+    <button class="btn btn-step" id="stepBtn-4" onclick="nextStep(4)">Samm 1 →</button>
+    <button class="btn btn-solve" onclick="showAll(4)">✅ Täielik lahendus</button>
+    <button class="btn btn-reset" onclick="reset(4)">↺ Alusta uuesti</button>
+  </div>
+  <div class="ex-reveal">
+    <div class="hint-box" id="hint-4"><div><div class="hint-label">💡 Vihje</div><div class="hint-text">Reegel: <strong>|A| ≤ a</strong> tähendab <strong>−a ≤ A ≤ a</strong>. Kirjutan ühe kaksikõrratusena.</div></div></div>
+    <div class="steps-area" id="steps-4">
+      <div class="step-block" id="step-4-1"><div class="step-num-label">Samm 1 — Reegel |A| ≤ a</div><div class="step-math">|2x − 3| ≤ 5<br>−5 ≤ 2x − 3 ≤ 5</div><div class="step-verbal">|A| ≤ a muutub kaksikõrratuseks −a ≤ A ≤ a.</div></div>
+      <div class="step-block" id="step-4-2"><div class="step-num-label">Samm 2 — Liida 3 igale osale</div><div class="step-math">−5 + 3 ≤ 2x ≤ 5 + 3<br>−2 ≤ 2x ≤ 8</div></div>
+      <div class="step-block" id="step-4-3"><div class="step-num-label">Samm 3 — Jaga 2-ga</div><div class="step-math">−1 ≤ x ≤ 4</div><div class="step-verbal">Jagasin positiivse 2-ga → märk ei pöördu.</div></div>
+      <div class="step-block correct" id="step-4-4"><div class="step-num-label">Samm 4 — Vastus</div><div class="step-math">x ∈ [−1; 4]</div><div class="step-verbal">Suletud sulud — mõlemad otsad kuuluvad lahendusse (≤).</div></div>
+    </div>
+    <div class="answer-box" id="answer-4"><div class="answer-label">✅ Vastus</div><div class="answer-text">x ∈ [−1; 4]</div></div>
+    <div class="solved-badge" id="solved-4">🎉 Suurepärane! Ülesanne lahendatud.</div>
+  </div>
+</div>
+
+<div class="summary-card" id="summaryCard" style="display:none;">
+  <h2>🏆 Kõik lahendatud!</h2>
+  <p>Tubli! Kõik võrratuste tüübid on selged.</p>
+  <a href="illimar_materjalikogu.html" class="summary-btn">← Tagasi kogusse</a>
+</div>
+</div>
+<script>
+  const state={1:0,2:0,3:0,4:0};
+  const maxSteps={1:3,2:3,3:4,4:4};
+  const solved={1:false,2:false,3:false,4:false};
+  function toggleHint(n){document.getElementById('hint-'+n).classList.toggle('visible');}
+  function nextStep(n){const cur=state[n],max=maxSteps[n];if(cur>=max)return;const next=cur+1;state[n]=next;const el=document.getElementById('step-'+n+'-'+next);if(el)el.classList.add('visible');const btn=document.getElementById('stepBtn-'+n);if(next>=max){showAnswer(n);btn.disabled=true;btn.textContent='✓ Kõik sammud nähtud';}else{btn.textContent='Samm '+(next+1)+' →';}}
+  function showAnswer(n){document.getElementById('answer-'+n).classList.add('visible');document.getElementById('solved-'+n).classList.add('visible');document.getElementById('card-'+n).classList.add('solved');if(!solved[n]){solved[n]=true;updateProgress();}}
+  function showAll(n){document.getElementById('hint-'+n).classList.add('visible');for(let i=1;i<=maxSteps[n];i++){const el=document.getElementById('step-'+n+'-'+i);if(el)el.classList.add('visible');}state[n]=maxSteps[n];const btn=document.getElementById('stepBtn-'+n);btn.disabled=true;btn.textContent='✓ Kõik sammud nähtud';showAnswer(n);}
+  function reset(n){document.getElementById('hint-'+n).classList.remove('visible');for(let i=1;i<=maxSteps[n];i++){const el=document.getElementById('step-'+n+'-'+i);if(el)el.classList.remove('visible');}document.getElementById('answer-'+n).classList.remove('visible');document.getElementById('solved-'+n).classList.remove('visible');document.getElementById('card-'+n).classList.remove('solved');const btn=document.getElementById('stepBtn-'+n);btn.disabled=false;btn.textContent='Samm 1 →';state[n]=0;if(solved[n]){solved[n]=false;updateProgress();}}
+  function updateProgress(){const count=Object.values(solved).filter(Boolean).length;document.getElementById('progressBar').style.width=(count/4*100)+'%';document.getElementById('progressLabel').textContent=count+' / 4 lahendatud';if(count===4){document.getElementById('summaryCard').style.display='block';document.getElementById('summaryCard').scrollIntoView({behavior:'smooth',block:'center'});}}
+</script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Võrrandisüsteemid – Õppematerjal</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fef9f0;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 60%, #db2777 100%);
+    color: white;
+    padding: 48px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    margin-top: 48px;
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-num {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    border: 2px solid var(--border);
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .method-box {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .method-box h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .math-block {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem;
+    line-height: 1.9;
+    padding: 16px 20px;
+    border-radius: 10px;
+    border-left: 4px solid;
+    margin: 12px 0;
+    overflow-x: auto;
+  }
+  .highlight-box {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .highlight-box .icon { font-size: 1.2rem; flex-shrink: 0; }
+  .example-header {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .result-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-top: 8px;
+  }
+
+  /* Blue theme */
+  .blue .section-num { background: var(--blue-light); color: var(--blue); }
+  .blue .card { border-color: #bfdbfe; }
+  .blue .card h3 { color: var(--blue); }
+  .blue .method-box { background: var(--blue-light); }
+  .blue .method-box h4 { color: var(--blue); }
+  .blue .step-num { background: var(--blue); color: white; }
+  .blue .math-block { background: #eff6ff; border-color: var(--blue); color: #1e40af; }
+  .blue .highlight-box { background: #eff6ff; border: 1.5px solid #bfdbfe; }
+  .blue .result-box { background: var(--blue); color: white; }
+  .blue .tag { background: var(--blue-light); color: var(--blue); }
+
+  /* Green theme */
+  .green .section-num { background: var(--green-light); color: var(--green); }
+  .green .card { border-color: #bbf7d0; }
+  .green .card h3 { color: var(--green); }
+  .green .method-box { background: var(--green-light); }
+  .green .method-box h4 { color: var(--green); }
+  .green .step-num { background: var(--green); color: white; }
+  .green .math-block { background: #f0fdf4; border-color: var(--green); color: #15803d; }
+  .green .highlight-box { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .green .result-box { background: var(--green); color: white; }
+  .green .tag { background: var(--green-light); color: var(--green); }
+
+  /* Purple theme */
+  .purple .section-num { background: var(--purple-light); color: var(--purple); }
+  .purple .card { border-color: #ddd6fe; }
+  .purple .card h3 { color: var(--purple); }
+  .purple .method-box { background: var(--purple-light); }
+  .purple .method-box h4 { color: var(--purple); }
+  .purple .step-num { background: var(--purple); color: white; }
+  .purple .math-block { background: #faf5ff; border-color: var(--purple); color: #6d28d9; }
+  .purple .highlight-box { background: #faf5ff; border: 1.5px solid #ddd6fe; }
+  .purple .result-box { background: var(--purple); color: white; }
+  .purple .tag { background: var(--purple-light); color: var(--purple); }
+
+  /* Orange theme */
+  .orange .section-num { background: var(--orange-light); color: var(--orange); }
+  .orange .card { border-color: #fed7aa; }
+  .orange .card h3 { color: var(--orange); }
+  .orange .method-box { background: var(--orange-light); }
+  .orange .method-box h4 { color: var(--orange); }
+  .orange .step-num { background: var(--orange); color: white; }
+  .orange .math-block { background: #fff7ed; border-color: var(--orange); color: #c2410c; }
+  .orange .highlight-box { background: #fff7ed; border: 1.5px solid #fed7aa; }
+  .orange .result-box { background: var(--orange); color: white; }
+  .orange .tag { background: var(--orange-light); color: var(--orange); }
+
+  /* Yellow theme */
+  .yellow .section-num { background: var(--yellow-light); color: var(--yellow); }
+  .yellow .card { border-color: #fef08a; }
+  .yellow .card h3 { color: #854d0e; }
+  .yellow .method-box { background: var(--yellow-light); }
+  .yellow .method-box h4 { color: #854d0e; }
+  .yellow .step-num { background: var(--yellow); color: white; }
+  .yellow .math-block { background: #fefce8; border-color: var(--yellow); color: #713f12; }
+  .yellow .highlight-box { background: #fefce8; border: 1.5px solid #fef08a; }
+  .yellow .result-box { background: var(--yellow); color: white; }
+  .yellow .tag { background: var(--yellow-light); color: #854d0e; }
+
+  .divider {
+    border: none;
+    border-top: 2px dashed #e2e8f0;
+    margin: 32px 0 24px;
+  }
+  .sub-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.6;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+  }
+  .det-grid {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 0;
+    width: fit-content;
+    border-left: 3px solid currentColor;
+    border-right: 3px solid currentColor;
+    padding: 6px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin: 8px 0;
+  }
+  .det-cell { padding: 2px 12px; text-align: center; }
+  .arrow { font-size: 1.3rem; margin: 0 4px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 8px;
+  }
+  @media (max-width: 600px) {
+    .summary-grid { grid-template-columns: 1fr; }
+  }
+  .summary-card {
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .summary-card .emoji { font-size: 2rem; margin-bottom: 8px; }
+  .summary-card h4 { font-size: 0.9rem; font-weight: 800; }
+  .summary-card p { font-size: 0.8rem; opacity: 0.75; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">📚 Kontrolltöö IV – A ettevalmistus</div>
+  <h1>Võrrandisüsteemid<br>& Determinandid</h1>
+  <p>Samm-sammuline juhend tekstülesannetega – kõik, mida kontrolltööks vaja!</p>
+</div>
+
+<div class="container">
+
+  <!-- SECTION 1: LIITMISMEETOD -->
+  <div class="section-title blue">
+    <div class="section-num">1</div>
+    <h2>Liitmismeetod (kahe tundmatuga)</h2>
+  </div>
+
+  <div class="card blue">
+    <h3>🔑 Põhiidee</h3>
+    <div class="method-box blue">
+      <h4>📋 Sammud:</h4>
+      <ul class="steps">
+        <li><div class="step-num">1</div><span>Korruta üks (või mõlemad) võrrand sobiva arvuga, et ühe tundmatu kordajad oleksid <strong>vastupidised</strong> (nt +6 ja −6)</span></li>
+        <li><div class="step-num">2</div><span>Liida võrrandid kokku – üks tundmatu <strong>kaob ära</strong></span></li>
+        <li><div class="step-num">3</div><span>Lahenda järelejäänud ühe tundmatuga võrrand</span></li>
+        <li><div class="step-num">4</div><span>Asenda leitud väärtus algvõrrandisse → leia teine tundmatu</span></li>
+        <li><div class="step-num">5</div><span>Tee <strong>kontroll</strong> – asenda mõlemad väärtused mõlemasse võrrandisse!</span></li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+    <div class="example-header">📝 Näide – Ülesanne 1a:</div>
+
+    <div style="background:#f8fafc; border-radius:10px; padding:16px 20px; margin-bottom:14px; font-family:'Space Mono',monospace; font-size:0.9rem; line-height:2;">
+      <strong>Süsteem:</strong><br>
+      { 5x + 6y = −20 &nbsp;&nbsp; (I)<br>
+      { 9y + 2x = 25 &nbsp;&nbsp;&nbsp; (II) → 2x + 9y = 25
+    </div>
+
+    <div class="math-block blue">
+      <strong>Samm 1:</strong> Korrutame (I) × 2 ja (II) × (−5):<br>
+      &nbsp;  I × 2:  10x + 12y = −40<br>
+      &nbsp; II × (−5): −10x − 45y = −125<br>
+      <br>
+      <strong>Samm 2:</strong> Liidame:<br>
+      &nbsp;  0x − 33y = −165<br>
+      &nbsp;  y = −165 ÷ (−33) = <strong>5</strong><br>
+      <br>
+      <strong>Samm 3:</strong> Asendame y = 5 võrrandisse (I):<br>
+      &nbsp;  5x + 6·5 = −20<br>
+      &nbsp;  5x + 30 = −20<br>
+      &nbsp;  5x = −50<br>
+      &nbsp;  x = <strong>−10</strong>
+    </div>
+
+    <div class="highlight-box blue">
+      <span class="icon">✅</span>
+      <div><strong>Kontroll:</strong> I: 5·(−10) + 6·5 = −50 + 30 = −20 ✓ &nbsp; II: 2·(−10) + 9·5 = −20 + 45 = 25 ✓</div>
+    </div>
+    <div class="result-box blue">Vastus: x = −10, y = 5</div>
+  </div>
+
+  <!-- SECTION 2: ASENDUSMEETOD -->
+  <div class="section-title green">
+    <div class="section-num">2</div>
+    <h2>Asendusmeetod</h2>
+  </div>
+
+  <div class="card green">
+    <h3>🔑 Põhiidee</h3>
+    <div class="method-box green">
+      <h4>📋 Sammud:</h4>
+      <ul class="steps">
+        <li><div class="step-num">1</div><span>Vali lihtsam võrrand ja <strong>väljenda üks tundmatu teise kaudu</strong> (nt y = 3x + 7)</span></li>
+        <li><div class="step-num">2</div><span><strong>Asenda</strong> see avaldis teise võrrandisse</span></li>
+        <li><div class="step-num">3</div><span>Lahenda saadud ühe tundmatuga võrrand</span></li>
+        <li><div class="step-num">4</div><span>Leia teine tundmatu</span></li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+    <div class="example-header">📝 Näide – Ülesanne 1b (mittelineaarne!):</div>
+
+    <div style="background:#f8fafc; border-radius:10px; padding:16px 20px; margin-bottom:14px; font-family:'Space Mono',monospace; font-size:0.9rem; line-height:2;">
+      { x² + xy = 2 &nbsp; (I)<br>
+      { y − 3x = 7 &nbsp;&nbsp; (II)
+    </div>
+
+    <div class="math-block green">
+      <strong>Samm 1:</strong> Võrrandist (II) avaldame y:<br>
+      &nbsp;  y = 3x + 7<br>
+      <br>
+      <strong>Samm 2:</strong> Asendame võrrandisse (I):<br>
+      &nbsp;  x² + x·(3x + 7) = 2<br>
+      &nbsp;  x² + 3x² + 7x = 2<br>
+      &nbsp;  4x² + 7x − 2 = 0<br>
+      <br>
+      <strong>Samm 3:</strong> Ruutvõrrand – diskriminant:<br>
+      &nbsp;  D = 7² − 4·4·(−2) = 49 + 32 = 81<br>
+      &nbsp;  √D = 9<br>
+      &nbsp;  x₁ = (−7 + 9) / 8 = 2/8 = <strong>1/4</strong><br>
+      &nbsp;  x₂ = (−7 − 9) / 8 = −16/8 = <strong>−2</strong><br>
+      <br>
+      <strong>Samm 4:</strong> Leiame y mõlemal juhul:<br>
+      &nbsp;  x = 1/4 → y = 3·(1/4) + 7 = 3/4 + 7 = 31/4<br>
+      &nbsp;  x = −2 → y = 3·(−2) + 7 = −6 + 7 = <strong>1</strong>
+    </div>
+
+    <div class="highlight-box green">
+      <span class="icon">💡</span>
+      <div>Mittelineaarsel süsteemil võib olla <strong>mitu lahendit</strong>! Kontrolli mõlemaid algvõrrandites.</div>
+    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <div class="result-box green">Vastus 1: x = ¼, y = 31/4</div>
+      <div class="result-box green">Vastus 2: x = −2, y = 1</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: DETERMINANDID -->
+  <div class="section-title purple">
+    <div class="section-num">3</div>
+    <h2>Determinandi meetod (Crameri reegel)</h2>
+  </div>
+
+  <div class="card purple">
+    <h3>🔑 Põhivalemid</h3>
+
+    <div class="sub-label">Crameri reegel</div>
+    <div class="math-block purple" style="font-size:0.9rem; line-height:2.2; margin-bottom:16px;">
+      x = Dₓ / D &nbsp;&nbsp; y = D_y / D &nbsp;&nbsp; z = D_z / D
+    </div>
+
+    <div class="sub-label">3×3 determinant – Sarrus' reegel (õpetaja meetod)</div>
+    <div class="math-block purple" style="font-size:0.85rem; line-height:2.1;">
+      |a &nbsp;b &nbsp;c|<br>
+      |d &nbsp;e &nbsp;f| &nbsp;= &nbsp;aei − afh − bdi + bfg + cdh − ceg<br>
+      |g &nbsp;h &nbsp;i|
+    </div>
+
+    <div class="highlight-box purple" style="margin-bottom:8px;">
+      <span class="icon">✏️</span>
+      <div><strong>Kuidas meeles pidada? Diagonaalide trikk!</strong><br>
+      Kirjuta maatriks välja ja joonista 6 diagonaali:<br>
+      <span style="color:#a78bfa;">➕ Kolm positiivset:</span> vasakult paremale nurgast nurka<br>
+      <span style="color:#f472b6;">➖ Kolm negatiivset:</span> paremalt vasakule nurgast nurka
+      </div>
+    </div>
+
+    <div style="background:#faf5ff; border-radius:12px; padding:16px 20px; margin:14px 0; font-family:'Space Mono',monospace; font-size:0.82rem; line-height:2.2; border:1px solid #ddd6fe;">
+      <div style="color:#7c3aed; font-weight:700; margin-bottom:6px;">POSITIIVSED (+) diagonaalid:</div>
+      <div>① a·<b>e</b>·i &nbsp;→ vasak ülanurk → parem alanurk</div>
+      <div>② b·<b>f</b>·g &nbsp;→ keskmine → parem alanurk → vasak</div>
+      <div>③ c·<b>d</b>·h &nbsp;→ parem ülanurk → vasak → kesk</div>
+      <div style="color:#9333ea; font-weight:700; margin-top:10px; margin-bottom:6px;">NEGATIIVSED (−) diagonaalid:</div>
+      <div>④ −a·<b>f</b>·h &nbsp;→ vasak ülanurk → parem → kesk</div>
+      <div>⑤ −b·<b>d</b>·i &nbsp;→ kesk → vasak → parem alanurk</div>
+      <div>⑥ −c·<b>e</b>·g &nbsp;→ parem ülanurk → kesk → vasak alanurk</div>
+    </div>
+
+    <div class="highlight-box purple">
+      <span class="icon">🧩</span>
+      <div><strong>Kuidas asendada?</strong> Dₓ – asenda <em>x</em>-i veerus olevad arvud vabaüksustega (paremad pooled). D_y – asenda <em>y</em>-i veerus. D_z – asenda <em>z</em>-i veerus.</div>
+    </div>
+
+    <hr class="divider">
+    <div class="example-header">📝 Näide – Ülesanne 2:</div>
+
+    <div style="background:#f8fafc; border-radius:10px; padding:16px 20px; margin-bottom:14px; font-family:'Space Mono',monospace; font-size:0.9rem; line-height:2;">
+      { &nbsp;3x + y + z = 8<br>
+      { x − 2y + 2z = −6<br>
+      { &nbsp;x + y − z = 6
+    </div>
+
+    <div class="math-block purple">
+      <strong>Peadeterminant D:</strong><br>
+      | 3 &nbsp; 1 &nbsp; 1 |<br>
+      | 1 &nbsp;−2 &nbsp; 2 | &nbsp;→ a=3, b=1, c=1, d=1, e=−2, f=2, g=1, h=1, i=−1<br>
+      | 1 &nbsp; 1 &nbsp;−1 |<br>
+      <br>
+      D = aei − afh − bdi + bfg + cdh − ceg<br>
+      <br>
+      ① &nbsp;+aei &nbsp;= +3·(−2)·(−1) = +6<br>
+      ② &nbsp;−afh = −3·2·1 &nbsp;&nbsp;&nbsp;&nbsp;= −6<br>
+      ③ &nbsp;−bdi = −1·1·(−1)&nbsp; = +1<br>
+      ④ &nbsp;+bfg = +1·2·1 &nbsp;&nbsp;&nbsp;&nbsp;= +2<br>
+      ⑤ &nbsp;+cdh = +1·1·1 &nbsp;&nbsp;&nbsp;&nbsp;= +1<br>
+      ⑥ &nbsp;−ceg = −1·(−2)·1 &nbsp;= +2<br>
+      <br>
+      D = 6 − 6 + 1 + 2 + 1 + 2 = <strong>6</strong>
+    </div>
+
+    <div class="math-block purple" style="margin-top:10px;">
+      <strong>Dₓ</strong> (asenda 1. veerg vabaüksustega 8, −6, 6):<br>
+      | 8 &nbsp; 1 &nbsp; 1 |<br>
+      |−6 &nbsp;−2 &nbsp; 2 | &nbsp;→ a=8, b=1, c=1, d=−6, e=−2, f=2, g=6, h=1, i=−1<br>
+      | 6 &nbsp; 1 &nbsp;−1 |<br>
+      <br>
+      ① &nbsp;+8·(−2)·(−1) = +16<br>
+      ② &nbsp;−8·2·1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= −16<br>
+      ③ &nbsp;−1·(−6)·(−1)= −6<br>
+      ④ &nbsp;+1·2·6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= +12<br>
+      ⑤ &nbsp;+1·(−6)·1 &nbsp;&nbsp;= −6<br>
+      ⑥ &nbsp;−1·(−2)·6 &nbsp;&nbsp;= +12<br>
+      <br>
+      Dₓ = 16 − 16 − 6 + 12 − 6 + 12 = <strong>12</strong>
+    </div>
+
+    <div class="math-block purple" style="margin-top:10px;">
+      <strong>D_y</strong> (asenda 2. veerg vabaüksustega):<br>
+      | 3 &nbsp; 8 &nbsp; 1 |<br>
+      | 1 &nbsp;−6 &nbsp; 2 | &nbsp;→ a=3, b=8, c=1, d=1, e=−6, f=2, g=1, h=6, i=−1<br>
+      | 1 &nbsp; 6 &nbsp;−1 |<br>
+      <br>
+      ① &nbsp;+3·(−6)·(−1) = +18<br>
+      ② &nbsp;−3·2·6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= −36<br>
+      ③ &nbsp;−8·1·(−1) &nbsp;&nbsp;&nbsp;= +8<br>
+      ④ &nbsp;+8·2·1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= +16<br>
+      ⑤ &nbsp;+1·1·6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= +6<br>
+      ⑥ &nbsp;−1·(−6)·1 &nbsp;&nbsp;= +6<br>
+      <br>
+      D_y = 18 − 36 + 8 + 16 + 6 + 6 = <strong>18</strong>
+    </div>
+
+    <div class="math-block purple" style="margin-top:10px;">
+      <strong>D_z</strong> (asenda 3. veerg vabaüksustega):<br>
+      | 3 &nbsp; 1 &nbsp; 8 |<br>
+      | 1 &nbsp;−2 &nbsp;−6 | &nbsp;→ a=3, b=1, c=8, d=1, e=−2, f=−6, g=1, h=1, i=6<br>
+      | 1 &nbsp; 1 &nbsp; 6 |<br>
+      <br>
+      ① &nbsp;+3·(−2)·6 &nbsp;&nbsp;&nbsp;= −36<br>
+      ② &nbsp;−3·(−6)·1 &nbsp;&nbsp;= +18<br>
+      ③ &nbsp;−1·1·6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= −6<br>
+      ④ &nbsp;+1·(−6)·1 &nbsp;&nbsp;= −6<br>
+      ⑤ &nbsp;+8·1·1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= +8<br>
+      ⑥ &nbsp;−8·(−2)·1 &nbsp;&nbsp;= +16<br>
+      <br>
+      D_z = −36 + 18 − 6 − 6 + 8 + 16 = <strong>−6</strong>
+    </div>
+
+    <div class="highlight-box purple" style="margin-top:10px;">
+      <span class="icon">✅</span>
+      <div><strong>Lõppvastused Crameri reeglist:</strong><br>
+      x = Dₓ/D = 12/6 = <strong>2</strong><br>
+      y = D_y/D = 18/6 = <strong>3</strong><br>
+      z = D_z/D = −6/6 = <strong>−1</strong></div>
+    </div>
+
+    <div class="highlight-box purple" style="background:#f0fdf4; border:1.5px solid #bbf7d0;">
+      <span class="icon">🔍</span>
+      <div><strong>Kontroll (asenda x=2, y=3, z=−1 kõikidesse võrranditesse):</strong><br>
+      I: &nbsp;3·2 + 3 + (−1) = 6+3−1 = <strong>8 ✓</strong><br>
+      II: 2 − 2·3 + 2·(−1) = 2−6−2 = <strong>−6 ✓</strong><br>
+      III: 2 + 3 − (−1) = 2+3+1 = <strong>6 ✓</strong>
+      </div>
+    </div>
+
+    <div class="result-box purple" style="margin-top:12px;">
+      x = 2 &nbsp;|&nbsp; y = 3 &nbsp;|&nbsp; z = −1
+    </div>
+  </div>
+
+  <!-- SECTION 4: TEKSTÜLESANDED -->
+  <div class="section-title orange">
+    <div class="section-num">4</div>
+    <h2>Tekstülesannete lahendamine – täielik lahenduskäik</h2>
+  </div>
+
+  <div class="card orange">
+    <h3>🗺️ Eksami lahenduskäigu struktuur</h3>
+    <div class="method-box orange">
+      <ul class="steps">
+        <li><div class="step-num">1</div><span><strong>Nimeta tundmatud lausena:</strong> "Oletame, et … on X ja … on Y"</span></li>
+        <li><div class="step-num">2</div><span><strong>Kirjuta iga võrrand koos põhjendusega:</strong> "Kuna … , siis X = …"</span></li>
+        <li><div class="step-num">3</div><span><strong>Lahenda süsteem</strong> – näita kõik sammud</span></li>
+        <li><div class="step-num">4</div><span><strong>Kontroll</strong> – asenda algvõrranditesse</span></li>
+        <li><div class="step-num">5</div><span><strong>Vastus terve lausena:</strong> "Bussi kiirus on … km/h ja auto kiirus on … km/h."</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ÜLESANNE 3 -->
+  <div class="card orange">
+    <h3>🚗 Ülesanne 3 – täielik lahenduskäik</h3>
+    <div style="background:#fff7ed; border-radius:10px; padding:14px 18px; margin-bottom:16px; font-size:0.9rem; line-height:1.7; border:1px solid #fed7aa; font-style:italic; color:#7c2d12;">
+      "Tartust Tallinna on ligikaudu 180 km. Ühel ajal startisid Tartust sõiduauto ja buss. Sõiduauto keskmine kiirus oli 5 km/h suurem kui bussil ning sõiduauto jõudis Tallinna 9 minutit varem kui buss. Kui suure keskmise kiirusega liikus kumbki sõiduk?"
+    </div>
+
+    <div class="math-block orange" style="line-height:2.2; font-size:0.88rem;">
+      <strong>Tundmatute nimetamine:</strong><br>
+      Oletame, et bussi kiirus on v km/h ja auto kiirus on v + 5 km/h.<br>
+      <br>
+      <strong>1. võrrand – kiiruste vahe:</strong><br>
+      Põhjendus: auto kiirus on 5 km/h suurem kui bussi kiirus, seega:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;auto kiirus = v + 5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (I) &nbsp;← see on juba sees tundmatu nimetuses<br>
+      <br>
+      <strong>2. võrrand – ajavahe:</strong><br>
+      Põhjendus: aeg = teekond ÷ kiirus.<br>
+      Bussi sõiduaeg = 180/v tundi<br>
+      Auto sõiduaeg &nbsp;= 180/(v+5) tundi<br>
+      Kuna auto jõuab 9 minutit = 9/60 = 3/20 tundi varem, siis:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;180/v − 180/(v+5) = 3/20 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (II)
+    </div>
+
+    <div class="math-block orange" style="line-height:2.2; font-size:0.88rem;">
+      <strong>Lahendamine – korrutame (II) läbi 20·v·(v+5):</strong><br>
+      20·180·(v+5) − 20·180·v = 3·v·(v+5)<br>
+      3 600(v+5) − 3 600v = 3v² + 15v<br>
+      3 600v + 18 000 − 3 600v = 3v² + 15v<br>
+      18 000 = 3v² + 15v<br>
+      <br>
+      Jagame 3-ga:<br>
+      v² + 5v − 6 000 = 0<br>
+      <br>
+      <strong>Lahutame:</strong> otsime arve, mille korrutis on −6 000 ja summa on +5:<br>
+      80 · (−75) = −6 000 &nbsp;✓ &nbsp;ja&nbsp; 80 + (−75) = 5 &nbsp;✓<br>
+      <br>
+      (v + 80)(v − 75) = 0<br>
+      <br>
+      v = 75 &nbsp;või&nbsp; v = −80 ← ei sobi, kiirus ei saa olla negatiivne
+    </div>
+
+    <div class="math-block orange" style="line-height:2.2; font-size:0.88rem;">
+      <strong>Seega:</strong><br>
+      Bussi kiirus = v = <strong>75 km/h</strong><br>
+      Auto kiirus &nbsp;= v + 5 = <strong>80 km/h</strong>
+    </div>
+
+    <div class="highlight-box orange" style="font-size:0.88rem;">
+      <span class="icon">🔍</span>
+      <div><strong>Kontroll:</strong><br>
+      80 − 75 = 5 km/h ✓ (auto on 5 km/h kiirem)<br>
+      180/75 = 2,4 h = 144 min &nbsp;|&nbsp; 180/80 = 2,25 h = 135 min<br>
+      144 − 135 = 9 min ✓</div>
+    </div>
+    <div class="result-box orange">Vastus: bussi kiirus on 75 km/h ja auto kiirus on 80 km/h.</div>
+  </div>
+
+  <!-- ÜLESANNE 4 -->
+  <div class="card yellow">
+    <h3>👩‍🌾 Ülesanne 4 – täielik lahenduskäik</h3>
+    <div style="background:#fefce8; border-radius:10px; padding:14px 18px; margin-bottom:16px; font-size:0.9rem; line-height:1.7; border:1px solid #fef08a; font-style:italic; color:#713f12;">
+      "Kaks naist rohiksid põllu koos töötades ära 6 tunniga. Sama põllu rohimiseks üksi kuluks esimesel töölisel 5 tundi rohkem kui teisel töölisel. Mitu tundi kuluks põllu rohimiseks kummalgi töölisel üksi töötades?"
+    </div>
+
+    <div class="math-block yellow" style="line-height:2.2; font-size:0.88rem;">
+      <strong>Tundmatute nimetamine:</strong><br>
+      Oletame, et teise töölisel kulub põllu rohimiseks üksi T tundi<br>
+      ja esimesel töölisel kulub selleks T + 5 tundi.<br>
+      <br>
+      <strong>1. võrrand – ühine töö:</strong><br>
+      Põhjendus: ühe tunniga teeb teine töölinel 1/T osa tööst<br>
+      ja esimene töölinen 1/(T+5) osa tööst.<br>
+      Kuna koos tehakse kogu töö 6 tunniga, siis 6 tunniga tehakse 1 töö:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;6 · (1/T + 1/(T+5)) = 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (I)<br>
+      <br>
+      ehk lihtsustades:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;1/T + 1/(T+5) = 1/6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (I)
+    </div>
+
+    <div class="math-block yellow" style="line-height:2.2; font-size:0.88rem;">
+      <strong>Lahendamine – korrutame läbi 6T(T+5):</strong><br>
+      6(T+5) + 6T = T(T+5)<br>
+      6T + 30 + 6T = T² + 5T<br>
+      12T + 30 = T² + 5T<br>
+      T² − 7T − 30 = 0<br>
+      <br>
+      Diskriminant: D = 7² + 4·30 = 49 + 120 = 169<br>
+      √D = 13<br>
+      <br>
+      T = (7 + 13) / 2 = 20 / 2 = <strong>10</strong> &nbsp;(tundi)<br>
+      T = (7 − 13) / 2 = −3 &nbsp;← ei sobi, aeg ei saa olla negatiivne<br>
+      <br>
+      Seega teine töölinen: T = 10 tundi<br>
+      Esimene töölinen: T + 5 = 15 tundi
+    </div>
+
+    <div class="highlight-box yellow" style="font-size:0.88rem;">
+      <span class="icon">🔍</span>
+      <div><strong>Kontroll:</strong><br>
+      1/15 + 1/10 = 2/30 + 3/30 = 5/30 = 1/6 &nbsp;→ koos 6 tundi ✓<br>
+      15 − 10 = 5 tundi vahe ✓</div>
+    </div>
+    <div class="result-box yellow">Vastus: esimesel töölisel kulub 15 tundi ja teisel töölisel 10 tundi.</div>
+  </div>
+
+  <!-- ÜLESANNE 5 -->
+  <div class="card" style="border-color:#fef08a; background: #fefce8;">
+    <h3 style="color:#854d0e;">🔢 Ülesanne 5 – täielik lahenduskäik</h3>
+    <div style="background:#fef9c3; border-radius:10px; padding:14px 18px; margin-bottom:16px; font-size:0.9rem; line-height:1.7; border:1px solid #fde047; font-style:italic; color:#713f12;">
+      "Kahekohalise arvu ristsumma on 10. Kui selles arvus numbrid vahetada, siis saame arvu, mis on esialgsest arvust 54 võrra suurem. Leia esialgne arv."
+    </div>
+
+    <div class="math-block yellow" style="font-size:0.88rem; line-height:2.2;">
+      <strong>Tundmatute nimetamine:</strong><br>
+      Oletame, et otsitava arvu kümnete number on a ja ühtede number on b.<br>
+      Siis esialgne arv = 10a + b &nbsp;(nt arv 37: a=3, b=7, arv = 10·3+7 = 37)<br>
+      Numbrite vahetamisel saadud arv = 10b + a<br>
+      <br>
+      <strong>1. võrrand – ristsumma:</strong><br>
+      Põhjendus: ristsumma tähendab numbrite summat, mis on 10, seega:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;a + b = 10 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (I)<br>
+      <br>
+      <strong>2. võrrand – pööratud arv on 54 võrra suurem:</strong><br>
+      Põhjendus: pööratud arv ületab esialgset arvu 54 võrra, seega:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;10b + a = (10a + b) + 54<br>
+      Viime kõik ühele poole:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;10b + a − 10a − b = 54<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;9b − 9a = 54 &nbsp;&nbsp;&nbsp;&nbsp;| jagame 9-ga<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;b − a = 6 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (II)
+    </div>
+
+    <div class="math-block yellow" style="font-size:0.88rem; line-height:2.2;">
+      <strong>Süsteem:</strong><br>
+      { a + b = 10 &nbsp;&nbsp;&nbsp; (I)<br>
+      { b − a = 6 &nbsp;&nbsp;&nbsp;&nbsp; (II)<br>
+      <br>
+      <strong>Liitmismeetod</strong> – liidame (I) ja (II):<br>
+      (a + b) + (b − a) = 10 + 6<br>
+      2b = 16<br>
+      b = 8<br>
+      <br>
+      Asendame b = 8 võrrandisse (I):<br>
+      a + 8 = 10<br>
+      a = 2
+    </div>
+
+    <div class="highlight-box" style="background:#fefce8; border:1.5px solid #fde047; font-size:0.88rem;">
+      <span class="icon">🔍</span>
+      <div><strong>Kontroll:</strong><br>
+      Esialgne arv = 10·2 + 8 = 28<br>
+      Ristsumma: 2 + 8 = 10 ✓<br>
+      Pööratud arv: 82 &nbsp;|&nbsp; 82 − 28 = 54 ✓</div>
+    </div>
+    <div class="result-box" style="background:#ca8a04; color:white; font-family:'Space Mono',monospace; margin-top:10px;">
+      Vastus: otsitav kahekohaline arv on 28.
+    </div>
+  </div>
+
+  <!-- KOKKUVÕTE -->
+  <div class="section-title blue">
+    <div class="section-num">⭐</div>
+    <h2>Kiire kokkuvõte – mida meeles pidada</h2>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card" style="background:#dbeafe; border:2px solid #93c5fd;">
+      <div class="emoji">➕</div>
+      <h4 style="color:#1e40af;">Liitmismeetod</h4>
+      <p style="color:#1e40af;">Koruta, et kordajad kustuksid. Hea lineaarsetele süsteemidele.</p>
+    </div>
+    <div class="summary-card" style="background:#dcfce7; border:2px solid #86efac;">
+      <div class="emoji">🔄</div>
+      <h4 style="color:#166534;">Asendusmeetod</h4>
+      <p style="color:#166534;">Avaldage üks tundmatu, asendage teise. Hea mittelineaarsetele.</p>
+    </div>
+    <div class="summary-card" style="background:#ede9fe; border:2px solid #c4b5fd;">
+      <div class="emoji">📐</div>
+      <h4 style="color:#5b21b6;">Determinant</h4>
+      <p style="color:#5b21b6;">3 tundmatuga süsteemile. Crameri reegel: x = Dₓ/D</p>
+    </div>
+    <div class="summary-card" style="background:#ffedd5; border:2px solid #fdba74;">
+      <div class="emoji">✅</div>
+      <h4 style="color:#9a3412;">Kontroll</h4>
+      <p style="color:#9a3412;">Alati asenda vastus MÕLEMASSE algvõrrandisse!</p>
+    </div>
+    <div class="summary-card" style="background:#fef9c3; border:2px solid #fde047;">
+      <div class="emoji">🔢</div>
+      <h4 style="color:#713f12;">Kahekohaline arv</h4>
+      <p style="color:#713f12;">Arv = 10a+b. Pööramine = 10b+a. Ristsumma = a+b.</p>
+    </div>
+    <div class="summary-card" style="background:#fce7f3; border:2px solid #f9a8d4;">
+      <div class="emoji">📖</div>
+      <h4 style="color:#9d174d;">Tekstülesanne</h4>
+      <p style="color:#9d174d;">Nimeta tundmatud → koosta 2 võrrandit → lahenda → vastus lausena</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:48px; padding:24px; background:linear-gradient(135deg,#1e3a8a,#7c3aed); border-radius:16px; color:white;">
+    <div style="font-size:2rem; margin-bottom:8px;">🎯</div>
+    <div style="font-size:1.2rem; font-weight:900; margin-bottom:8px;">Head kontrolltööd, Illimar!</div>
+    <div style="opacity:0.8; font-size:0.95rem;">Sa suudad seda! Loe ülesanded hoolikalt, kirjuta sammud välja ja kontrolli alati oma vastuseid. 💪</div>
+  </div>
+
+</div>
+</body>
+</html>

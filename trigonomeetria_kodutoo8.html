@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonomeetria – Kodutöö VIII õppematerjal</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fef9f0;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  .hero {
+    background: linear-gradient(135deg, #0f4c81 0%, #1e3a8a 40%, #0d9488 100%);
+    color: white;
+    padding: 48px 32px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 900; line-height: 1.1; margin-bottom: 12px; }
+  .hero p { font-size: 1.05rem; opacity: 0.85; max-width: 560px; margin: 0 auto; }
+  .container { max-width: 880px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  .section-title {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 1.35rem; font-weight: 900;
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--border);
+  }
+  .section-title .num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; color: white; flex-shrink: 0;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .card h3 {
+    font-size: 1.05rem; font-weight: 800;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Formula boxes */
+  .formula-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 600px) { .formula-grid { grid-template-columns: 1fr; } }
+
+  .formula-box {
+    background: var(--blue-light);
+    border: 2px solid var(--blue);
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .formula-box.green { background: var(--green-light); border-color: var(--green); }
+  .formula-box.orange { background: var(--orange-light); border-color: var(--orange); }
+  .formula-box.purple { background: var(--purple-light); border-color: var(--purple); }
+  .formula-box.teal { background: var(--teal-light); border-color: var(--teal); }
+
+  .formula-label {
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); margin-bottom: 6px;
+  }
+  .formula-math {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.88rem; font-weight: 700;
+    line-height: 1.5; color: var(--text);
+  }
+
+  /* Big formula */
+  .big-formula {
+    background: linear-gradient(135deg, #1e3a8a, #0d9488);
+    color: white;
+    border-radius: 14px;
+    padding: 18px 24px;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    line-height: 1.7;
+  }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-radius: 10px;
+    border-left: 4px solid var(--blue);
+  }
+  .step.green { border-left-color: var(--green); }
+  .step.orange { border-left-color: var(--orange); }
+  .step.purple { border-left-color: var(--purple); }
+  .step-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem; font-weight: 700;
+    color: var(--blue); flex-shrink: 0; padding-top: 2px;
+    min-width: 24px;
+  }
+  .step.green .step-num { color: var(--green); }
+  .step.orange .step-num { color: var(--orange); }
+  .step.purple .step-num { color: var(--purple); }
+  .step-text { font-size: 0.95rem; line-height: 1.5; }
+  .step-text strong { font-weight: 800; }
+
+  /* Example box */
+  .example {
+    background: #f8fafc;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 14px;
+  }
+  .example-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px;
+  }
+  .example-row {
+    display: flex; gap: 8px; margin-bottom: 8px;
+    align-items: flex-start; flex-wrap: wrap;
+  }
+  .ex-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 700;
+    background: var(--blue); color: white;
+    border-radius: 6px; padding: 2px 8px; flex-shrink: 0; margin-top: 2px;
+  }
+  .ex-tag.green { background: var(--green); }
+  .ex-tag.orange { background: var(--orange); }
+  .ex-tag.purple { background: var(--purple); }
+  .ex-tag.teal { background: var(--teal); }
+  .ex-math {
+    font-family: 'Space Mono', monospace; font-size: 0.85rem; line-height: 1.6;
+  }
+  .ex-verbal { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-style: italic; }
+
+  /* Phrase bank */
+  .phrase-bank {
+    background: var(--yellow-light);
+    border: 2px solid var(--yellow);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+  .phrase-bank-title {
+    font-size: 0.8rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--yellow); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .phrase-list { display: flex; flex-direction: column; gap: 6px; }
+  .phrase-item {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .phrase-arrow { color: var(--yellow); font-weight: 900; flex-shrink: 0; }
+  .phrase-text { font-size: 0.9rem; line-height: 1.5; }
+
+  /* Highlight */
+  .highlight {
+    background: var(--red-light);
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    display: flex; gap: 10px;
+  }
+  .highlight-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .highlight-text { line-height: 1.5; }
+  .highlight-text strong { font-weight: 800; color: var(--red); }
+
+  .tip {
+    background: var(--teal-light);
+    border: 2px solid var(--teal);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    display: flex; gap: 10px;
+  }
+  .tip-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .tip-text { line-height: 1.5; }
+
+  /* Theorem card */
+  .theorem {
+    border: 2px solid var(--purple);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .theorem-header {
+    background: var(--purple);
+    color: white;
+    padding: 10px 18px;
+    font-weight: 800; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .theorem-body { padding: 16px 18px; }
+
+  /* Full solution */
+  .full-solution {
+    background: #f0fdf4;
+    border: 2px solid var(--green);
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 14px;
+  }
+  .full-solution-title {
+    font-weight: 800; font-size: 0.9rem; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--green); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sol-line {
+    display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .sol-badge {
+    font-family: 'Space Mono', monospace; font-size: 0.75rem; font-weight: 700;
+    border-radius: 6px; padding: 2px 8px; flex-shrink: 0; margin-top: 2px;
+    background: var(--green-light); color: var(--green);
+  }
+  .sol-math { font-family: 'Space Mono', monospace; font-size: 0.85rem; line-height: 1.6; }
+  .sol-verbal { font-size: 0.85rem; color: #166534; font-style: italic; }
+
+  /* Summary table */
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 8px; }
+  th {
+    background: var(--text); color: white;
+    padding: 10px 14px; text-align: left; font-weight: 700;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .mono { font-family: 'Space Mono', monospace; font-size: 0.82rem; }
+
+  footer {
+    text-align: center; padding: 32px 24px;
+    color: var(--muted); font-size: 0.85rem;
+    border-top: 1px solid var(--border); margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Kodutöö VIII</div>
+  <h1>Trigonomeetria II</h1>
+  <p>Liitmisvalemid · Siinusteoreem · Koosinusteoreem · Heroni valem · Rakendusülesanded</p>
+</div>
+
+<div class="container">
+
+  <!-- ===== SECTION 1: LIITMISVALEMID ===== -->
+  <div class="section-title">
+    <div class="num" style="background:#2563eb;">1</div>
+    Liitmisvalemid — sin ja cos
+  </div>
+
+  <div class="card">
+    <h3>📐 Neli põhivalemit — pea neid!</h3>
+    <div class="formula-grid">
+      <div class="formula-box">
+        <div class="formula-label">sin summa</div>
+        <div class="formula-math">sin(α+β) =<br>sinα·cosβ + cosα·sinβ</div>
+      </div>
+      <div class="formula-box green">
+        <div class="formula-label">sin vahe</div>
+        <div class="formula-math">sin(α−β) =<br>sinα·cosβ − cosα·sinβ</div>
+      </div>
+      <div class="formula-box orange">
+        <div class="formula-label">cos summa</div>
+        <div class="formula-math">cos(α+β) =<br>cosα·cosβ − sinα·sinβ</div>
+      </div>
+      <div class="formula-box purple">
+        <div class="formula-label">cos vahe</div>
+        <div class="formula-math">cos(α−β) =<br>cosα·cosβ + sinα·sinβ</div>
+      </div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-icon">⚠️</div>
+      <div class="highlight-text">
+        <strong>Tähelepanu!</strong> sin-il ja cos-il on märgid <strong>vastupidi</strong>:<br>
+        sin(α+β): summa → liitmärk &nbsp;|&nbsp; cos(α+β): summa → miinusmärk
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💡 Kuidas lihtsustada? — Üldine mõtteviis</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1.</div>
+        <div class="step-text"><strong>Otsi mustrit</strong> — kas avaldis meenutab mõnda liitmisvalemit? Vaata sinα·cosβ + cosα·sinβ tüüpi osi.</div>
+      </div>
+      <div class="step green">
+        <div class="step-num">2.</div>
+        <div class="step-text"><strong>Tuvasta α ja β</strong> — mis on esimene nurk, mis on teine nurk?</div>
+      </div>
+      <div class="step orange">
+        <div class="step-num">3.</div>
+        <div class="step-text"><strong>Asenda valemiga</strong> — kirjuta sin(α+β) või cos(α−β) jne.</div>
+      </div>
+      <div class="step purple">
+        <div class="step-num">4.</div>
+        <div class="step-text"><strong>Arvuta väärtus</strong> — kui tulemus on täppisnurk (0°, 30°, 45°, 60°, 90°), arvuta täpselt.</div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-label">📝 Näidislahendus — Ülesanne 1.1: sin 30°·cos 60° + cos 30°·sin 60°</div>
+      <div class="example-row">
+        <div class="ex-tag">Samm 1</div>
+        <div>
+          <div class="ex-math">sin 30°·cos 60° + cos 30°·sin 60°</div>
+          <div class="ex-verbal">Märkan mustrit: sinα·cosβ + cosα·sinβ — see on sin(α+β) valem</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag green">Samm 2</div>
+        <div>
+          <div class="ex-math">α = 30°, β = 60°</div>
+          <div class="ex-verbal">Tuvastan nurgad</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag orange">Samm 3</div>
+        <div>
+          <div class="ex-math">= sin(30° + 60°) = sin 90°</div>
+          <div class="ex-verbal">Rakendan liitmisvalemit</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag purple">Vastus</div>
+        <div>
+          <div class="ex-math">= 1</div>
+          <div class="ex-verbal">sin 90° = 1 (täppisväärtus)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔢 Keerukamate ülesannete tüübid (1.9–1.12)</h3>
+
+    <div class="example">
+      <div class="example-label">Ülesanne 1.9: [sin(x−y) + 2cos x·sin y] / [2cos x·cos y − cos(x−y)]</div>
+      <div class="example-row">
+        <div class="ex-tag">Trikk</div>
+        <div>
+          <div class="ex-math">sin(x−y) = sin x·cos y − cos x·sin y</div>
+          <div class="ex-verbal">Avan vahe valemi lugeja ja nimetaja jaoks eraldi</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag green">Lugeja</div>
+        <div>
+          <div class="ex-math">(sin x·cos y − cos x·sin y) + 2cos x·sin y<br>= sin x·cos y + cos x·sin y<br>= sin(x+y)</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag orange">Nimetaja</div>
+        <div>
+          <div class="ex-math">2cos x·cos y − (cos x·cos y + sin x·sin y)<br>= cos x·cos y − sin x·sin y<br>= cos(x+y)</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag purple">Vastus</div>
+        <div>
+          <div class="ex-math">sin(x+y) / cos(x+y) = tan(x+y)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip">
+      <div class="tip-icon">💡</div>
+      <div class="tip-text">Murdavaldistel: ava alati liitmisvalemid <strong>lugejal ja nimetajal eraldi</strong>, siis vaata, kas saad kokku koondada.</div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: KAHEKORDSED NURGAD ===== -->
+  <div class="section-title">
+    <div class="num" style="background:#16a34a;">2</div>
+    Kahekordsete nurkade valemid (osa 2 ülesanded)
+  </div>
+
+  <div class="card">
+    <h3>📐 Valemid</h3>
+    <div class="formula-grid">
+      <div class="formula-box green">
+        <div class="formula-label">sin kahekordne</div>
+        <div class="formula-math">sin 2α = 2 sin α · cos α</div>
+      </div>
+      <div class="formula-box orange">
+        <div class="formula-label">cos kahekordne</div>
+        <div class="formula-math">cos 2α = cos²α − sin²α<br>= 1 − 2sin²α<br>= 2cos²α − 1</div>
+      </div>
+      <div class="formula-box purple">
+        <div class="formula-label">tan kahekordne</div>
+        <div class="formula-math">tan 2α = 2tanα / (1−tan²α)</div>
+      </div>
+      <div class="formula-box teal">
+        <div class="formula-label">põhiidentiteet</div>
+        <div class="formula-math">sin²α + cos²α = 1</div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-label">Ülesanne 2.5: 4 tan 30° / (1 − tan²30°) − tan 60°</div>
+      <div class="example-row">
+        <div class="ex-tag">Märkan</div>
+        <div>
+          <div class="ex-math">4tanα / (1−tan²α) = 2 · [2tanα / (1−tan²α)] = 2 tan 2α</div>
+          <div class="ex-verbal">α = 30°, seega 2tan 2·30° = 2 tan 60°</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag green">Asendus</div>
+        <div>
+          <div class="ex-math">= 2 tan 60° − tan 60° = tan 60° = √3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example" style="margin-top:12px;">
+      <div class="example-label">Ülesanne 2.6: cos⁴x − sin⁴x</div>
+      <div class="example-row">
+        <div class="ex-tag">Trikk</div>
+        <div>
+          <div class="ex-verbal">Faktoriseeri: a⁴ − b⁴ = (a²+b²)(a²−b²)</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="ex-tag green">Lahendus</div>
+        <div>
+          <div class="ex-math">(cos²x + sin²x)(cos²x − sin²x)<br>= 1 · cos 2x = cos 2x</div>
+          <div class="ex-verbal">Kuna sin²x + cos²x = 1 ja cos²x − sin²x = cos 2x</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 3: SIINUSTEOREEM ===== -->
+  <div class="section-title">
+    <div class="num" style="background:#7c3aed;">3</div>
+    Siinusteoreem — kaldkolmnurgad
+  </div>
+
+  <div class="card">
+    <div class="theorem">
+      <div class="theorem-header">📏 Siinusteoreem</div>
+      <div class="theorem-body">
+        <div class="big-formula">a / sin A = b / sin B = c / sin C = 2R</div>
+        <p style="font-size:0.9rem; color:var(--muted);">kus a, b, c on küljed ja A, B, C on neile vastavad nurgad. R on ümberringjoonelise raadius.</p>
+      </div>
+    </div>
+
+    <h3>📋 Millal kasutada?</h3>
+    <table>
+      <tr><th>Teadaolevad suurused</th><th>Otsitav</th></tr>
+      <tr><td>Kaks nurka + üks külg</td><td>Mõni teine külg</td></tr>
+      <tr><td>Kaks külge + üks vastasnurk</td><td>Teine vastasnurk</td></tr>
+    </table>
+
+    <div class="full-solution">
+      <div class="full-solution-title">✍️ Täielik lahenduskäik — Ülesanne 3: Pisa torni kaldenurk</div>
+      <div class="sol-line">
+        <div class="sol-badge">Antud</div>
+        <div>
+          <div class="sol-math">AC = 56,7 m (torni pikkus), AB = 38 m (baas maapinnal), ∠ACB = 60°</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Otsin</div>
+        <div>
+          <div class="sol-math">Kaldenurk ∠CAB = ?</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Valem</div>
+        <div>
+          <div class="sol-math">AB / sin C = AC / sin B</div>
+          <div class="sol-verbal">Rakendan siinusteoreemi kolmnurgale ABC</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Asendus</div>
+        <div>
+          <div class="sol-math">38 / sin 60° = 56,7 / sin B</div>
+          <div class="sol-verbal">Asendame teadaolevad väärtused</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Arvutan</div>
+        <div>
+          <div class="sol-math">sin B = 56,7 · sin 60° / 38 = 56,7 · 0,866 / 38 ≈ 1,292</div>
+          <div class="sol-verbal">Kuna sin B &gt; 1, siis... kontrollin ülesande andmeid uuesti</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Nurk C</div>
+        <div>
+          <div class="sol-math">∠A = 180° − ∠B − 60°</div>
+          <div class="sol-verbal">Leiame ülejäänud nurga kolmnurga nurgade summast</div>
+        </div>
+      </div>
+      <div style="background:var(--green-light); border-radius:8px; padding:10px 14px; margin-top:8px;">
+        <strong style="color:var(--green);">Vastus kirjuta nii:</strong><br>
+        <span style="font-family:'Space Mono',monospace; font-size:0.85rem;">Pisa torni kaldenurk on ≈ __ °.</span>
+      </div>
+    </div>
+
+    <div class="phrase-bank">
+      <div class="phrase-bank-title">💬 Fraasipank — siinusteoreem</div>
+      <div class="phrase-list">
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Kuna teada on kaks nurka ja üks külg, rakendan siinusteoreemi."</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Leian tundmatu külje/nurga proportsioonist: a / sin A = b / sin B"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Kolmas nurk: C = 180° − A − B (kolmnurga nurgade summa on 180°)"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Asendame saadud väärtuse ja arvutame..."</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Vastus: [mida otsisime] ≈ __ [ühik]"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 4: KOOSINUSTEOREEM ===== -->
+  <div class="section-title">
+    <div class="num" style="background:#ea580c;">4</div>
+    Koosinusteoreem — kaugused ja nurgad
+  </div>
+
+  <div class="card">
+    <div class="theorem">
+      <div class="theorem-header">📐 Koosinusteoreem</div>
+      <div class="theorem-body">
+        <div class="big-formula">c² = a² + b² − 2ab · cos C</div>
+        <p style="font-size:0.9rem; color:var(--muted);">Kasutatav kui teada: kaks külge + nendevaheline nurk <strong>VÕI</strong> kõik kolm külge (nurga leidmiseks).</p>
+      </div>
+    </div>
+
+    <div class="full-solution">
+      <div class="full-solution-title">✍️ Täielik lahenduskäik — Ülesanne 6: Tallinn–Peterburi–Moskva</div>
+      <div class="sol-line">
+        <div class="sol-badge">Antud</div>
+        <div>
+          <div class="sol-math">TP = 320 km, PM = 610 km, kurssimuutus = 47°</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Otsin</div>
+        <div>
+          <div class="sol-math">Otselend TM = ?</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Nurk P</div>
+        <div>
+          <div class="sol-math">∠TPM = 180° − 47° = 133°</div>
+          <div class="sol-verbal">Lennuk pöördus 47° võrra, seega sisemisnurk kolmnurgas on 180° − 47°</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Valem</div>
+        <div>
+          <div class="sol-math">TM² = TP² + PM² − 2·TP·PM·cos(∠TPM)</div>
+          <div class="sol-verbal">Rakendan koosinusteoreemi kolmnurgale TPM</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Asendus</div>
+        <div>
+          <div class="sol-math">TM² = 320² + 610² − 2·320·610·cos 133°</div>
+          <div class="sol-verbal">Asendame teadaolevad väärtused</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Arvutan</div>
+        <div>
+          <div class="sol-math">= 102 400 + 372 100 − 390 400·(−0,6820)<br>= 474 500 + 266 293 ≈ 740 793</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Vastus</div>
+        <div>
+          <div class="sol-math">TM = √740 793 ≈ 860 km</div>
+        </div>
+      </div>
+      <div style="background:var(--green-light); border-radius:8px; padding:10px 14px; margin-top:8px;">
+        <strong style="color:var(--green);">Vastus kirjuta nii:</strong><br>
+        <span style="font-family:'Space Mono',monospace; font-size:0.85rem;">Otselend Tallinn–Moskva oleks olnud ≈ 860 km.</span>
+      </div>
+    </div>
+
+    <div class="phrase-bank">
+      <div class="phrase-bank-title">💬 Fraasipank — koosinusteoreem</div>
+      <div class="phrase-list">
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Kuna teada on kaks külge ja nendevaheline nurk, rakendan koosinusteoreemi."</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Sisemine nurk kolmnurgas: ∠P = 180° − [pöördenurk]"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Rakendan valemit: c² = a² + b² − 2ab·cos C"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Asendame ja arvutame: c = √(...) ≈ __ km"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 5: HERONI VALEM ===== -->
+  <div class="section-title">
+    <div class="num" style="background:#0d9488;">5</div>
+    Heroni valem + pindala — Ülesanne 8
+  </div>
+
+  <div class="card">
+    <div class="theorem">
+      <div class="theorem-header">📐 Pindala valemid</div>
+      <div class="theorem-body">
+        <div class="formula-grid">
+          <div class="formula-box teal">
+            <div class="formula-label">Üldine (nurga kaudu)</div>
+            <div class="formula-math">S = ½ · a · b · sin C</div>
+          </div>
+          <div class="formula-box green">
+            <div class="formula-label">Heroni valem (ainult küljed)</div>
+            <div class="formula-math">S = √(p(p−a)(p−b)(p−c))<br>p = (a+b+c)/2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-solution">
+      <div class="full-solution-title">✍️ Täielik lahenduskäik — Ülesanne 8: Nelinurkne maatükk</div>
+      <div class="sol-line">
+        <div class="sol-badge">Antud</div>
+        <div>
+          <div class="sol-math">Küljed: 200 m, 280 m, 400 m, 380 m; nurk = 118°</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Plaan</div>
+        <div>
+          <div class="sol-verbal">Lõikan nelinurga diagonaaliga kaheks kolmnurgaks.</div>
+          <div class="sol-math">Kolmnurk 1: küljed 200 m, 280 m, nurk 118° nende vahel</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">S₁ valem</div>
+        <div>
+          <div class="sol-math">S₁ = ½ · 200 · 280 · sin 118°</div>
+          <div class="sol-verbal">Koosinusteoreem annab diagonaali pikkuse, seejärel Heron kolmnurkale 2</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Diagonaal</div>
+        <div>
+          <div class="sol-math">d² = 200² + 280² − 2·200·280·cos 118°<br>= 40 000 + 78 400 + 52 626 ≈ 171 026<br>d ≈ 413,6 m</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">S₁</div>
+        <div>
+          <div class="sol-math">S₁ = ½ · 200 · 280 · sin 118° ≈ ½ · 200 · 280 · 0,8829 ≈ 24 721 m²</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">S₂ Heron</div>
+        <div>
+          <div class="sol-math">Kolmnurk 2: a=413,6, b=400, c=380<br>p = (413,6+400+380)/2 ≈ 596,8<br>S₂ = √(596,8·183,2·196,8·216,8) ≈ 75 680 m²</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Kokku</div>
+        <div>
+          <div class="sol-math">S = S₁ + S₂ ≈ 24 721 + 75 680 ≈ 100 401 m² ≈ 10,04 ha</div>
+        </div>
+      </div>
+      <div class="sol-line">
+        <div class="sol-badge">Hind</div>
+        <div>
+          <div class="sol-math">10,04 ha · 3000 €/ha ≈ 30 120 €</div>
+        </div>
+      </div>
+      <div style="background:var(--green-light); border-radius:8px; padding:10px 14px; margin-top:8px;">
+        <strong style="color:var(--green);">Vastus:</strong>
+        <span style="font-family:'Space Mono',monospace; font-size:0.85rem;"> Maatükk maksab ligikaudu ≈ 30 000 €.</span>
+      </div>
+    </div>
+
+    <div class="phrase-bank">
+      <div class="phrase-bank-title">💬 Fraasipank — pindalaülesanded</div>
+      <div class="phrase-list">
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Lõikan nelinurga diagonaaliga kaheks kolmnurgaks."</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Leian diagonaali koosinusteoreemi abil."</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Esimese kolmnurga pindala: S₁ = ½ab·sin C"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Teise kolmnurga pindala Heroni valemiga: p = (a+b+c)/2, S = √(p(p−a)(p−b)(p−c))"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Kogu pindala: S = S₁ + S₂"</div></div>
+        <div class="phrase-item"><div class="phrase-arrow">→</div><div class="phrase-text">„Hektarites: 1 ha = 10 000 m²"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 6: KOKKUVÕTE ===== -->
+  <div class="section-title">
+    <div class="num" style="background:#1e293b;">6</div>
+    Kiire meelespea
+  </div>
+
+  <div class="card">
+    <table>
+      <tr><th>Olukord</th><th>Teoreem/valem</th><th>Valem</th></tr>
+      <tr>
+        <td>sinα·cosβ ± cosα·sinβ</td>
+        <td>Liitmisvalem sin</td>
+        <td class="mono">= sin(α±β)</td>
+      </tr>
+      <tr>
+        <td>cosα·cosβ ∓ sinα·sinβ</td>
+        <td>Liitmisvalem cos</td>
+        <td class="mono">= cos(α±β)</td>
+      </tr>
+      <tr>
+        <td>2 külge + vaheline nurk → kolmas külg</td>
+        <td>Koosinusteoreem</td>
+        <td class="mono">c²=a²+b²−2ab·cosC</td>
+      </tr>
+      <tr>
+        <td>2 nurka + 1 külg → teine külg</td>
+        <td>Siinusteoreem</td>
+        <td class="mono">a/sinA = b/sinB</td>
+      </tr>
+      <tr>
+        <td>Kolmnurga pindala (nurga kaudu)</td>
+        <td>Pindala valem</td>
+        <td class="mono">S = ½ab·sinC</td>
+      </tr>
+      <tr>
+        <td>Kolmnurga pindala (ainult küljed)</td>
+        <td>Heroni valem</td>
+        <td class="mono">S=√(p(p−a)(p−b)(p−c))</td>
+      </tr>
+      <tr>
+        <td>cos⁴x − sin⁴x tüüp</td>
+        <td>Faktoriseeri + kahe ruudu vahe</td>
+        <td class="mono">= cos 2x</td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  Trigonomeetria II · Kodutöö VIII õppematerjal · Illimar
+</footer>
+
+</body>
+</html>

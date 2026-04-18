@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Illiamri õppematerjalid — Matemaatika</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%);
+    color: white;
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(99,102,241,0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.2) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #6366f1, #0d9488);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 {
+    font-size: 2.6rem; font-weight: 900;
+    line-height: 1.1; margin-bottom: 10px;
+  }
+  .hero h1 span { color: #7dd3fc; }
+  .hero-sub {
+    font-size: 1.05rem; opacity: 0.75;
+    max-width: 480px; margin: 0 auto 24px;
+  }
+  .hero-stats {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+  }
+  .stat {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px;
+    text-align: center;
+  }
+  .stat-num { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.75rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 960px; margin: 0 auto; padding: 48px 24px 64px; }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 20px; margin-top: 40px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ===== MATERIAL CARDS ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .mat-card {
+    background: var(--card);
+    border-radius: 18px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .mat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .mat-header {
+    padding: 22px 22px 16px;
+    position: relative;
+  }
+  .mat-icon {
+    font-size: 2.2rem; margin-bottom: 10px; display: block;
+  }
+  .mat-badge {
+    position: absolute; top: 18px; right: 18px;
+    font-size: 0.7rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px;
+  }
+  .mat-title {
+    font-size: 1.15rem; font-weight: 900;
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .mat-subtitle {
+    font-size: 0.82rem; color: var(--muted);
+    font-weight: 600;
+  }
+
+  .mat-topics {
+    padding: 0 22px 18px;
+    flex: 1;
+  }
+  .topic-item {
+    display: flex; align-items: flex-start; gap: 7px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.84rem; color: var(--text);
+  }
+  .topic-item:last-child { border-bottom: none; }
+  .topic-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+  }
+
+  .mat-footer {
+    padding: 14px 22px;
+    border-top: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+  }
+  .mat-file {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .open-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem; font-weight: 800;
+    text-decoration: none;
+    color: white; flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .open-btn:hover { opacity: 0.85; }
+
+  /* Color themes */
+  .theme-blue .mat-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-blue .mat-badge { background: var(--blue-light); color: var(--blue); }
+  .theme-blue .topic-dot { background: var(--blue); }
+  .theme-blue .open-btn { background: var(--blue); }
+
+  .theme-green .mat-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-green .mat-badge { background: var(--green-light); color: var(--green); }
+  .theme-green .topic-dot { background: var(--green); }
+  .theme-green .open-btn { background: var(--green); }
+
+  .theme-purple .mat-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-purple .mat-badge { background: var(--purple-light); color: var(--purple); }
+  .theme-purple .topic-dot { background: var(--purple); }
+  .theme-purple .open-btn { background: var(--purple); }
+
+  .theme-orange .mat-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-orange .mat-badge { background: var(--orange-light); color: var(--orange); }
+  .theme-orange .topic-dot { background: var(--orange); }
+  .theme-orange .open-btn { background: var(--orange); }
+
+  .theme-teal .mat-header { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+  .theme-teal .mat-badge { background: var(--teal-light); color: var(--teal); }
+  .theme-teal .topic-dot { background: var(--teal); }
+  .theme-teal .open-btn { background: var(--teal); }
+
+  .theme-red .mat-header { background: linear-gradient(135deg, #fff5f5, #fee2e2); }
+  .theme-red .mat-badge { background: var(--red-light); color: var(--red); }
+  .theme-red .topic-dot { background: var(--red); }
+  .theme-red .open-btn { background: var(--red); }
+
+  /* ===== TIPS SECTION ===== */
+  .tips-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 2px solid var(--border);
+    display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== EXAM PHRASES ===== */
+  .phrase-box {
+    background: var(--yellow-light);
+    border: 2px solid var(--yellow);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 1rem; font-weight: 900; color: var(--yellow);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+  }
+  .phrase {
+    background: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.83rem;
+    border-left: 3px solid var(--yellow);
+    line-height: 1.4;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">📚</div>
+    <h1>Illiamri <span>õppematerjalid</span></h1>
+    <p class="hero-sub">Matemaatika · 10. klass · Kõik teemad ühes kohas</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">teemat</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10</div>
+        <div class="stat-label">faili</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">20</div>
+        <div class="stat-label">harjutust</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== MATERJALID ===== -->
+  <div class="section-label">📂 Kõik materjalid</div>
+
+  <div class="grid">
+
+    <!-- CARD 1: Võrrandisüsteemid -->
+    <div class="mat-card theme-blue">
+      <div class="mat-header">
+        <span class="mat-icon">🔢</span>
+        <span class="mat-badge">Täielik</span>
+        <div class="mat-title">Võrrandisüsteemid</div>
+        <div class="mat-subtitle">3 lahendamismeetodit + tekstülesanded</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Liitmismeetod (kahe tundmatuga)</div>
+        <div class="topic-item"><div class="topic-dot"></div>Asendusmeetod</div>
+        <div class="topic-item"><div class="topic-dot"></div>Determinandi meetod (Cramer)</div>
+        <div class="topic-item"><div class="topic-dot"></div>Tekstülesannete täielik lahenduskäik</div>
+        <div class="topic-item"><div class="topic-dot"></div>Fraasipank + kokkuvõte</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">vorrandisysteemid.html</div>
+        <div style="display:flex;gap:8px;">
+          <a class="open-btn" href="vorrandisysteemid.html">Ava →</a>
+          <a class="open-btn" style="background:#16a34a;" href="harjutused_vorrandisysteemid.html">⚡ Harjuta</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: Tekstülesannete mõtteviis -->
+    <div class="mat-card theme-green">
+      <div class="mat-header">
+        <span class="mat-icon">🧠</span>
+        <span class="mat-badge">Meetod</span>
+        <div class="mat-title">Tekstülesannete mõtteviis</div>
+        <div class="mat-subtitle">Üldine strateegia igaks ülesandeks</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Üldine mõtteviis — 5 sammu</div>
+        <div class="topic-item"><div class="topic-dot"></div>Kiirus · Aeg · Teekond</div>
+        <div class="topic-item"><div class="topic-dot"></div>Töö · Aeg ülesanded</div>
+        <div class="topic-item"><div class="topic-dot"></div>Kahekohaline arv</div>
+        <div class="topic-item"><div class="topic-dot"></div>Valemite meelespea</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">tekstylesannete_motteviis.html</div>
+        <div style="display:flex;gap:8px;">
+          <a class="open-btn" href="tekstylesannete_motteviis.html">Ava →</a>
+          <a class="open-btn" style="background:#16a34a;" href="harjutused_tekstylesanded.html">⚡ Harjuta</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3: Võrratused -->
+    <div class="mat-card theme-orange">
+      <div class="mat-header">
+        <span class="mat-icon">📊</span>
+        <span class="mat-badge">Põhjalik</span>
+        <div class="mat-title">Võrratused</div>
+        <div class="mat-subtitle">Lineaarsest absoluutväärtuseni</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Võrratuste põhimõisted ja reeglid</div>
+        <div class="topic-item"><div class="topic-dot"></div>Lineaarne võratus</div>
+        <div class="topic-item"><div class="topic-dot"></div>Ruutkolmliige ja ruutvõratus</div>
+        <div class="topic-item"><div class="topic-dot"></div>Kõrgema astme ja ratsionaalne võratus</div>
+        <div class="topic-item"><div class="topic-dot"></div>Absoluutväärtuse võratus</div>
+        <div class="topic-item"><div class="topic-dot"></div>Võrratussüsteemid · Graafiline meetod</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">vorratused.html</div>
+        <div style="display:flex;gap:8px;">
+          <a class="open-btn" href="vorratused.html">Ava →</a>
+          <a class="open-btn" style="background:#16a34a;" href="harjutused_vorratused.html">⚡ Harjuta</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 4: Trigonomeetria VII -->
+    <div class="mat-card theme-purple">
+      <div class="mat-header">
+        <span class="mat-icon">📐</span>
+        <span class="mat-badge">Kodutöö VII</span>
+        <div class="mat-title">Trigonomeetria I</div>
+        <div class="mat-subtitle">Alused, veerandid, radiaanid</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Märgid veerandites (mnemoonika)</div>
+        <div class="topic-item"><div class="topic-dot"></div>Teisenda teravnurkadeks</div>
+        <div class="topic-item"><div class="topic-dot"></div>Taanduvalemid</div>
+        <div class="topic-item"><div class="topic-dot"></div>Täppisväärtuste tabel</div>
+        <div class="topic-item"><div class="topic-dot"></div>Põhiidentiteedid</div>
+        <div class="topic-item"><div class="topic-dot"></div>Kraadid ↔ Radiaanid · Kaare pikkus</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">trigonomeetria_kodutoo7.html</div>
+        <div style="display:flex;gap:8px;">
+          <a class="open-btn" href="trigonomeetria_kodutoo7.html">Ava →</a>
+          <a class="open-btn" style="background:#16a34a;" href="harjutused_trigonomeetria7.html">⚡ Harjuta</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 5: Trigonomeetria VIII -->
+    <div class="mat-card theme-teal">
+      <div class="mat-header">
+        <span class="mat-icon">📏</span>
+        <span class="mat-badge">Kodutöö VIII</span>
+        <div class="mat-title">Trigonomeetria II</div>
+        <div class="mat-subtitle">Liitmisvalemid ja rakendused</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Liitmisvalemid sin ja cos</div>
+        <div class="topic-item"><div class="topic-dot"></div>Kahekordsete nurkade valemid</div>
+        <div class="topic-item"><div class="topic-dot"></div>Siinusteoreem</div>
+        <div class="topic-item"><div class="topic-dot"></div>Koosinusteoreem</div>
+        <div class="topic-item"><div class="topic-dot"></div>Heroni valem + pindala</div>
+        <div class="topic-item"><div class="topic-dot"></div>Navigatsiooni- ja kõrgusülesanded</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">trigonomeetria_kodutoo8.html</div>
+        <div style="display:flex;gap:8px;">
+          <a class="open-btn" href="trigonomeetria_kodutoo8.html">Ava →</a>
+          <a class="open-btn" style="background:#16a34a;" href="harjutused_trigonomeetria8.html">⚡ Harjuta</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== ÕPPIMISE NIPID ===== -->
+  <div class="section-label">💡 Kuidas neid materjale kasutada</div>
+
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div>
+        <div class="tip-title">Alusta näidislahendusest</div>
+        <div class="tip-text">Iga materjalis on täielik näidislahendus koos sõnalise osaga. Loe see läbi enne oma ülesande lahendamist.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💬</div>
+      <div>
+        <div class="tip-title">Kasuta fraasipanka</div>
+        <div class="tip-text">Iga teema lõpus on valmis laused. Eksamil ei pea sõnastust välja mõtlema — vali sobiv fraas ja kohandad.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔁</div>
+      <div>
+        <div class="tip-title">Struktuur: antud → otsin → valem → asendus → vastus</div>
+        <div class="tip-text">See 5-sammuline struktuur töötab igas tekstülesandes. Harjuta seda kuni see muutub automaatseks.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">✅</div>
+      <div>
+        <div class="tip-title">Kontrolli alati</div>
+        <div class="tip-text">Asenda saadud vastus algülesandesse tagasi. Kirjuta: „Kontrollin: kui x = __, siis..."</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📋</div>
+      <div>
+        <div class="tip-title">Kokkuvõttetabel = kiirviide</div>
+        <div class="tip-text">Iga materjali lõpus on kokkuvõttetabel. Kui oled teema selgeks saanud, piisab ainult tabelist.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🧩</div>
+      <div>
+        <div class="tip-title">Muster enne arvutust</div>
+        <div class="tip-text">Enne kalkulaatorit: mis tüüpi ülesanne see on? Millise valemi see meenutab? Tuvasta muster, siis arvuta.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ÜLDINE FRAASIPANK ===== -->
+  <div class="section-label">✍️ Üldine fraasipank — eksami jaoks</div>
+
+  <div class="phrase-box">
+    <h3>📝 Valmis laused lahenduskäigu kirjutamiseks</h3>
+    <div class="phrases-grid">
+      <div class="phrase">„Tähistame: olgu x = ..."</div>
+      <div class="phrase">„Koostan võrrandi/süsteemi antud tingimuste põhjal."</div>
+      <div class="phrase">„Rakendan [meetod/teoreem] ..."</div>
+      <div class="phrase">„Asendame saadud väärtuse..."</div>
+      <div class="phrase">„Kuna [põhjus], siis [järeldus]."</div>
+      <div class="phrase">„Tuvastan mustri: see on [valemi nimi] kuju."</div>
+      <div class="phrase">„Leiame tundmatu: ..."</div>
+      <div class="phrase">„Kontrollin: kui x = __, siis..."</div>
+      <div class="phrase">„Seega on [mida otsiti] = __ [ühik]."</div>
+      <div class="phrase">„Vastus: [kirjutan täislausena koos ühikuga]"</div>
+      <div class="phrase">„Kolmas nurk: C = 180° − A − B"</div>
+      <div class="phrase">„Lõikan [kujundi] kaheks osaks..."</div>
+      <div class="phrase">„Kogu [pindala/pikkus/summa]: S = S₁ + S₂"</div>
+      <div class="phrase">„Negatiivse arvuga jagades pöördub märk."</div>
+      <div class="phrase">„Nimetaja ei saa olla null, seega x ≠ ..."</div>
+      <div class="phrase">„Leiame kriitilised punktid, kus avaldis = 0."</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Illiamri matemaatika õppematerjalid · 10. klass · 2026
+</footer>
+
+</body>
+</html>
