@@ -6,7 +6,7 @@
 <title>Rootsi keel — Almas dag verbid</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
+  :root{
     --bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;
     --gold:#f5c518;--purple:#7b2fff;--purple-light:#a855f7;
     --teal:#0d9488;--teal-light:#2dd4bf;
@@ -15,98 +15,157 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-  .hero{background:linear-gradient(135deg,#0f0f1a 0%,#1a0533 50%,#0f1a33 100%);padding:40px 24px 36px;text-align:center;border-bottom:3px solid var(--gold);}
-  .hero-back{display:inline-flex;align-items:center;gap:6px;background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.3);border-radius:999px;padding:4px 14px;font-size:0.8rem;font-weight:700;text-decoration:none;color:var(--gold);margin-bottom:16px;}
+
+  .hero{background:linear-gradient(135deg,#0f0f1a 0%,#1a0533 50%,#0f1a33 100%);padding:40px 24px 32px;text-align:center;border-bottom:3px solid var(--gold);}
+  .hero-back{display:inline-flex;align-items:center;gap:6px;background:rgba(245,197,24,0.1);border:1px solid rgba(245,197,24,0.3);border-radius:999px;padding:4px 14px;font-size:0.8rem;font-weight:700;text-decoration:none;color:var(--gold);margin-bottom:14px;}
   .hero-title{font-size:1rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
-  .hero h1{font-size:2rem;font-weight:900;color:white;margin-bottom:14px;}
+  .hero h1{font-size:1.9rem;font-weight:900;color:white;margin-bottom:12px;}
   .hero-steps{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
-  .hero-step{background:rgba(245,197,24,0.15);border:1px solid var(--gold);border-radius:999px;padding:4px 14px;font-size:0.78rem;font-weight:700;color:var(--gold);}
-  .container{max-width:720px;margin:0 auto;padding:32px 20px 60px;}
-  .sec-header{display:flex;align-items:center;gap:12px;margin:36px 0 18px;}
-  .sec-num{width:36px;height:36px;border-radius:10px;background:var(--gold);color:#0f0f1a;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900;flex-shrink:0;}
-  .sec-title{font-size:1.1rem;font-weight:900;}
+  .hero-step{background:rgba(245,197,24,0.12);border:1px solid var(--gold);border-radius:999px;padding:4px 14px;font-size:0.75rem;font-weight:700;color:var(--gold);}
+
+  .container{max-width:740px;margin:0 auto;padding:28px 18px 60px;}
+
+  .sec-header{display:flex;align-items:center;gap:12px;margin:32px 0 16px;}
+  .sec-num{width:34px;height:34px;border-radius:10px;background:var(--gold);color:#0f0f1a;display:flex;align-items:center;justify-content:center;font-size:0.95rem;font-weight:900;flex-shrink:0;}
+  .sec-title{font-size:1.05rem;font-weight:900;}
 
   /* RULE CARDS */
-  .rule-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:20px;margin-bottom:12px;}
+  .rule-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;}
   .rule-card.gold{border-color:var(--gold);}
-  .rule-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:10px;}
-  .rule-text{font-size:0.95rem;line-height:1.65;}
+  .rule-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:8px;}
+  .rule-text{font-size:0.92rem;line-height:1.65;}
   .rule-text strong{color:var(--gold);}
-  .jojo-box{background:rgba(123,47,255,0.15);border:2px solid var(--purple);border-radius:12px;padding:14px 16px;margin-top:12px;}
-  .jojo-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--purple-light);margin-bottom:10px;}
-  .jojo-row{margin-bottom:8px;}
-  .jojo-sw{font-family:'Space Mono',monospace;font-weight:700;color:white;font-size:0.9rem;margin-bottom:2px;}
-  .jojo-hl{background:var(--purple);color:white;padding:1px 6px;border-radius:4px;font-family:'Space Mono',monospace;font-weight:700;}
-  .jojo-et{color:var(--muted);font-size:0.82rem;}
-  .spot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;}
-  @media(max-width:500px){.spot-grid{grid-template-columns:repeat(2,1fr);}}
-  .spot-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;}
-  .spot-end{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--teal-light);margin-bottom:4px;}
-  .spot-ex{font-size:0.72rem;color:var(--muted);font-family:'Space Mono',monospace;line-height:1.5;}
+  .jojo-box{background:rgba(123,47,255,0.15);border:2px solid var(--purple);border-radius:10px;padding:12px 14px;margin-top:10px;}
+  .jojo-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;color:var(--purple-light);margin-bottom:8px;}
+  .jojo-row{margin-bottom:6px;}
+  .jojo-sw{font-family:'Space Mono',monospace;font-weight:700;color:white;font-size:0.88rem;margin-bottom:1px;}
+  .jojo-hl{background:var(--purple);color:white;padding:1px 5px;border-radius:4px;font-family:'Space Mono',monospace;font-weight:700;}
+  .jojo-et{color:var(--muted);font-size:0.8rem;}
+  .spot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px;}
+  @media(max-width:480px){.spot-grid{grid-template-columns:repeat(2,1fr);}}
+  .spot-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:9px;text-align:center;}
+  .spot-end{font-family:'Space Mono',monospace;font-size:1.05rem;font-weight:700;color:var(--teal-light);margin-bottom:3px;}
+  .spot-ex{font-size:0.7rem;color:var(--muted);font-family:'Space Mono',monospace;line-height:1.5;}
 
-  /* PROGRESS */
-  .progress-wrap{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:14px;}
-  .prog-bg{flex:1;height:10px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;}
+  /* STEP 2 - TEXT */
+  .task-box{background:rgba(245,197,24,0.08);border:2px solid var(--gold);border-radius:12px;padding:12px 16px;margin-bottom:14px;font-size:0.88rem;line-height:1.6;}
+  .task-box strong{color:var(--gold);}
+
+  .progress-wrap{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+  .prog-bg{flex:1;height:9px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;}
   .prog-fill{height:100%;background:var(--gold);border-radius:999px;transition:width 0.3s ease;width:0%;}
-  .prog-text{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;color:var(--gold);white-space:nowrap;}
+  .prog-text{font-family:'Space Mono',monospace;font-size:0.82rem;font-weight:700;color:var(--gold);white-space:nowrap;}
 
-  /* VERB GRID */
-  .verb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px;}
-  .verb-item{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:10px 12px;cursor:pointer;transition:all 0.15s;user-select:none;display:flex;gap:8px;align-items:flex-start;}
-  .verb-item:hover{border-color:var(--gold);}
-  .verb-item.checked{background:rgba(245,197,24,0.08);border-color:var(--gold);}
-  .vcb{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;transition:all 0.15s;}
-  .verb-item.checked .vcb{background:var(--gold);border-color:var(--gold);color:#0f0f1a;}
-  .vsw{font-family:'Space Mono',monospace;font-weight:700;color:var(--teal-light);font-size:0.88rem;margin-bottom:2px;}
-  .vpron{font-size:0.7rem;color:var(--purple-light);font-style:italic;margin-bottom:2px;}
-  .vet{font-size:0.75rem;color:var(--muted);}
+  .reading-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px 22px;font-size:0.95rem;line-height:2.1;}
+  .reading-card p{margin-bottom:10px;}
+  .reading-card p:last-child{margin-bottom:0;}
 
-  .done-banner{display:none;background:linear-gradient(135deg,var(--green-dark),var(--teal));border-radius:12px;padding:14px 20px;text-align:center;font-weight:800;font-size:0.95rem;margin-top:12px;animation:slideIn 0.3s ease;}
+  .word{
+    cursor:pointer;border-radius:4px;padding:1px 3px;
+    transition:all 0.15s;display:inline;
+    border-bottom:2px solid transparent;
+  }
+  .word:hover{background:rgba(245,197,24,0.15);border-bottom-color:var(--gold);}
+  .word.correct{background:rgba(34,197,94,0.2);border-bottom:2px solid var(--green);color:#86efac;font-weight:700;}
+  .word.wrong{background:rgba(239,68,68,0.2);border-bottom:2px solid var(--red);}
+  .word.correct{animation:pulse 0.3s ease;}
+  @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+
+  .feedback-bar{
+    min-height:36px;border-radius:8px;padding:8px 14px;
+    font-size:0.85rem;font-weight:700;margin:10px 0;
+    display:flex;align-items:center;gap:8px;
+    transition:all 0.2s;
+    background:transparent;
+  }
+  .feedback-bar.show-correct{background:rgba(34,197,94,0.15);border:1px solid var(--green);color:#86efac;}
+  .feedback-bar.show-wrong{background:rgba(239,68,68,0.12);border:1px solid var(--red);color:#fca5a5;}
+
+  .found-verbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:32px;}
+  .found-chip{
+    font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;
+    background:rgba(34,197,94,0.15);border:1px solid var(--green);
+    color:#86efac;border-radius:6px;padding:3px 8px;
+    animation:chipIn 0.2s ease;
+  }
+  @keyframes chipIn{from{opacity:0;transform:scale(0.8);}to{opacity:1;transform:scale(1);}}
+
+  .done-banner{display:none;background:linear-gradient(135deg,var(--green-dark),var(--teal));border-radius:10px;padding:12px 18px;text-align:center;font-weight:800;font-size:0.92rem;margin-top:10px;animation:slideIn 0.3s ease;}
   .done-banner.visible{display:block;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 
-  /* SENTENCE GUIDE */
-  .sg-card{background:var(--card2);border:2px solid var(--purple);border-radius:14px;padding:18px 20px;margin-bottom:14px;}
-  .sg-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--purple-light);margin-bottom:12px;}
-  .word-order{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
-  .wo{border-radius:8px;padding:6px 10px;font-size:0.75rem;font-weight:800;text-align:center;border:2px solid transparent;}
+  /* STEP 3 - SENTENCES */
+  .sg-card{background:var(--card2);border:2px solid var(--purple);border-radius:12px;padding:16px 18px;margin-bottom:12px;}
+  .sg-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--purple-light);margin-bottom:10px;}
+  .word-order{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;align-items:center;}
+  .wo{border-radius:7px;padding:5px 9px;font-size:0.73rem;font-weight:800;text-align:center;border:2px solid transparent;}
   .wo-s{background:rgba(59,130,246,0.2);border-color:var(--blue);color:#93c5fd;}
   .wo-v{background:rgba(239,68,68,0.2);border-color:var(--red);color:#fca5a5;}
   .wo-o{background:rgba(34,197,94,0.2);border-color:var(--green);color:#86efac;}
   .wo-t{background:rgba(245,197,24,0.15);border-color:var(--gold);color:var(--gold);}
-  .wo-arr{color:var(--muted);font-size:1rem;}
-  .mini{font-family:'Space Mono',monospace;font-size:0.82rem;line-height:1.9;}
+  .wo-arr{color:var(--muted);font-size:0.95rem;}
+  .mini{font-family:'Space Mono',monospace;font-size:0.8rem;line-height:1.9;}
   .mini-sw{color:white;}
   .mini-pr{color:var(--purple-light);font-style:italic;}
   .mini-et{color:var(--muted);}
-  .useful-words{font-size:0.78rem;color:var(--muted);margin-top:10px;line-height:1.8;}
+  .useful{font-size:0.76rem;color:var(--muted);margin-top:8px;line-height:1.8;}
   .uw{color:var(--teal-light);font-family:'Space Mono',monospace;}
 
-  /* SLOTS */
-  .sentence-slots{display:flex;flex-direction:column;gap:12px;}
-  .slot{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:16px 18px;transition:border-color 0.2s;}
-  .slot.has-verb{border-color:var(--gold);}
-  .slot-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
-  .slot-n{width:30px;height:30px;border-radius:8px;background:var(--gold);color:#0f0f1a;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;flex-shrink:0;}
-  .slot-vd{font-family:'Space Mono',monospace;font-weight:700;color:var(--red);font-size:0.88rem;}
-  .slot-ve{font-size:0.75rem;color:var(--muted);margin-top:2px;}
-  .slot-tpl{font-size:0.8rem;color:var(--muted);font-style:italic;margin-bottom:8px;line-height:1.5;}
-  .slot-tpl span{color:var(--teal-light);font-style:normal;font-weight:700;}
-  .slot-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;min-height:24px;}
-  .vchip{font-family:'Space Mono',monospace;font-size:0.73rem;font-weight:700;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:6px;padding:3px 8px;color:var(--teal-light);cursor:pointer;transition:all 0.15s;display:none;}
-  .vchip.show{display:inline-block;}
-  .vchip:hover{background:var(--teal);color:white;border-color:var(--teal);}
-  .vchip.used{opacity:0.25;cursor:not-allowed;pointer-events:none;}
-  .slot-line{border-bottom:2px dashed var(--border);height:28px;width:100%;}
-  .slot-hint{font-size:0.72rem;color:var(--muted);margin-top:5px;text-align:right;}
+  /* ALL VERB CHIPS */
+  .all-verbs-label{font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);margin-bottom:8px;}
+  .all-verb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .avchip{
+    font-family:'Space Mono',monospace;font-size:0.75rem;font-weight:700;
+    background:rgba(255,255,255,0.06);border:1px solid var(--border);
+    border-radius:6px;padding:4px 9px;color:var(--teal-light);
+    cursor:pointer;transition:all 0.15s;
+  }
+  .avchip:hover{background:rgba(13,148,136,0.2);border-color:var(--teal);color:var(--teal-light);}
+  .avchip.sel{background:var(--teal);color:white;border-color:var(--teal);}
 
-  @keyframes slideIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-  footer{text-align:center;padding:28px 20px;color:var(--muted);font-size:0.8rem;border-top:1px solid var(--border);}
+  /* SENTENCE SLOTS */
+  .slots{display:flex;flex-direction:column;gap:10px;}
+  .slot{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 16px;transition:border-color 0.2s;}
+  .slot.active{border-color:var(--gold);}
+  .slot-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .slot-n{width:28px;height:28px;border-radius:7px;background:var(--gold);color:#0f0f1a;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:900;flex-shrink:0;}
+  .slot-verb-picked{font-family:'Space Mono',monospace;font-weight:700;color:var(--red);font-size:0.88rem;}
+  .slot-verb-et{font-size:0.75rem;color:var(--muted);margin-left:8px;}
+  .slot-tpl{font-size:0.78rem;color:var(--muted);font-style:italic;margin-bottom:8px;line-height:1.5;}
+  .slot-tpl span{color:var(--teal-light);font-style:normal;font-weight:700;}
+  .write-line{border-bottom:2px dashed var(--border);height:28px;width:100%;margin-bottom:8px;}
+
+  /* MODEL SENTENCE */
+  .model-sentence{
+    display:none;
+    background:rgba(34,197,94,0.08);border:1px solid var(--green);
+    border-radius:8px;padding:10px 12px;margin-top:4px;
+    animation:slideIn 0.25s ease;
+  }
+  .model-sentence.visible{display:block;}
+  .model-label{font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--green);margin-bottom:6px;}
+  .model-sw{font-family:'Space Mono',monospace;font-size:0.85rem;font-weight:700;color:#86efac;margin-bottom:2px;}
+  .model-pr{font-size:0.75rem;color:var(--purple-light);font-style:italic;margin-bottom:2px;}
+  .model-et{font-size:0.78rem;color:var(--muted);}
+  .model-check{font-size:0.78rem;color:var(--muted);margin-top:6px;line-height:1.5;border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;}
+  .model-check strong{color:#86efac;}
+
+  .show-model-btn{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(34,197,94,0.1);border:1px solid var(--green);
+    border-radius:7px;padding:5px 12px;
+    font-size:0.78rem;font-weight:800;color:#86efac;
+    cursor:pointer;transition:all 0.15s;margin-top:4px;
+  }
+  .show-model-btn:hover{background:rgba(34,197,94,0.2);}
+
+  footer{text-align:center;padding:24px 18px;color:var(--muted);font-size:0.78rem;border-top:1px solid var(--border);}
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <a href="illimar_materjalikogu.html" class="hero-back">← Tagasi kogusse</a>
+  <a href="rootsi_index.html" class="hero-back">← Rootsi keel</a>
   <div class="hero-title">🇸🇪 Rootsi keel</div>
   <h1>Almas dag — verbid</h1>
   <div class="hero-steps">
@@ -118,204 +177,377 @@
 
 <div class="container">
 
-  <!-- SAMM 1 -->
-  <div class="sec-header">
-    <div class="sec-num">1</div>
-    <div class="sec-title">Mis on verb (tegusõna)?</div>
-  </div>
-
-  <div class="rule-card gold">
-    <div class="rule-label">📌 Põhidefinitsioon</div>
-    <div class="rule-text">
-      Verb = sõna mis ütleb <strong>mida keegi teeb</strong>.<br>
-      Küsi iga sõna kohta: <em>"Mida ta teeb?"</em> — kui saad vastuse, on see verb.
-    </div>
-    <div class="jojo-box">
-      <div class="jojo-label">⭐ JoJo näited rootsi keeles</div>
-      <div class="jojo-row">
-        <div class="jojo-sw">Jotaro <span class="jojo-hl">går</span> till skolan.</div>
-        <div class="jojo-et">Jotaro <strong>läheb</strong> kooli. → går = verb</div>
-      </div>
-      <div class="jojo-row">
-        <div class="jojo-sw">Giorno <span class="jojo-hl">äter</span> pizza.</div>
-        <div class="jojo-et">Giorno <strong>sööb</strong> pitsat. → äter = verb</div>
-      </div>
-      <div class="jojo-row">
-        <div class="jojo-sw">Josuke <span class="jojo-hl">lyssnar</span> på musik.</div>
-        <div class="jojo-et">Josuke <strong>kuulab</strong> muusikat. → lyssnar = verb</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="rule-card">
-    <div class="rule-label">🔍 Kuidas verbi tekstist ära tunda — lõpud</div>
-    <div class="spot-grid">
-      <div class="spot-card">
-        <div class="spot-end">-ar</div>
-        <div class="spot-ex">vaknar<br>tittar<br>lyssnar</div>
-      </div>
-      <div class="spot-card">
-        <div class="spot-end">-er</div>
-        <div class="spot-ex">dricker<br>ligger<br>sitter</div>
-      </div>
-      <div class="spot-card">
-        <div class="spot-end">-r</div>
-        <div class="spot-ex">går<br>tar<br>läser</div>
-      </div>
-      <div class="spot-card">
-        <div class="spot-end">erand</div>
-        <div class="spot-ex">är = on<br>har = omab<br>gör = teeb</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SAMM 2 -->
-  <div class="sec-header">
-    <div class="sec-num">2</div>
-    <div class="sec-title">Leia kõik verbid tekstist</div>
-  </div>
-
-  <div class="progress-wrap">
-    <div class="prog-bg"><div class="prog-fill" id="pFill"></div></div>
-    <div class="prog-text" id="pText">0 / 28</div>
-  </div>
-
-  <div style="font-size:0.83rem;color:var(--muted);margin-bottom:12px;">Klõpsa verbil kui leiad selle tekstist. ✓ = leitud.</div>
-
-  <div class="verb-grid" id="verbGrid"></div>
-  <div class="done-banner" id="doneBanner">✅ Kõik 28 verbi leitud! Liigu edasi lausete juurde.</div>
-
-  <!-- SAMM 3 -->
-  <div class="sec-header">
-    <div class="sec-num">3</div>
-    <div class="sec-title">Moodusta 5 lauset</div>
-  </div>
-
-  <div class="sg-card">
-    <div class="sg-label">📐 Lausemall — verb on alati teisel kohal</div>
-    <div class="word-order">
-      <div class="wo wo-s">MINA<br><small>jag</small></div>
-      <div class="wo-arr">+</div>
-      <div class="wo wo-v">VERB</div>
-      <div class="wo-arr">+</div>
-      <div class="wo wo-o">OBJEKT</div>
-      <div class="wo-arr">+</div>
-      <div class="wo wo-t">MILLAL/KUS</div>
-    </div>
-    <div class="mini">
-      <div class="mini-sw">Jag äter pizza varje dag.</div>
-      <div class="mini-pr">"Jaag äter pitsa varrje daag."</div>
-      <div class="mini-et">→ Mina söön pitsat iga päev.</div>
-    </div>
-    <div class="useful-words">
-      <span class="uw">jag</span> (mina) &nbsp;·&nbsp;
-      <span class="uw">varje dag</span> (iga päev) &nbsp;·&nbsp;
-      <span class="uw">på kvällen</span> (õhtul) &nbsp;·&nbsp;
-      <span class="uw">hemma</span> (kodus) &nbsp;·&nbsp;
-      <span class="uw">ofta</span> (sageli) &nbsp;·&nbsp;
-      <span class="uw">musik / fotboll</span> (muusika / jalgpall)
-    </div>
-  </div>
-
-  <div style="font-size:0.83rem;color:var(--muted);margin-bottom:12px;">
-    Vali igale lausele verb (klõpsa sinist nuppu allpool) → kirjuta lause paberile.
-  </div>
-
-  <div class="sentence-slots" id="sSlots"></div>
-
+<!-- ===== SAMM 1 ===== -->
+<div class="sec-header">
+  <div class="sec-num">1</div>
+  <div class="sec-title">Mis on verb (tegusõna)?</div>
 </div>
 
+<div class="rule-card gold">
+  <div class="rule-label">📌 Põhidefinitsioon</div>
+  <div class="rule-text">
+    Verb = sõna mis ütleb <strong>mida keegi teeb</strong>.<br>
+    Küsi iga sõna kohta: <em>"Mida ta teeb?"</em> — kui saad vastuse, on see verb.
+  </div>
+  <div class="jojo-box">
+    <div class="jojo-label">⭐ JoJo näited rootsi keeles</div>
+    <div class="jojo-row">
+      <div class="jojo-sw">Jotaro <span class="jojo-hl">går</span> till skolan.</div>
+      <div class="jojo-et">Jotaro <strong>läheb</strong> kooli. → går = verb</div>
+    </div>
+    <div class="jojo-row">
+      <div class="jojo-sw">Giorno <span class="jojo-hl">äter</span> pizza varje dag.</div>
+      <div class="jojo-et">Giorno <strong>sööb</strong> pitsat iga päev. → äter = verb</div>
+    </div>
+    <div class="jojo-row">
+      <div class="jojo-sw">Josuke <span class="jojo-hl">lyssnar</span> på musik hemma.</div>
+      <div class="jojo-et">Josuke <strong>kuulab</strong> muusikat kodus. → lyssnar = verb</div>
+    </div>
+  </div>
+</div>
+
+<div class="rule-card">
+  <div class="rule-label">🔍 Kuidas verbi ära tunda — lõpud</div>
+  <div class="spot-grid">
+    <div class="spot-card"><div class="spot-end">-ar</div><div class="spot-ex">vaknar<br>tittar<br>lyssnar</div></div>
+    <div class="spot-card"><div class="spot-end">-er</div><div class="spot-ex">dricker<br>ligger<br>sitter</div></div>
+    <div class="spot-card"><div class="spot-end">-r</div><div class="spot-ex">går<br>tar<br>läser</div></div>
+    <div class="spot-card"><div class="spot-end">erand</div><div class="spot-ex">är = on<br>har = omab<br>gör = teeb</div></div>
+  </div>
+</div>
+
+<!-- ===== SAMM 2 ===== -->
+<div class="sec-header">
+  <div class="sec-num">2</div>
+  <div class="sec-title">Leia verbid tekstist</div>
+</div>
+
+<div class="task-box">
+  <strong>Ülesanne:</strong> Loe tekst läbi ja klõpsa igal verbil (tegusõnal). 
+  Roheline = õige ✓ &nbsp;·&nbsp; Punane = pole verb ✗
+</div>
+
+<div class="progress-wrap">
+  <div class="prog-bg"><div class="prog-fill" id="pFill"></div></div>
+  <div class="prog-text" id="pText">0 / 28 leitud</div>
+</div>
+
+<div class="feedback-bar" id="feedback"></div>
+
+<div class="reading-card" id="textArea">
+  <!-- Text injected by JS -->
+</div>
+
+<div style="margin-top:12px;">
+  <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;">Leitud verbid:</div>
+  <div class="found-verbs" id="foundVerbs"></div>
+</div>
+
+<div class="done-banner" id="doneBanner">
+  ✅ Kõik 28 verbi leitud! Liigu edasi lausete moodustamise juurde.
+</div>
+
+<!-- ===== SAMM 3 ===== -->
+<div class="sec-header">
+  <div class="sec-num">3</div>
+  <div class="sec-title">Moodusta 5 lauset</div>
+</div>
+
+<div class="sg-card">
+  <div class="sg-label">📐 Lausemall — verb on alati teisel kohal</div>
+  <div class="word-order">
+    <div class="wo wo-s">MINA<br><small>jag</small></div>
+    <div class="wo-arr">+</div>
+    <div class="wo wo-v">VERB</div>
+    <div class="wo-arr">+</div>
+    <div class="wo wo-o">OBJEKT</div>
+    <div class="wo-arr">+</div>
+    <div class="wo wo-t">MILLAL/KUS</div>
+  </div>
+  <div class="mini">
+    <div class="mini-sw">Jag äter pizza varje dag.</div>
+    <div class="mini-pr">"Jaag äter pitsa varrje daag."</div>
+    <div class="mini-et">→ Mina söön pitsat iga päev.</div>
+  </div>
+  <div class="useful">
+    <span class="uw">jag</span> (mina) &nbsp;·&nbsp;
+    <span class="uw">varje dag</span> (iga päev) &nbsp;·&nbsp;
+    <span class="uw">på kvällen</span> (õhtul) &nbsp;·&nbsp;
+    <span class="uw">hemma</span> (kodus) &nbsp;·&nbsp;
+    <span class="uw">ofta</span> (sageli) &nbsp;·&nbsp;
+    <span class="uw">musik / fotboll</span> (muusika / jalgpall) &nbsp;·&nbsp;
+    <span class="uw">med kompisar</span> (sõpradega)
+  </div>
+</div>
+
+<div class="all-verbs-label">Vali verb lausele — klõpsa:</div>
+<div class="all-verb-chips" id="allChips"></div>
+
+<div class="slots" id="slotsContainer"></div>
+
+</div>
 <footer>Rootsi keel · Almas dag · Verbid · Illimar</footer>
 
 <script>
-const verbs=[
-  {sw:"är",pron:'"äär"',et:"on (olema)"},
-  {sw:"går",pron:'"goor"',et:"läheb, käib"},
-  {sw:"vaknar",pron:'"vaknar"',et:"ärkab"},
-  {sw:"ligger",pron:'"liger"',et:"lamab"},
-  {sw:"tittar",pron:'"tittar"',et:"vaatab"},
-  {sw:"kollar",pron:'"kollar"',et:"kontrollib"},
-  {sw:"duschar",pron:'"dušar"',et:"duššib"},
-  {sw:"klär",pron:'"kläär"',et:"riietub"},
-  {sw:"äter",pron:'"äter"',et:"sööb"},
-  {sw:"dricker",pron:'"driker"',et:"joob"},
-  {sw:"lyssnar",pron:'"lüsnar"',et:"kuulab"},
-  {sw:"tar",pron:'"taar"',et:"võtab"},
-  {sw:"chattar",pron:'"šattar"',et:"jututab"},
-  {sw:"skickar",pron:'"šikar"',et:"saadab"},
-  {sw:"träffar",pron:'"träffar"',et:"kohtub"},
-  {sw:"läser",pron:'"läser"',et:"loeb, õpib"},
-  {sw:"sitter",pron:'"siter"',et:"istub"},
-  {sw:"pratar",pron:'"praatar"',et:"räägib"},
-  {sw:"skrattar",pron:'"skratar"',et:"naerab"},
-  {sw:"planerar",pron:'"planeerar"',et:"planeerib"},
-  {sw:"pluggar",pron:'"pluggar"',et:"õpib"},
-  {sw:"älskar",pron:'"älskar"',et:"armastab"},
-  {sw:"gillar",pron:'"gilar"',et:"meeldib"},
-  {sw:"har",pron:'"haar"',et:"omab, on"},
-  {sw:"spelar",pron:'"spelar"',et:"mängib"},
-  {sw:"gör",pron:'"jöör"',et:"teeb"},
-  {sw:"lägger",pron:'"läger"',et:"paneb/heidab"},
-  {sw:"somnar",pron:'"somnar"',et:"jääb magama"}
+// ============================================================
+// DATA
+// ============================================================
+const verbs = {
+  "är":    {pron:'"äär"',     et:"on (olema)",       model:{sw:"Jag är trött på kvällen.",      pr:'"Jaag äär trött po kvällen."',      et:"Mina olen õhtul väsinud."}},
+  "går":   {pron:'"goor"',    et:"läheb, käib",      model:{sw:"Jag går till skolan varje dag.", pr:'"Jaag goor til skuulan varrje daag."',et:"Mina lähen kooli iga päev."}},
+  "vaknar":{pron:'"vaknar"',  et:"ärkab",            model:{sw:"Jag vaknar klockan sju.",        pr:'"Jaag vaknar klokkan šüü."',         et:"Mina ärkan kell seitse."}},
+  "ligger":{pron:'"liger"',   et:"lamab",            model:{sw:"Jag ligger i sängen på morgonen.",pr:'"Jaag liger ii sängen po morgonen."',et:"Mina laман hommikul voodis."}},
+  "tittar":{pron:'"tittar"',  et:"vaatab",           model:{sw:"Jag tittar på Netflix ofta.",    pr:'"Jaag tittar po Netflix ofta."',     et:"Mina vaatan tihti Netflixi."}},
+  "kollar":{pron:'"kollar"',  et:"kontrollib",       model:{sw:"Jag kollar mobilen på morgonen.",pr:'"Jaag kollar mubiilen po morgonen."',et:"Mina vaatan hommikul telefoni."}},
+  "duschar":{pron:'"dušar"',  et:"duššib",           model:{sw:"Jag duschar varje morgon.",      pr:'"Jaag dušar varrje morgon."',        et:"Mina duššin iga hommik."}},
+  "klär":  {pron:'"kläär"',   et:"riietub",          model:{sw:"Jag klär på mig snabbt.",        pr:'"Jaag kläär po mij snabbt."',        et:"Mina riietun kiiresti."}},
+  "äter":  {pron:'"äter"',    et:"sööb",             model:{sw:"Jag äter frukost klockan sju.",  pr:'"Jaag äter frukost klokkan šüü."',   et:"Mina söön hommikusööki kell seitse."}},
+  "dricker":{pron:'"driker"', et:"joob",             model:{sw:"Jag dricker te varje morgon.",   pr:'"Jaag driker te varrje morgon."',    et:"Mina joon iga hommik teed."}},
+  "lyssnar":{pron:'"lüsnar"', et:"kuulab",           model:{sw:"Jag lyssnar på musik hemma.",    pr:'"Jaag lüsnar po müsiik hemma."',     et:"Mina kuulan muusikat kodus."}},
+  "tar":   {pron:'"taar"',    et:"võtab",            model:{sw:"Jag tar bussen till skolan.",    pr:'"Jaag taar büssen til skuulan."',    et:"Mina sõidan koolibussiga."}},
+  "chattar":{pron:'"šattar"', et:"jututab",          model:{sw:"Jag chattar med kompisar ofta.", pr:'"Jaag šattar me kompisar ofta."',    et:"Mina jututan sageli sõpradega."}},
+  "skickar":{pron:'"šikar"',  et:"saadab",           model:{sw:"Jag skickar ett klipp till vänner.",pr:'"Jaag šikar et klip til vänner."',et:"Mina saadan sõpradele video."}},
+  "träffar":{pron:'"träffar"',et:"kohtub",           model:{sw:"Jag träffar kompisar i skolan.", pr:'"Jaag träffar kompisar ii skuulan."',et:"Mina kohtan sõpru koolis."}},
+  "läser": {pron:'"läser"',   et:"loeb, õpib",       model:{sw:"Jag läser en bok på kvällen.",   pr:'"Jaag läser en buuk po kvällen."',   et:"Mina loen õhtul raamatut."}},
+  "sitter":{pron:'"siter"',   et:"istub",            model:{sw:"Jag sitter med kompisar i matsalen.",pr:'"Jaag siter me kompisar."',      et:"Mina istun sõpradega söögimajas."}},
+  "pratar":{pron:'"praatar"', et:"räägib",           model:{sw:"Jag pratar med Noah varje dag.", pr:'"Jaag praatar me Noa varrje daag."', et:"Mina räägin Noahiga iga päev."}},
+  "skrattar":{pron:'"skratar"',et:"naerab",          model:{sw:"Jag skrattar ofta med kompisar.",pr:'"Jaag skratar ofta me kompisar."',  et:"Mina naeran sageli koos sõpradega."}},
+  "planerar":{pron:'"planeerar"',et:"planeerib",     model:{sw:"Jag planerar helgen med vänner.",pr:'"Jaag planeerar helgen me vänner."', et:"Mina planeerin nädalavahetust sõpradega."}},
+  "pluggar":{pron:'"pluggar"',et:"õpib",             model:{sw:"Jag pluggar hemma på kvällen.",  pr:'"Jaag pluggar hemma po kvällen."',   et:"Mina õpin õhtul kodus."}},
+  "älskar":{pron:'"älskar"',  et:"armastab",         model:{sw:"Jag älskar anime och musik.",    pr:'"Jaag älskar anime ok müsiik."',     et:"Mina armastan animeT ja muusikat."}},
+  "gillar":{pron:'"gilar"',   et:"meeldib",          model:{sw:"Jag gillar att titta på anime.", pr:'"Jaag gilar at tita po anime."',     et:"Mulle meeldib animeT vaadata."}},
+  "har":   {pron:'"haar"',    et:"omab, on",         model:{sw:"Jag har dansträning på eftermiddagen.",pr:'"Jaag haar dansträning."',     et:"Mul on pärastlõunal tantsutreening."}},
+  "spelar":{pron:'"spelar"',  et:"mängib",           model:{sw:"Jag spelar fotboll med kompisar.",pr:'"Jaag spelar futbol me kompisar."', et:"Mina mängin sõpradega jalgpalli."}},
+  "gör":   {pron:'"jöör"',    et:"teeb",             model:{sw:"Jag gör läxorna varje kväll.",   pr:'"Jaag jöör läksorna varrje kvell."', et:"Mina teen iga õhtu kodutöid."}},
+  "lägger":{pron:'"läger"',   et:"paneb/heidab",     model:{sw:"Jag lägger mig klockan elva.",   pr:'"Jaag läger mij klokkan elva."',     et:"Mina heidan kell üksteist magama."}},
+  "somnar":{pron:'"somnar"',  et:"jääb magama",      model:{sw:"Jag somnar snart efter det.",    pr:'"Jaag somnar snart after de."',      et:"Mina jään varsti magama."}}
+};
+
+// Almas dag text as tokens: {text, isVerb, verbKey}
+const textParagraphs = [
+  [
+    {t:"Alma",v:false},{t:" "},{t:"är",v:true,k:"är"},{t:" sjutton år och "},{t:"går",v:true,k:"går"},{t:" i gymnasiet. Hon "},
+    {t:"vaknar",v:true,k:"vaknar"},{t:" ofta klockan sju men "},{t:"ligger",v:true,k:"ligger"},{t:" kvar i sängen några minuter och "},
+    {t:"tittar",v:true,k:"tittar"},{t:" på mobilen. Hon "},{t:"kollar",v:true,k:"kollar"},{t:" TikTok, Instagram och några reels. Sedan "},{t:"går",v:true,k:"går"},{t:" hon upp."}
+  ],
+  [
+    {t:"Efter det "},{t:"duschar",v:true,k:"duschar"},{t:" hon och "},{t:"klär",v:true,k:"klär"},{t:" på sig. Frukost "},
+    {t:"äter",v:true,k:"äter"},{t:" hon klockan halv åtta. Hon "},{t:"dricker",v:true,k:"dricker"},{t:" te eller juice och "},
+    {t:"äter",v:true,k:"äter"},{t:" yoghurt eller en macka. Samtidigt "},{t:"lyssnar",v:true,k:"lyssnar"},{t:" hon ofta på musik."}
+  ],
+  [
+    {t:"Klockan åtta "},{t:"går",v:true,k:"går"},{t:" Alma till busshållplatsen och "},{t:"tar",v:true,k:"tar"},
+    {t:" bussen till skolan. På bussen "},{t:"chattar",v:true,k:"chattar"},{t:" hon med sin kompis Noah. Ibland "},
+    {t:"tittar",v:true,k:"tittar"},{t:" hon på TikTok eller "},{t:"skickar",v:true,k:"skickar"},{t:" ett roligt klipp till sina vänner."}
+  ],
+  [
+    {t:"I skolan "},{t:"träffar",v:true,k:"träffar"},{t:" Alma sina kompisar och "},{t:"går",v:true,k:"går"},
+    {t:" på lektioner. Hon "},{t:"läser",v:true,k:"läser"},{t:" svenska, engelska och historia. Vid lunch "},
+    {t:"äter",v:true,k:"äter"},{t:" hon i skolans matsal. Hon "},{t:"sitter",v:true,k:"sitter"},{t:" med Noah och några andra vänner. De "},
+    {t:"pratar",v:true,k:"pratar"},{t:", "},{t:"skrattar",v:true,k:"skrattar"},{t:" och "},{t:"planerar",v:true,k:"planerar"},{t:" helgen."}
+  ],
+  [
+    {t:"Efter skolan "},{t:"går",v:true,k:"går"},{t:" Alma till ett café nära skolan. Där "},
+    {t:"dricker",v:true,k:"dricker"},{t:" hon en smoothie eller en kaffe. Ibland "},{t:"pluggar",v:true,k:"pluggar"},
+    {t:" hon lite eller "},{t:"läser",v:true,k:"läser"},{t:" en ungdomsroman. Hon "},{t:"älskar",v:true,k:"älskar"},
+    {t:" böcker men hon "},{t:"gillar",v:true,k:"gillar"},{t:" också Netflix."}
+  ],
+  [
+    {t:"På eftermiddagen "},{t:"har",v:true,k:"har"},{t:" Alma ofta dansträning. Ibland "},
+    {t:"spelar",v:true,k:"spelar"},{t:" hon fotboll med sina kompisar i parken. Klockan sex "},
+    {t:"äter",v:true,k:"äter"},{t:" hon middag med sin familj."}
+  ],
+  [
+    {t:"På kvällen "},{t:"gör",v:true,k:"gör"},{t:" Alma läxorna. Sedan "},{t:"tittar",v:true,k:"tittar"},
+    {t:" hon ofta på en serie på Netflix eller "},{t:"chattar",v:true,k:"chattar"},{t:" med Noah och andra vänner. Klockan elva "},
+    {t:"är",v:true,k:"är"},{t:" Alma trött. Hon "},{t:"tittar",v:true,k:"tittar"},{t:" en sista gång på mobilen och "},{t:"går",v:true,k:"går"},
+    {t:" och "},{t:"lägger",v:true,k:"lägger"},{t:" sig. Snart "},{t:"somnar",v:true,k:"somnar"},{t:" hon."}
+  ]
 ];
 
-let checked=new Set();
-let slotVerbs=[null,null,null,null,null];
+// ============================================================
+// RENDER TEXT
+// ============================================================
+let found = new Set();
+let wordEls = []; // track clickable word elements per verbKey
 
-// Build grid
-const grid=document.getElementById('verbGrid');
-verbs.forEach((v,i)=>{
-  const el=document.createElement('div');
-  el.className='verb-item';el.id='vi'+i;
-  el.innerHTML=`<div class="vcb" id="cb${i}"></div><div><div class="vsw">${v.sw}</div><div class="vpron">${v.pron}</div><div class="vet">${v.et}</div></div>`;
-  el.onclick=()=>toggle(i);
-  grid.appendChild(el);
+const textArea = document.getElementById('textArea');
+textParagraphs.forEach(para => {
+  const p = document.createElement('p');
+  para.forEach(token => {
+    if (typeof token.t === 'string' && !token.v) {
+      p.appendChild(document.createTextNode(token.t));
+    } else if (token.v) {
+      const span = document.createElement('span');
+      span.className = 'word';
+      span.textContent = token.t;
+      span.dataset.key = token.k;
+      span.onclick = () => handleWordClick(span, token.k);
+      p.appendChild(span);
+    } else {
+      p.appendChild(document.createTextNode(token.t));
+    }
+  });
+  textArea.appendChild(p);
 });
 
-function toggle(i){
-  const el=document.getElementById('vi'+i),cb=document.getElementById('cb'+i);
-  if(checked.has(i)){checked.delete(i);el.classList.remove('checked');cb.textContent='';}
-  else{checked.add(i);el.classList.add('checked');cb.textContent='✓';}
-  const n=checked.size;
-  document.getElementById('pFill').style.width=(n/28*100)+'%';
-  document.getElementById('pText').textContent=n+' / 28';
-  if(n===28)document.getElementById('doneBanner').classList.add('visible');
-  else document.getElementById('doneBanner').classList.remove('visible');
-  rebuildChips();
-}
+function handleWordClick(el, key) {
+  if (el.classList.contains('correct')) return; // already found
 
-// Build slots
-const ss=document.getElementById('sSlots');
-for(let i=0;i<5;i++){
-  const d=document.createElement('div');
-  d.className='slot';d.id='slot'+i;
-  d.innerHTML=`<div class="slot-top"><div class="slot-n">${i+1}</div><div><div class="slot-vd" id="svd${i}">— vali verb allpool —</div><div class="slot-ve" id="sve${i}"></div></div></div><div class="slot-tpl"><span>Jag</span> + <span id="stpl${i}">[verb]</span> + objekt + aeg/koht</div><div class="slot-chips" id="sc${i}"></div><div class="slot-line"></div><div class="slot-hint">kirjuta lause paberile</div>`;
-  ss.appendChild(d);
-}
+  if (verbs[key]) {
+    // Correct!
+    el.classList.add('correct');
+    // Mark all occurrences of this verb
+    document.querySelectorAll(`.word[data-key="${key}"]`).forEach(w => w.classList.add('correct'));
 
-function rebuildChips(){
-  for(let s=0;s<5;s++){
-    const c=document.getElementById('sc'+s);c.innerHTML='';
-    verbs.forEach((v,vi)=>{
-      if(!checked.has(vi))return;
-      const ch=document.createElement('div');
-      ch.className='vchip show';ch.textContent=v.sw;
-      const used=slotVerbs.some((sv,si)=>si!==s&&sv===vi);
-      if(used)ch.classList.add('used');
-      ch.onclick=()=>{if(!used)pick(s,vi);};
-      c.appendChild(ch);
-    });
+    if (!found.has(key)) {
+      found.add(key);
+      // Add to found chips
+      const chip = document.createElement('div');
+      chip.className = 'found-chip';
+      chip.textContent = key;
+      document.getElementById('foundVerbs').appendChild(chip);
+    }
+
+    showFeedback(true, `✓ "${key}" — ${verbs[key].et}`);
+    updateProgress();
+  } else {
+    // Wrong
+    el.classList.add('wrong');
+    setTimeout(() => el.classList.remove('wrong'), 800);
+    showFeedback(false, `✗ "${el.textContent}" pole verb — see on nimisõna/omadussõna/muu`);
   }
 }
 
-function pick(s,vi){
-  slotVerbs[s]=vi;
-  const v=verbs[vi];
-  document.getElementById('svd'+s).textContent=v.sw;
-  document.getElementById('sve'+s).textContent=v.et;
-  document.getElementById('stpl'+s).textContent=v.sw;
-  document.getElementById('slot'+s).classList.add('has-verb');
-  rebuildChips();
+function showFeedback(correct, msg) {
+  const fb = document.getElementById('feedback');
+  fb.textContent = msg;
+  fb.className = 'feedback-bar ' + (correct ? 'show-correct' : 'show-wrong');
+  clearTimeout(fb._t);
+  fb._t = setTimeout(() => { fb.className = 'feedback-bar'; }, 2500);
+}
+
+function updateProgress() {
+  const n = found.size;
+  document.getElementById('pFill').style.width = (n/28*100) + '%';
+  document.getElementById('pText').textContent = n + ' / 28 leitud';
+  if (n === 28) document.getElementById('doneBanner').classList.add('visible');
+}
+
+// ============================================================
+// SENTENCE BUILDER
+// ============================================================
+const verbKeys = Object.keys(verbs);
+let slotVerbs = [null,null,null,null,null];
+let modelVisible = [false,false,false,false,false];
+
+// All verb chips
+const allChips = document.getElementById('allChips');
+verbKeys.forEach(k => {
+  const ch = document.createElement('div');
+  ch.className = 'avchip';
+  ch.id = 'ac-' + k;
+  ch.innerHTML = `<span>${k}</span> <span style="color:var(--muted);font-size:0.68rem;">${verbs[k].et}</span>`;
+  ch.onclick = () => assignVerb(k);
+  allChips.appendChild(ch);
+});
+
+// Build 5 slots
+const slotsEl = document.getElementById('slotsContainer');
+for (let i = 0; i < 5; i++) {
+  const d = document.createElement('div');
+  d.className = 'slot';
+  d.id = 'slot-' + i;
+  d.innerHTML = `
+    <div class="slot-top">
+      <div class="slot-n">${i+1}</div>
+      <div>
+        <span class="slot-verb-picked" id="svp-${i}">— vali verb ülalt —</span>
+        <span class="slot-verb-et" id="sve-${i}"></span>
+      </div>
+    </div>
+    <div class="slot-tpl">
+      <span>Jag</span> + <span id="stpl-${i}">[verb]</span> + objekt + aeg/koht
+    </div>
+    <div class="write-line"></div>
+    <div>
+      <div class="show-model-btn" id="smb-${i}" onclick="toggleModel(${i})" style="display:none;">
+        👁 Vaata näidislauset
+      </div>
+      <div class="model-sentence" id="ms-${i}">
+        <div class="model-label">📝 Näidislause — võrdle oma lausega</div>
+        <div class="model-sw" id="msw-${i}"></div>
+        <div class="model-pr" id="mpr-${i}"></div>
+        <div class="model-et" id="met-${i}"></div>
+        <div class="model-check">
+          Kontrolli: <strong>Kas verb on teisel kohal?</strong> · Kas lause lõpeb punktiga? · Kas sõnad on õiges järjekorras?
+        </div>
+      </div>
+    </div>`;
+  slotsEl.appendChild(d);
+}
+
+let activeSlot = 0; // which slot to assign next verb to
+
+function assignVerb(k) {
+  // Find first empty slot
+  let target = -1;
+  for (let i = 0; i < 5; i++) {
+    if (slotVerbs[i] === null) { target = i; break; }
+  }
+  if (target === -1) {
+    // All full — replace last selected
+    target = slotVerbs.findIndex(v => v === k);
+    if (target === -1) return;
+  }
+
+  // If clicking already assigned verb, find its slot and clear
+  const existing = slotVerbs.findIndex(v => v === k);
+  if (existing !== -1) {
+    clearSlot(existing);
+    return;
+  }
+
+  // Assign
+  slotVerbs[target] = k;
+  const v = verbs[k];
+  document.getElementById('svp-' + target).textContent = k;
+  document.getElementById('sve-' + target).textContent = v.et;
+  document.getElementById('stpl-' + target).textContent = k;
+  document.getElementById('slot-' + target).classList.add('active');
+  document.getElementById('smb-' + target).style.display = 'inline-flex';
+  // Fill model
+  document.getElementById('msw-' + target).textContent = v.model.sw;
+  document.getElementById('mpr-' + target).textContent = v.model.pr;
+  document.getElementById('met-' + target).textContent = '→ ' + v.model.et;
+  // Mark chip as selected
+  document.getElementById('ac-' + k).classList.add('sel');
+}
+
+function clearSlot(i) {
+  const k = slotVerbs[i];
+  slotVerbs[i] = null;
+  modelVisible[i] = false;
+  document.getElementById('svp-' + i).textContent = '— vali verb ülalt —';
+  document.getElementById('sve-' + i).textContent = '';
+  document.getElementById('stpl-' + i).textContent = '[verb]';
+  document.getElementById('slot-' + i).classList.remove('active');
+  document.getElementById('smb-' + i).style.display = 'none';
+  document.getElementById('ms-' + i).classList.remove('visible');
+  if (k) document.getElementById('ac-' + k).classList.remove('sel');
+}
+
+function toggleModel(i) {
+  const ms = document.getElementById('ms-' + i);
+  const btn = document.getElementById('smb-' + i);
+  modelVisible[i] = !modelVisible[i];
+  if (modelVisible[i]) {
+    ms.classList.add('visible');
+    btn.textContent = '🙈 Peida näidislause';
+  } else {
+    ms.classList.remove('visible');
+    btn.innerHTML = '👁 Vaata näidislauset';
+  }
 }
 </script>
 </body>
