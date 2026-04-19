@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psühholoogia — Mälu ja mnemotehnikad</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #1a0e3d 100%);
+    color: white; padding: 56px 32px 48px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(124,58,237,0.35) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.2) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px; padding: 5px 16px;
+    font-size: 0.8rem; font-weight: 700; text-decoration: none;
+    color: white; margin-bottom: 22px; transition: background 0.15s;
+  }
+  .hero-back:hover { background: rgba(255,255,255,0.2); }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #7c3aed, #0d9488);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 2rem;
+    margin: 0 auto 20px; box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #c4b5fd; }
+  .hero-sub { font-size: 1rem; opacity: 0.75; max-width: 500px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 20px; margin-top: 40px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* SECTION BLOCK */
+  .section-block {
+    background: var(--card); border-radius: 20px;
+    border: 2px solid var(--border); overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px;
+  }
+  .section-header {
+    padding: 22px 26px 16px; display: flex; align-items: flex-start; gap: 14px;
+  }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-blue .section-header   { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-teal .section-header   { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-green .section-header  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-yellow .section-header { background: linear-gradient(135deg, #fefce8, #fef9c3); }
+
+  /* MÄLUSÜSTEEMID GRID */
+  .malu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .malu-card {
+    border-radius: 16px; overflow: hidden; border: 2px solid var(--border);
+  }
+  .malu-card-header {
+    padding: 16px 18px 10px; display: flex; align-items: center; gap: 10px;
+  }
+  .malu-icon { font-size: 1.8rem; }
+  .malu-name { font-size: 1rem; font-weight: 900; }
+  .malu-aka { font-size: 0.75rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .malu-card-body { padding: 4px 18px 16px; }
+  .malu-desc { font-size: 0.85rem; color: var(--text); line-height: 1.55; margin-bottom: 8px; }
+  .malu-ex { background: #f8fafc; border-radius: 10px; padding: 9px 12px; border-left: 3px solid; font-size: 0.82rem; color: var(--muted); font-style: italic; }
+
+  .malu-lyhiajaline .malu-card-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .malu-lyhiajaline .malu-name { color: var(--blue); }
+  .malu-lyhiajaline .malu-ex { border-left-color: var(--blue); }
+  .malu-pikaajaline .malu-card-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .malu-pikaajaline .malu-name { color: var(--purple); }
+  .malu-pikaajaline .malu-ex { border-left-color: var(--purple); }
+  .malu-semantiline .malu-card-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .malu-semantiline .malu-name { color: var(--green); }
+  .malu-semantiline .malu-ex { border-left-color: var(--green); }
+  .malu-episoodiline .malu-card-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .malu-episoodiline .malu-name { color: var(--orange); }
+  .malu-episoodiline .malu-ex { border-left-color: var(--orange); }
+  .malu-protseduuriline .malu-card-header { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+  .malu-protseduuriline .malu-name { color: var(--teal); }
+  .malu-protseduuriline .malu-ex { border-left-color: var(--teal); }
+
+  /* TEHNIKAD TABLE */
+  .tehnika-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .tehnika-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px; text-align: left;
+    color: var(--muted); border-bottom: 2px solid var(--border); background: #f8fafc;
+  }
+  .tehnika-table td {
+    padding: 11px 14px; font-size: 0.88rem;
+    border-bottom: 1px solid #f1f5f9; vertical-align: top; line-height: 1.5;
+  }
+  .tehnika-table tr:last-child td { border-bottom: none; }
+  .tehnika-table tr:hover td { background: #f8fafc; }
+  .t-name { font-weight: 900; color: var(--purple); }
+  .t-ex { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-top: 3px; }
+
+  /* TEEKONNA MEETOD STEPS */
+  .steps-list { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; }
+  .step-item { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num {
+    min-width: 36px; height: 36px; border-radius: 50%;
+    background: var(--purple); color: white;
+    font-size: 1rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-body h4 { font-size: 0.95rem; font-weight: 900; margin-bottom: 3px; }
+  .step-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+
+  /* TEEKOND VISUAL MAP */
+  .teekond-map { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; margin-top: 16px; }
+  .teekond-stop {
+    border-radius: 14px; border: 2px solid var(--border);
+    overflow: hidden; background: var(--card);
+  }
+  .ts-header {
+    padding: 10px 14px 8px; display: flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #faf5ff, #ede9fe);
+  }
+  .ts-num { font-size: 1.3rem; font-weight: 900; color: var(--purple); font-family: 'Space Mono', monospace; }
+  .ts-loc { font-size: 0.8rem; font-weight: 800; color: var(--text); }
+  .ts-body { padding: 10px 14px 12px; }
+  .ts-item { font-size: 0.82rem; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+  .ts-img { font-size: 0.78rem; color: var(--muted); font-style: italic; line-height: 1.4; }
+
+  /* TULVING BOX */
+  .person-box {
+    border-radius: 16px; border: 2px solid var(--purple-light);
+    background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+    padding: 20px 22px; display: flex; gap: 18px; align-items: flex-start;
+    margin-top: 16px;
+  }
+  .person-avatar {
+    width: 60px; height: 60px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--purple), #4f46e5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+  }
+  .person-name { font-size: 1.1rem; font-weight: 900; color: var(--purple); margin-bottom: 3px; }
+  .person-years { font-size: 0.78rem; color: var(--muted); font-family: 'Space Mono', monospace; margin-bottom: 8px; }
+  .person-desc { font-size: 0.85rem; color: var(--text); line-height: 1.55; }
+
+  /* CASE STUDY */
+  .case-box {
+    border-radius: 14px; border: 2px solid var(--orange-light);
+    background: var(--orange-light); padding: 18px 20px; margin-top: 16px;
+  }
+  .case-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--orange); margin-bottom: 8px;
+  }
+  .case-title { font-size: 1rem; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+  .case-text { font-size: 0.85rem; color: var(--text); line-height: 1.6; }
+  .case-question {
+    margin-top: 12px; background: white; border-radius: 10px;
+    padding: 12px 14px; border-left: 3px solid var(--orange);
+    font-size: 0.85rem; font-weight: 700; color: var(--orange);
+  }
+
+  /* KODUTÖÖ JUHEND */
+  .hw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 16px; }
+  .hw-card {
+    border-radius: 14px; border: 2px solid var(--border);
+    overflow: hidden; background: var(--card);
+  }
+  .hw-card-header { padding: 14px 16px 10px; }
+  .hw-step-badge {
+    font-size: 0.68rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; border-radius: 999px; padding: 3px 10px;
+    display: inline-block; margin-bottom: 8px;
+  }
+  .hw-card-title { font-size: 0.95rem; font-weight: 900; line-height: 1.2; }
+  .hw-card-body { padding: 4px 16px 16px; }
+  .hw-card-text { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+  .hw-card ul { padding-left: 16px; margin-top: 6px; }
+  .hw-card li { font-size: 0.82rem; color: var(--muted); margin-bottom: 3px; }
+
+  .hw-1 .hw-card-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .hw-1 .hw-step-badge { background: var(--blue-light); color: var(--blue); }
+  .hw-2 .hw-card-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .hw-2 .hw-step-badge { background: var(--purple-light); color: var(--purple); }
+  .hw-3 .hw-card-header { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+  .hw-3 .hw-step-badge { background: var(--teal-light); color: var(--teal); }
+  .hw-4 .hw-card-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .hw-4 .hw-step-badge { background: var(--orange-light); color: var(--orange); }
+  .hw-5 .hw-card-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .hw-5 .hw-step-badge { background: var(--green-light); color: var(--green); }
+
+  /* ANALÜÜS KÜSIMUSED */
+  .q-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .q-item { border-radius: 14px; border: 2px solid var(--border); overflow: hidden; }
+  .q-header {
+    padding: 14px 18px 12px; display: flex; gap: 12px; align-items: flex-start;
+    background: #f8fafc; cursor: pointer; user-select: none;
+  }
+  .q-num {
+    min-width: 28px; height: 28px; border-radius: 50%; background: var(--purple);
+    color: white; font-size: 0.82rem; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+  }
+  .q-text { font-size: 0.9rem; font-weight: 800; color: var(--text); line-height: 1.4; flex: 1; }
+  .q-arrow { font-size: 0.9rem; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .q-body { padding: 14px 18px; font-size: 0.85rem; color: var(--muted); line-height: 1.6; display: none; border-top: 1px solid var(--border); }
+  .q-item.open .q-body { display: block; }
+  .q-item.open .q-arrow { transform: rotate(180deg); }
+
+  /* EXAMPLE KELLI */
+  .kelli-box {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border-radius: 16px; border: 2px solid #bbf7d0; padding: 20px 22px; margin-top: 16px;
+  }
+  .kelli-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--green); margin-bottom: 8px;
+  }
+  .kelli-title { font-size: 1rem; font-weight: 900; margin-bottom: 10px; }
+  .kelli-points { display: flex; flex-direction: column; gap: 7px; }
+  .kelli-point { display: flex; gap: 8px; align-items: flex-start; font-size: 0.85rem; color: var(--text); line-height: 1.4; }
+  .kelli-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 5px; }
+
+  /* TIP CARDS */
+  .tips-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    border-radius: 14px; padding: 16px 20px; margin-top: 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--purple-light); border: 2px solid #c4b5fd;
+  }
+  .highlight-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .highlight-text { font-size: 0.88rem; color: var(--text); line-height: 1.55; font-weight: 700; }
+
+  /* BACK BTN */
+  .back-btn-wrap { margin-bottom: 32px; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 999px; padding: 6px 16px;
+    font-size: 0.82rem; font-weight: 800; text-decoration: none;
+    color: var(--text); transition: all 0.15s;
+  }
+  .back-btn:hover { border-color: var(--purple); color: var(--purple); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <a href="psyhholoogia_index.html" class="hero-back">← Psühholoogia</a>
+    <div class="hero-avatar">🧠</div>
+    <h1>Mälu ja <span>mnemotehnikad</span></h1>
+    <p class="hero-sub">Kuidas mälu töötab — ja kuidas seda paremini kasutada</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">mälusüsteemi</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">tehnikat</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">kodutöö</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== MIS ON MÄLU ===== -->
+  <div class="section-label">Teooria</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🧩</div>
+      <div>
+        <div class="section-title">Mis on mälu?</div>
+        <div class="section-subtitle">Kolm põhifunktsiooni</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="tips-row">
+        <div class="tip-card">
+          <div class="tip-icon">📥</div>
+          <div>
+            <div class="tip-title">Omandamine</div>
+            <div class="tip-text">Uue info vastuvõtmine ja kodeerimine ajus — näiteks lugemine, kuulamine, kogemine.</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💾</div>
+          <div>
+            <div class="tip-title">Säilitamine</div>
+            <div class="tip-text">Info hoidmine aju neuronvõrkudes — lühiajaliselt või väga pikaks ajaks.</div>
+          </div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🔍</div>
+          <div>
+            <div class="tip-title">Taastootmine</div>
+            <div class="tip-text">Salvestatud info leidmine ja kasutamine — meenutamine, äratundmine, tegemine.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MÄLUSÜSTEEMID ===== -->
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🗂️</div>
+      <div>
+        <div class="section-title">Mälusüsteemid</div>
+        <div class="section-subtitle">Uuringud näitavad, et mälu pole üks — see koosneb mitmest eraldi süsteemist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="malu-grid">
+        <div class="malu-card malu-lyhiajaline">
+          <div class="malu-card-header">
+            <div class="malu-icon">⚡</div>
+            <div>
+              <div class="malu-name">Lühiajaline mälu</div>
+              <div class="malu-aka">töömälu</div>
+            </div>
+          </div>
+          <div class="malu-card-body">
+            <div class="malu-desc">Info püsib mõne sekundi kuni minuti. Piiratud maht — ca 7 ühikut korraga. Taju pikendus.</div>
+            <div class="malu-ex">Telefoni numbri meeles hoidmine kuni kirjutamiseni</div>
+          </div>
+        </div>
+        <div class="malu-card malu-pikaajaline">
+          <div class="malu-card-header">
+            <div class="malu-icon">🏛️</div>
+            <div>
+              <div class="malu-name">Pikaajaline mälu</div>
+              <div class="malu-aka">piiramatu maht?</div>
+            </div>
+          </div>
+          <div class="malu-card-body">
+            <div class="malu-desc">Info võib püsida aastakümneid. Maht pole teaduslikult piiritletud. Koosneb eraldi alasüsteemidest.</div>
+            <div class="malu-ex">Lapsepõlve mälestused, emakeel, jalgrattasõit</div>
+          </div>
+        </div>
+        <div class="malu-card malu-semantiline">
+          <div class="malu-card-header">
+            <div class="malu-icon">📚</div>
+            <div>
+              <div class="malu-name">Semantiline mälu</div>
+              <div class="malu-aka">faktiteadmised</div>
+            </div>
+          </div>
+          <div class="malu-card-body">
+            <div class="malu-desc">Üldised teadmised maailma kohta — abstraktne ja üldistatud info, mis pole seotud konkreetse sündmusega.</div>
+            <div class="malu-ex">Eesti pealinn on Tallinn. 2 × 3 = 6.</div>
+          </div>
+        </div>
+        <div class="malu-card malu-episoodiline">
+          <div class="malu-card-header">
+            <div class="malu-icon">🎞️</div>
+            <div>
+              <div class="malu-name">Episoodiline mälu</div>
+              <div class="malu-aka">isiklikud mälestused</div>
+            </div>
+          </div>
+          <div class="malu-card-body">
+            <div class="malu-desc">Isiklikud sündmused: mis juhtus, kus ja millal. Autobiograafiline mälu. Seotud ajas ja ruumis.</div>
+            <div class="malu-ex">Mälestus sellest kuidas sünnipäevatorti sõid</div>
+          </div>
+        </div>
+        <div class="malu-card malu-protseduuriline">
+          <div class="malu-card-header">
+            <div class="malu-icon">🚴</div>
+            <div>
+              <div class="malu-name">Protseduuriline mälu</div>
+              <div class="malu-aka">lihasmälu</div>
+            </div>
+          </div>
+          <div class="malu-card-body">
+            <div class="malu-desc">Oskused ja harjumused — "kuidas midagi teha". Ei pea teadlikult meenutama. Automatiseeritud.</div>
+            <div class="malu-ex">Jalgrattasõit, kirjutamine, autojuhtimine</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ENDEL TULVING ===== -->
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🔬</div>
+      <div>
+        <div class="section-title">Teadlane: Endel Tulving</div>
+        <div class="section-subtitle">Mälusüsteemide teooria rajaja</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="person-box">
+        <div class="person-avatar">👨‍🔬</div>
+        <div>
+          <div class="person-name">Endel Tulving</div>
+          <div class="person-years">1927 – 2023 · Eesti-Kanada psühholoog</div>
+          <div class="person-desc">Pakkus mälusüsteemide käsitluse esimesena välja 1970. aastatel ning leidis ka eksperimentaalseid kinnitusi. Tema kõige tuntum saavutus on episoodilise ja semantilise mälu eristamine — täna peetakse seda psühholoogia põhikontseptsiooniks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HENRY MOLAISON ===== -->
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">🏥</div>
+      <div>
+        <div class="section-title">Juhtum: Henry Molaison</div>
+        <div class="section-subtitle">Mida see meile mälu kohta õpetas?</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="case-box">
+        <div class="case-label">Ajalooline juhtum · 1953</div>
+        <div class="case-title">Epilepsiaoperatsioon ja suur mälukaotus</div>
+        <div class="case-text">Henry Molaison oli raske epilepsiahaige. Epilepsiahoogudest vabanemiseks eemaldati tal operatsioonil suur osa ajustruktuuridest — sealhulgas hipokampus. Tulemuseks oli ulatuslik amneesia: ta ei mäletanud viimast 10 aastat oma elust ega suutnud ka uusi sündmusi meelde jätta. Üllatavalt aga säilis tema protseduuriline mälu — ta suutis õppida uusi motoorseid oskusi, kuid ei mäletanud neid õppinud olevat.</div>
+        <div class="case-question">❓ Milline mälusüsteem sai kahjustada — ja milline säilis?</div>
+      </div>
+      <div class="highlight-box" style="margin-top:14px;">
+        <div class="highlight-icon">💡</div>
+        <div class="highlight-text">Vastus: Episoodiline ja semantiline mälu said kahjustada (hipokampus on nende jaoks kriitiline), kuid protseduuriline mälu säilis — see asub teistes ajupiirkondades.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MNEMOTEHNIKAD ===== -->
+  <div class="section-label">Mnemotehnikad</div>
+
+  <div class="section-block theme-teal">
+    <div class="section-header">
+      <div class="section-emoji">🛠️</div>
+      <div>
+        <div class="section-title">Mnemotehnikad — ülevaade</div>
+        <div class="section-subtitle">4 peamist tehnikat meeldejätmiseks</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="tehnika-table">
+        <thead>
+          <tr>
+            <th>Tehnika</th>
+            <th>Kuidas toimib</th>
+            <th>Sobib kõige paremini</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="t-name">Riimid ja luuletused</span><div class="t-ex">+ viis/meloodia</div></td>
+            <td>Rütm ja heli aitavad ajul infot kodeerida ja taastoota. Laul jääb kiiremini meelde kui proosa.</td>
+            <td>Numbrid, kuupäevad, reeglid, telefoninumbrid</td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Akronüümid</span><div class="t-ex">esitähtlühendid</div></td>
+            <td>Iga meeldejäetava sõna esitäht moodustab uue sõna või lühendi.</td>
+            <td>Lühikesed nimekirjad, ilmakaared, etapid, reeglid</td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Lausete moodustamine</span><div class="t-ex">esitähtlause</div></td>
+            <td>Iga järjekorraelement saab lause algussõna — lause on kergem meelde jätta kui loetelu.</td>
+            <td>Järjestatud nimekirjad, värvid, planeedid, etapid</td>
+          </tr>
+          <tr>
+            <td><span class="t-name">Assotsiatsioon + teekonna meetod</span><div class="t-ex">kõige võimsam tehnika</div></td>
+            <td>Info muudetakse absurdseks pildiks ja "paigutatakse" tuttavasse koha-teekonnal. Ruumiline mälu on väga tugev.</td>
+            <td>Pikad nimekirjad, sõnad, terminid, faktid</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== TEEKONNA MEETOD ===== -->
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🗺️</div>
+      <div>
+        <div class="section-title">Teekonna meetod — detailselt</div>
+        <div class="section-subtitle">Mälupalee ehk Loci meetod — iidne kreeka tehnika</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Vali tuttav koht</h4>
+            <p>Kodu, koolitee, kool, tänav. Peab olema koht, mida näed mõttes selgelt ilma pingutuseta. Mida paremini tead, seda parem.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Määra kindlad "peatused"</h4>
+            <p>Vali 5–10 konkreetset punkti järjekorras: uks → esik → köök → elutuba jne. Järjekord peab alati sama olema!</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Muuda iga asi absurdseks pildiks</h4>
+            <p>Iga meeldejäetav asi → naljakas, üllatav või väga elav visuaalne kujutis. Tavapärane = unustub. Absurdne = jääb meelde!</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>"Aseta" pildid peatustele</h4>
+            <p>Kujuta ette, et iga pilt toimub selles konkreetses peatuses — võimalikult detailselt ja elavalt. Lase kujutisel "elada".</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Kõnni teekonnal "läbi"</h4>
+            <p>Info taastootmiseks: kujuta mõttes ette, et kõnnid oma teekonnal. Igas peatuses "näed" pilti → saad info kätte.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:28px;">Näide: poenimekiri teekonna meetodiga</div>
+      <div class="teekond-map">
+        <div class="teekond-stop">
+          <div class="ts-header"><div class="ts-num">①</div><div class="ts-loc">Uks</div></div>
+          <div class="ts-body"><div class="ts-item">3 köögivilja</div><div class="ts-img">Kolmekäeline "inimpeet" koputab uksele</div></div>
+        </div>
+        <div class="teekond-stop">
+          <div class="ts-header"><div class="ts-num">②</div><div class="ts-loc">Esik</div></div>
+          <div class="ts-body"><div class="ts-item">Viinerid</div><div class="ts-img">Kuri lihunik viineritükid käes tantsib koridoris</div></div>
+        </div>
+        <div class="teekond-stop">
+          <div class="ts-header"><div class="ts-num">③</div><div class="ts-loc">Köök</div></div>
+          <div class="ts-body"><div class="ts-item">Piim, hapukoor, vahukoor</div><div class="ts-img">Piimatooted istuvad saunas päikseprillidega</div></div>
+        </div>
+        <div class="teekond-stop">
+          <div class="ts-header"><div class="ts-num">④</div><div class="ts-loc">Elutuba</div></div>
+          <div class="ts-body"><div class="ts-item">Leib, röstsai</div><div class="ts-img">Leib ja Fazer röstsai mängivad malet — röstsai võidab</div></div>
+        </div>
+      </div>
+
+      <div class="kelli-box">
+        <div class="kelli-label">Eeskujulik näide</div>
+        <div class="kelli-title">Mida tegi Kelli oma kodutöös?</div>
+        <div class="kelli-points">
+          <div class="kelli-point"><div class="kelli-dot"></div><span>Jagas poenimekirja gruppidesse ja seostas need poe osakondadega — loogilisem teekond</span></div>
+          <div class="kelli-point"><div class="kelli-dot"></div><span>Lõi iga peatuse jaoks erilise tegelase — inimkujuline peet, kuri lihunik, saunatooted</span></div>
+          <div class="kelli-point"><div class="kelli-dot"></div><span>Joonistas oma teekonna kaardi — visuaalne kinnistamine</span></div>
+          <div class="kelli-point"><div class="kelli-dot"></div><span>Telefoninumbrite jaoks kasutas lauluviisi — 3 kordusega jäi meelde</span></div>
+          <div class="kelli-point"><div class="kelli-dot"></div><span>Inglise väljendite jaoks mõtles ise välja "tähe meetodi" — isiklik seos akronüümiga</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KODUTÖÖ JUHEND ===== -->
+  <div class="section-label">Kodutöö</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">📝</div>
+      <div>
+        <div class="section-title">Kodutöö juhend</div>
+        <div class="section-subtitle">Kasuta vähemalt 3 tehnikat — üks neist peab olema teekonna meetod</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="hw-grid">
+        <div class="hw-card hw-1">
+          <div class="hw-card-header">
+            <div class="hw-step-badge">Samm 1</div>
+            <div class="hw-card-title">Loe läbi kõik tehnikad</div>
+          </div>
+          <div class="hw-card-body">
+            <div class="hw-card-text">Tutvu selle lehe ülemise osaga — kõik 4 tehnikat on lahti seletatud koos näidetega.</div>
+          </div>
+        </div>
+        <div class="hw-card hw-2">
+          <div class="hw-card-header">
+            <div class="hw-step-badge">Samm 2</div>
+            <div class="hw-card-title">Vali 3 ülesannet</div>
+          </div>
+          <div class="hw-card-body">
+            <div class="hw-card-text">Näiteks:</div>
+            <ul>
+              <li>Poenimekiri (teekond)</li>
+              <li>Telefoninumber (laul/rütm)</li>
+              <li>Inglise väljendid (akronüümid)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hw-card hw-3">
+          <div class="hw-card-header">
+            <div class="hw-step-badge">Samm 3</div>
+            <div class="hw-card-title">Kasuta tehnikaid päriselt</div>
+          </div>
+          <div class="hw-card-body">
+            <div class="hw-card-text">Iga ülesande jaoks vähemalt üks tehnika. Kindlasti kasuta teekonna meetodit vähemalt korra.</div>
+          </div>
+        </div>
+        <div class="hw-card hw-4">
+          <div class="hw-card-header">
+            <div class="hw-step-badge">Samm 4</div>
+            <div class="hw-card-title">Kirjelda täpselt</div>
+          </div>
+          <div class="hw-card-body">
+            <div class="hw-card-text">Kirjuta lahti: mis info, mis peatused, mis pildid. Lisa joonistused! Kirjeldus peab olema nii täpne, et keegi teine saaks korrata.</div>
+          </div>
+        </div>
+        <div class="hw-card hw-5">
+          <div class="hw-card-header">
+            <div class="hw-step-badge">Samm 5</div>
+            <div class="hw-card-title">Analüüsi kogemust</div>
+          </div>
+          <div class="hw-card-body">
+            <div class="hw-card-text">Vasta 4 analüüsiküsimusele (vt allpool).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ANALÜÜSIKÜSIMUSED ===== -->
+  <div class="section-block theme-yellow">
+    <div class="section-header">
+      <div class="section-emoji">💬</div>
+      <div>
+        <div class="section-title">Analüüsiküsimused</div>
+        <div class="section-subtitle">Kodutöö viimane osa — klõpsa küsimust, et näha mõtlemisabi</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="q-list">
+        <div class="q-item" onclick="toggleQ(this)">
+          <div class="q-header">
+            <div class="q-num">1</div>
+            <div class="q-text">Milliseid õppimismeetodeid oled varem kasutanud?</div>
+            <div class="q-arrow">▾</div>
+          </div>
+          <div class="q-body">Mõtle ausalt: kas oled kordanud (tuupinud), teinud kokkuvõtteid, seletanud kellelegi teisele, kasutanud flashcard'e, lugenud mitu korda üle, teinud märkmeid? "Lihtsalt lugesin" on ka täiesti kehtiv vastus. Pole õiget ega vale — küsimus on selles, mida sa tegelikult teinud oled.</div>
+        </div>
+        <div class="q-item" onclick="toggleQ(this)">
+          <div class="q-header">
+            <div class="q-num">2</div>
+            <div class="q-text">Milline proovitud mnemotehnika meeldis enim ja miks?</div>
+            <div class="q-arrow">▾</div>
+          </div>
+          <div class="q-body">Võrdle oma kogemust: mis tundus loomulik? Mis oli lõbusam? Mis töötas kiiremini? Mis oli kohmakas? Võid öelda ka kui mõni tehnika üldse ei töötanud — see on huvitav tulemus. Konkreetsed näited on paremad kui üldistused.</div>
+        </div>
+        <div class="q-item" onclick="toggleQ(this)">
+          <div class="q-header">
+            <div class="q-num">3</div>
+            <div class="q-text">Kas mnemotehnikad lihtsustasid/kiirendasid õppimist?</div>
+            <div class="q-arrow">▾</div>
+          </div>
+          <div class="q-body">Proovi hinnata konkreetselt — näiteks: "sain telefoninumbri selgeks 3 kordusega, tavaliselt oleks võtnud 20+". Või: "teekonna meetod võttis seadistamiseks rohkem aega, aga tulemus oli parem". Kui ei lihtsustanud — see on ka huvitav tulemus, kirjuta miks!</div>
+        </div>
+        <div class="q-item" onclick="toggleQ(this)">
+          <div class="q-header">
+            <div class="q-num">4</div>
+            <div class="q-text">Kas kasutad mnemotehnikaid edaspidi õppimisel?</div>
+            <div class="q-arrow">▾</div>
+          </div>
+          <div class="q-body">Mõtle millises olukorras oleks tehnikast kasu: eksamiks õppimine, võõrkeelsed sõnad, valemid, ajalooaastad? Milline tehnika sobib sinu jaoks kõige paremini? Mis olukorras sa kindlasti seda kasutaksid?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleQ(el) {
+  el.classList.toggle('open');
+}
+</script>
+</body>
+</html>
