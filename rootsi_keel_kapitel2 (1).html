@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Svenska — Kapitel 2 · Hur är läget?</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff; --card: #ffffff;
+    --blue: #2563eb; --blue-light: #dbeafe;
+    --green: #16a34a; --green-light: #dcfce7;
+    --orange: #ea580c; --orange-light: #ffedd5;
+    --purple: #7c3aed; --purple-light: #ede9fe;
+    --yellow: #ca8a04; --yellow-light: #fef9c3;
+    --teal: #0d9488; --teal-light: #ccfbf1;
+    --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1a3a5e 50%, #1e3a2f 100%);
+    color: white; padding: 56px 32px 48px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(22,160,133,0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(37,99,235,0.2) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px; background: linear-gradient(135deg, #0d9488, #2563eb);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px; box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #6ee7b7; }
+  .hero-sub { font-size: 1rem; opacity: 0.75; max-width: 500px; margin: 0 auto 24px; }
+  .hero-flag { font-size: 2rem; margin-bottom: 6px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+  #voiceBanner {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; padding: 8px 18px; margin: 18px auto 0; max-width: 460px;
+    font-size: 0.8rem; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .vdot { width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; flex-shrink: 0; animation: blink 1s ease infinite; }
+  #voiceBanner.ok .vdot { background: #4ade80; animation: none; }
+  #voiceBanner.err .vdot { background: #f87171; animation: none; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 20px; margin-top: 40px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-block {
+    background: var(--card); border-radius: 20px; border: 2px solid var(--border);
+    overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px;
+  }
+  .section-header { padding: 22px 26px 16px; display: flex; align-items: flex-start; gap: 14px; }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+  .theme-blue .section-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+
+  /* SPEAK BUTTON */
+  .sb {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--blue-light); border: none; cursor: pointer;
+    font-size: 0.8rem; transition: all 0.15s; flex-shrink: 0;
+    vertical-align: middle; line-height: 1; padding: 0;
+  }
+  .sb:hover { background: var(--blue); transform: scale(1.12); }
+  .sb.speaking { background: var(--blue); animation: pring 0.7s ease infinite; }
+  .sb.g { background: var(--green-light); }
+  .sb.g:hover, .sb.g.speaking { background: var(--green); }
+  .sb.o { background: var(--orange-light); }
+  .sb.o:hover, .sb.o.speaking { background: var(--orange); }
+  .sb.y { background: var(--yellow-light); }
+  .sb.y:hover, .sb.y.speaking { background: var(--yellow); }
+  @keyframes pring {
+    0%,100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.4); }
+    50% { box-shadow: 0 0 0 7px rgba(37,99,235,0); }
+  }
+
+  /* PLAY ALL */
+  .play-all-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, #2563eb, #0d9488); color: white;
+    border: none; border-radius: 10px; padding: 9px 18px;
+    font-size: 0.82rem; font-weight: 800; cursor: pointer; transition: all 0.15s;
+    margin-bottom: 14px; font-family: 'Nunito', sans-serif;
+  }
+  .play-all-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .play-all-btn.playing { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+  /* PHRASE TABLE */
+  .phrase-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .phrase-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 10px 14px; text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border); background: #f8fafc;
+  }
+  .phrase-table td { padding: 10px 14px; font-size: 0.88rem; border-bottom: 1px solid #f1f5f9; vertical-align: middle; line-height: 1.5; }
+  .phrase-table tr:last-child td { border-bottom: none; }
+  .phrase-table tr:hover td { background: #f8fafc; }
+  .sv { font-weight: 800; color: var(--blue); }
+  .et { color: var(--text); }
+  .note { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 2px; }
+  .rc { display: flex; align-items: center; gap: 6px; }
+
+  /* CONJUNCTION CARD */
+  .conj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .conj-card { border-radius: 16px; overflow: hidden; border: 2px solid var(--border); }
+  .conj-header { padding: 16px 18px 12px; display: flex; align-items: center; gap: 10px; }
+  .conj-word { font-size: 2rem; font-weight: 900; font-family: 'Space Mono', monospace; display: flex; align-items: center; gap: 10px; }
+  .conj-meaning { font-size: 0.8rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .conj-body { padding: 4px 18px 16px; }
+  .conj-rule { font-size: 0.85rem; color: var(--text); line-height: 1.5; margin-bottom: 10px; }
+  .conj-examples { display: flex; flex-direction: column; gap: 8px; }
+  .ex-item { background: #f8fafc; border-radius: 10px; padding: 10px 12px; border-left: 3px solid; }
+  .ex-sv { font-size: 0.88rem; font-weight: 800; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .ex-et { font-size: 0.82rem; color: var(--muted); }
+  .conj-och .conj-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .conj-och .conj-word { color: var(--blue); }
+  .conj-och .ex-item { border-left-color: var(--blue); }
+  .conj-och .ex-sv { color: var(--blue); }
+  .conj-men .conj-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .conj-men .conj-word { color: var(--orange); }
+  .conj-men .ex-item { border-left-color: var(--orange); }
+  .conj-men .ex-sv { color: var(--orange); }
+  .conj-saa .conj-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .conj-saa .conj-word { color: var(--green); }
+  .conj-saa .ex-item { border-left-color: var(--green); }
+  .conj-saa .ex-sv { color: var(--green); }
+
+  /* TIPS */
+  .tips-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+  .tip-card { background: var(--card); border-radius: 14px; padding: 16px 18px; border: 2px solid var(--border); display: flex; gap: 12px; }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* PHRASE BOX */
+  .phrase-box { background: var(--yellow-light); border: 2px solid var(--yellow); border-radius: 16px; padding: 22px; margin-top: 8px; }
+  .phrase-box h3 { font-size: 0.95rem; font-weight: 900; color: var(--yellow); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+  .phrase { background: white; border-radius: 8px; padding: 8px 12px; font-size: 0.83rem; border-left: 3px solid var(--yellow); line-height: 1.4; display: flex; align-items: flex-start; gap: 8px; }
+  .phrase-content { flex: 1; }
+  .phrase-sv { font-weight: 800; color: var(--text); }
+  .phrase-et { color: var(--muted); font-size: 0.78rem; }
+  .phrase .sb { width: 24px; height: 24px; font-size: 0.72rem; flex-shrink: 0; margin: 0; }
+
+  /* BADGE */
+  .badge { display: inline-block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; border-radius: 999px; padding: 3px 10px; margin-left: 8px; vertical-align: middle; }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+
+  /* DIALOGUE */
+  .dialogue { background: #f8fafc; border-radius: 14px; padding: 18px 20px; border: 2px solid var(--border); margin-top: 16px; }
+  .dialogue-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; }
+  .line { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .line:last-child { margin-bottom: 0; }
+  .speaker { font-size: 0.72rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; min-width: 28px; text-align: right; padding-top: 10px; }
+  .a-speaker { color: var(--blue); }
+  .b-speaker { color: var(--green); }
+  .bubble-wrap { flex: 1; }
+  .bubble { border-radius: 10px; padding: 8px 12px; font-size: 0.88rem; display: flex; align-items: center; gap: 8px; }
+  .bubble-a { background: var(--blue-light); color: var(--blue); font-weight: 700; }
+  .bubble-b { background: var(--green-light); color: var(--green); font-weight: 700; }
+  .bubble-text { flex: 1; }
+  .bubble-tr { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 3px; padding-left: 2px; }
+
+  footer { text-align: center; padding: 28px 24px; color: var(--muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-flag">🇸🇪</div>
+    <div class="hero-avatar">💬</div>
+    <h1>Svenska <span>kapitel 2</span></h1>
+    <p class="hero-sub">Hur är läget? · Vad gör de i Sverige? · Konjunktioner: och, men, så</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">teemat</div></div>
+      <div class="stat"><div class="stat-num">30+</div><div class="stat-label">fraasi</div></div>
+      <div class="stat"><div class="stat-num">🔊</div><div class="stat-label">audio</div></div>
+    </div>
+    <div id="voiceBanner"><span class="vdot"></span><span id="voiceMsg">Laen rootsi häält...</span></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">💬 1. osa — Tervitused ja enesetunde küsimine</div>
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">👋</div>
+      <div>
+        <div class="section-title">Hur är läget? <span class="badge badge-blue">Tervitused</span></div>
+        <div class="section-subtitle">Klõpsa 🔊 iga fraasi juures kuulamiseks</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="phrase-table">
+        <thead><tr><th>Rootsi keeles 🇸🇪</th><th>Eesti keeles</th><th>Märkus</th></tr></thead>
+        <tbody id="tb-greet"></tbody>
+      </table>
+      <div class="dialogue">
+        <div class="dialogue-title">📖 Näidisdialoog</div>
+        <button class="play-all-btn" id="playAllBtn" onclick="playAll()">▶ Kuula kogu dialoog</button>
+        <div id="dl-lines"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">🇸🇪 2. osa — Tegevused Rootsis</div>
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">🏙️</div>
+      <div>
+        <div class="section-title">Vad gör de i Sverige? <span class="badge badge-green">Tegevused</span></div>
+        <div class="section-subtitle">Klõpsa 🔊 tegusõnade ja lausete kuulamiseks</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="phrase-table">
+        <thead><tr><th>Infinitiiv</th><th>Olevikus</th><th>Eesti keeles</th></tr></thead>
+        <tbody id="tb-verbs"></tbody>
+      </table>
+      <div style="margin-top:18px;">
+        <div style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">📝 Näidislaused</div>
+        <table class="phrase-table">
+          <thead><tr><th>Rootsi keeles</th><th>Eesti keeles</th></tr></thead>
+          <tbody id="tb-sent"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">🔗 3. osa — Sidesõnad (konjunktioner)</div>
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">🔗</div>
+      <div>
+        <div class="section-title">Och · Men · Så <span class="badge badge-orange">Sidesõnad</span></div>
+        <div class="section-subtitle">Klõpsa 🔊 sidesõnade ja näitelausete kuulamiseks</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="conj-grid" id="conj-grid"></div>
+      <div style="margin-top:20px;">
+        <table class="phrase-table">
+          <thead><tr><th>Sidesõna</th><th>Küsimus</th><th>Eesti vaste</th><th>Näide</th></tr></thead>
+          <tbody id="tb-conj-sum"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">✍️ Fraasipank — kontrolltöö jaoks</div>
+  <div class="phrase-box">
+    <h3>📝 Valmislaused — klõpsa 🔊 igal fraasil!</h3>
+    <div class="phrases-grid" id="pb"></div>
+  </div>
+
+  <div class="section-label">💡 Õppimise nipid</div>
+  <div class="tips-row">
+    <div class="tip-card"><div class="tip-icon">🎯</div><div><div class="tip-title">Kuula ja korda</div><div class="tip-text">Klõpsa „Kuula kogu dialoog" — seejärel korda iga lauset peast. See on parim tee häälduse õppimiseks!</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🔗</div><div><div class="tip-title">Sidesõnade trikk</div><div class="tip-text"><strong>och</strong> = lisab · <strong>men</strong> = vastandab · <strong>så</strong> = tagajärg. Küsi: „Kas see on JA, AGA või NII ET?"</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🇸🇪</div><div><div class="tip-title">Fika on rootsi kultuur!</div><div class="tip-text">„Fika" on rootsi kultuuris väga tähtis — kohvi/tee koos küpsise/koogiga. Kuula ka sõna „fikar" hääldust!</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📝</div><div><div class="tip-title">Tegusõnade reegel</div><div class="tip-text">Rootsi keeles lõpeb oleviku verb alati <strong>-r</strong>-iga: bor, arbetar, studerar, pratar. Kuula erinevust!</div></div></div>
+  </div>
+
+</div>
+
+<footer>Illiamri rootsi keele õppematerjalid · Kapitel 2 · 2026 🇸🇪</footer>
+
+<script>
+// ===== SPEECH ENGINE =====
+let svVoice = null;
+let activBtn = null;
+
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+  svVoice = voices.find(v => v.lang && v.lang.startsWith('sv')) || null;
+  const b = document.getElementById('voiceBanner');
+  const m = document.getElementById('voiceMsg');
+  if (svVoice) {
+    b.className = 'ok';
+    m.textContent = '🔊 Rootsi hääl: ' + svVoice.name;
+  } else if (voices.length > 0) {
+    b.className = 'err';
+    m.textContent = '⚠️ Rootsi häält ei leitud — kasuta Chrome\'i parima tulemuse jaoks';
+  }
+}
+if ('onvoiceschanged' in speechSynthesis) speechSynthesis.onvoiceschanged = loadVoices;
+setTimeout(loadVoices, 300);
+setTimeout(loadVoices, 1200);
+
+function speak(text, btn) {
+  speechSynthesis.cancel();
+  if (activBtn) { activBtn.classList.remove('speaking'); activBtn.textContent = '🔊'; }
+
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'sv-SE';
+  if (svVoice) u.voice = svVoice;
+  u.rate = 0.88; u.pitch = 1.0;
+
+  if (btn) {
+    btn.classList.add('speaking'); btn.textContent = '🔉'; activBtn = btn;
+    u.onend  = () => { btn.classList.remove('speaking'); btn.textContent = '🔊'; if (activBtn===btn) activBtn=null; };
+    u.onerror= () => { btn.classList.remove('speaking'); btn.textContent = '🔊'; };
+  }
+  speechSynthesis.speak(u);
+}
+
+function mkBtn(text, cls='') {
+  const t = text.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const safe = text.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+  return `<button class="sb ${cls}" onclick="speak('${safe}',this)" title="Kuula">🔊</button>`;
+}
+
+// ===== DATA =====
+const greetings = [
+  ['Hur är läget?',     'Kuidas läheb? / Kuidas on?',        'argikeelne, noorte seas'],
+  ['Hur mår du?',       'Kuidas sul läheb?',                  'ametlikum variant'],
+  ['Hur har du det?',   'Kuidas sul läheb? (üldiselt)',       'hoolivam toon'],
+  ['Det är bra, tack!', 'Hästi, aitäh!',                      'kõige levinum vastus'],
+  ['Bara bra!',         'Täitsa hästi!',                      'rõõmsameelne vastus'],
+  ['Inte så bra.',      'Mitte eriti hästi.',                  'kui läheb halvasti'],
+  ['Ganska bra.',       'Päris hästi.',                       ''],
+  ['Okej, det går.',    'Okei, läheb.',                       'keskmiselt'],
+  ['Och du?',           'Aga sina?',                          'küsi tagasi!'],
+  ['Tack, detsamma!',   'Aitäh, samuti!',                     'kui soovitakse head'],
+];
+
+const dialogue = [
+  {sp:'A', sv:'Hej! Hur är läget?',             et:'Hei! Kuidas läheb?',           c:'a'},
+  {sp:'B', sv:'Hej! Det är bra, tack! Och du?', et:'Hei! Hästi, aitäh! Aga sina?', c:'b'},
+  {sp:'A', sv:'Bara bra! Vi ses!',               et:'Täitsa hästi! Näeme!',         c:'a'},
+  {sp:'B', sv:'Hej då!',                          et:'Head aega!',                   c:'b'},
+];
+
+const verbs = [
+  ['att bo',          'bor',          'elama / elab'],
+  ['att arbeta',      'arbetar',      'töötama / töötab'],
+  ['att studera',     'studerar',     'õppima / õpib (ülikoolis)'],
+  ['att gå i skolan', 'går i skolan', 'koolis käima'],
+  ['att tala',        'talar',        'rääkima / räägib'],
+  ['att lära sig',    'lär sig',      'õppima (iseseisvalt)'],
+  ['att fika',        'fikar',        'fikama — kohvi/tee + koogi paus ☕'],
+  ['att cykla',       'cyklar',       'jalgrattaga sõitma'],
+  ['att handla',      'handlar',      'ostlema / poes käima'],
+  ['att titta på TV', 'tittar på TV', 'televiisorit vaatama'],
+  ['att laga mat',    'lagar mat',    'süüa tegema / kokkama'],
+  ['att träna',       'tränar',       'trennis käima / sportima'],
+];
+
+const sentences = [
+  ['Han bor i Stockholm.',          'Ta elab Stockholmis.'],
+  ['Hon arbetar på ett café.',       'Ta töötab kohvikus.'],
+  ['De studerar svenska.',           'Nad õpivad rootsi keelt.'],
+  ['Han pratar med sina kompisar.', 'Ta räägib oma sõpradega.'],
+  ['Hon fikar varje dag.',           'Ta fikab iga päev.'],
+  ['De lagar mat hemma.',            'Nad teevad süüa kodus.'],
+];
+
+const conjunctions = [
+  {
+    cls:'conj-och', word:'och', btnCls:'', meaning:'= ja / ning',
+    rule:'Ühendab kahte asja, inimest või tegevust. Vastab eesti keele <strong>„ja"</strong> või <strong>„ning"</strong>.',
+    ex:[
+      {sv:'Han är glad <strong>och</strong> snäll.',    plain:'Han är glad och snäll.',    et:'Ta on rõõmsameelne <strong>ja</strong> lahke.'},
+      {sv:'Hon arbetar <strong>och</strong> studerar.', plain:'Hon arbetar och studerar.', et:'Ta töötab <strong>ja</strong> õpib.'},
+      {sv:'Jag köper mjölk <strong>och</strong> bröd.', plain:'Jag köper mjölk och bröd.', et:'Ma ostan piima <strong>ja</strong> leiba.'},
+    ]
+  },
+  {
+    cls:'conj-men', word:'men', btnCls:'o', meaning:'= aga / kuid',
+    rule:'Näitab <strong>vastandust</strong> — ütled ühe asja, aga siis midagi vastupidist. Vastab eesti <strong>„aga"</strong> või <strong>„kuid"</strong>.',
+    ex:[
+      {sv:'Hon är trött <strong>men</strong> glad.',              plain:'Hon är trött men glad.',              et:'Ta on väsinud, <strong>aga</strong> rõõmsameelne.'},
+      {sv:'Jag vill fika, <strong>men</strong> jag har inte tid.',plain:'Jag vill fika, men jag har inte tid.', et:'Tahan fikata, <strong>aga</strong> mul pole aega.'},
+      {sv:'Han bor i Sverige <strong>men</strong> jobbar i Norge.',plain:'Han bor i Sverige men jobbar i Norge.',et:'Ta elab Rootsis, <strong>aga</strong> töötab Norras.'},
+    ]
+  },
+  {
+    cls:'conj-saa', word:'så', btnCls:'g', meaning:'= nii et / seega',
+    rule:'Näitab <strong>tagajärge</strong> — esimene lause on põhjus, teine on tulemus. Vastab eesti <strong>„nii et"</strong> või <strong>„seega"</strong>.',
+    ex:[
+      {sv:'Det regnar, <strong>så</strong> jag tar paraplyet.', plain:'Det regnar, så jag tar paraplyet.', et:'Sajab vihma, <strong>nii et</strong> võtan vihmavarju.'},
+      {sv:'Han är hungrig, <strong>så</strong> han lagar mat.', plain:'Han är hungrig, så han lagar mat.', et:'Ta on näljane, <strong>seega</strong> teeb süüa.'},
+      {sv:'Hon är trött, <strong>så</strong> hon sover.',       plain:'Hon är trött, så hon sover.',       et:'Ta on väsinud, <strong>nii et</strong> magab.'},
+    ]
+  },
+];
+
+const phrasebank = [
+  ['Hur är läget?',                       'Kuidas läheb?'],
+  ['Det är bra, tack! Och du?',           'Hästi, aitäh! Aga sina?'],
+  ['Inte så bra.',                         'Mitte eriti hästi.'],
+  ['Han bor i Sverige.',                  'Ta elab Rootsis.'],
+  ['De arbetar och studerar.',            'Nad töötavad ja õpivad.'],
+  ['Hon lagar mat hemma.',                'Ta teeb süüa kodus.'],
+  ['Han är glad och snäll.',              'Ta on rõõmsameelne ja lahke.'],
+  ['Jag vill fika, men jag har inte tid.','Tahan fikata, aga mul pole aega.'],
+  ['Det regnar, så jag tar paraplyet.',   'Sajab, nii et võtan vihmavarju.'],
+  ['Hon fikar varje dag.',                'Ta fikab iga päev.'],
+  ['Tack, detsamma!',                     'Aitäh, samuti!'],
+  ['Vi ses! Hej då!',                     'Näeme! Head aega!'],
+];
+
+// ===== RENDER =====
+// Greetings
+const tbG = document.getElementById('tb-greet');
+greetings.forEach(([sv, et, note]) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><div class="rc"><span class="sv">${sv}</span>${mkBtn(sv)}</div></td>
+    <td><span class="et">${et}</span></td>
+    <td><span class="note">${note}</span></td>`;
+  tbG.appendChild(tr);
+});
+
+// Dialogue
+const dlEl = document.getElementById('dl-lines');
+dialogue.forEach(l => {
+  const d = document.createElement('div');
+  d.className = 'line';
+  d.innerHTML = `
+    <span class="speaker ${l.c}-speaker">${l.sp}</span>
+    <div class="bubble-wrap">
+      <div class="bubble bubble-${l.c}">
+        <span class="bubble-text">${l.sv}</span>
+        ${mkBtn(l.sv, l.c==='b' ? 'g' : '')}
+      </div>
+      <div class="bubble-tr">${l.et}</div>
+    </div>`;
+  dlEl.appendChild(d);
+});
+
+// Verbs
+const tbV = document.getElementById('tb-verbs');
+verbs.forEach(([inf, pres, et]) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><div class="rc"><span class="sv">${inf}</span>${mkBtn(inf,'g')}</div></td>
+    <td><div class="rc"><span class="sv">${pres}</span>${mkBtn(pres,'g')}</div></td>
+    <td><span class="et">${et}</span></td>`;
+  tbV.appendChild(tr);
+});
+
+// Sentences
+const tbS = document.getElementById('tb-sent');
+sentences.forEach(([sv, et]) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><div class="rc"><span class="sv">${sv}</span>${mkBtn(sv,'g')}</div></td>
+    <td><span class="et">${et}</span></td>`;
+  tbS.appendChild(tr);
+});
+
+// Conjunctions
+const cg = document.getElementById('conj-grid');
+conjunctions.forEach(c => {
+  const exHtml = c.ex.map(e =>
+    `<div class="ex-item">
+      <div class="ex-sv"><span>${e.sv}</span>${mkBtn(e.plain, c.btnCls)}</div>
+      <div class="ex-et">${e.et}</div>
+    </div>`
+  ).join('');
+  const card = document.createElement('div');
+  card.className = `conj-card ${c.cls}`;
+  card.innerHTML = `
+    <div class="conj-header"><div>
+      <div class="conj-word">${c.word} ${mkBtn(c.word, c.btnCls)}</div>
+      <div class="conj-meaning">${c.meaning}</div>
+    </div></div>
+    <div class="conj-body">
+      <div class="conj-rule">${c.rule}</div>
+      <div class="conj-examples">${exHtml}</div>
+    </div>`;
+  cg.appendChild(card);
+});
+
+// Summary table
+const tbCS = document.getElementById('tb-conj-sum');
+const conjSum = [
+  {sv:'och', et:'ja, ning', q:'Mis lisandub?',       ex:'glad och snäll',    cls:''},
+  {sv:'men', et:'aga, kuid', q:'Mis on vastupidine?', ex:'trött men glad',    cls:'o'},
+  {sv:'så',  et:'nii et, seega', q:'Mis on tagajärg?',ex:'trött, så sover',   cls:'g'},
+];
+conjSum.forEach(r => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><div class="rc"><span class="sv">${r.sv}</span>${mkBtn(r.sv, r.cls)}</div></td>
+    <td>${r.q}</td>
+    <td><span class="et">${r.et}</span></td>
+    <td><div class="rc"><span class="sv">${r.ex}</span>${mkBtn(r.ex, r.cls)}</div></td>`;
+  tbCS.appendChild(tr);
+});
+
+// Phrasebank
+const pbEl = document.getElementById('pb');
+phrasebank.forEach(([sv, et]) => {
+  const d = document.createElement('div');
+  d.className = 'phrase';
+  d.innerHTML = `
+    <div class="phrase-content">
+      <div class="phrase-sv">${sv}</div>
+      <div class="phrase-et">${et}</div>
+    </div>
+    ${mkBtn(sv, 'y')}`;
+  pbEl.appendChild(d);
+});
+
+// ===== PLAY ALL DIALOGUE =====
+let playing = false;
+function playAll() {
+  const btn = document.getElementById('playAllBtn');
+  if (playing) {
+    speechSynthesis.cancel();
+    playing = false;
+    btn.classList.remove('playing');
+    btn.textContent = '▶ Kuula kogu dialoog';
+    return;
+  }
+  playing = true;
+  btn.classList.add('playing');
+  btn.textContent = '⏹ Peata';
+  speechSynthesis.cancel();
+
+  let i = 0;
+  function next() {
+    if (i >= dialogue.length || !playing) {
+      playing = false;
+      btn.classList.remove('playing');
+      btn.textContent = '▶ Kuula kogu dialoog';
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(dialogue[i++].sv);
+    u.lang = 'sv-SE'; if (svVoice) u.voice = svVoice; u.rate = 0.85;
+    u.onend  = () => setTimeout(next, 500);
+    u.onerror= () => next();
+    speechSynthesis.speak(u);
+  }
+  setTimeout(next, 100);
+}
+</script>
+</body>
+</html>
