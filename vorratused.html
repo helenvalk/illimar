@@ -744,9 +744,354 @@ Arvtelg: parabool &gt; sirge, kui x &lt; −1 või x &gt; 2
     </div>
   </div>
 
-  <!-- ===== CHAPTER 8 ===== -->
+  <!-- ===== CHAPTER 8: RATIONAL INEQUALITY BRING TO ONE SIDE ===== -->
   <div class="chapter">
     <div class="chapter-num">8</div>
+    <div><h2>Ratsionaalne võratus: vii kõigepealt ühele poole!</h2></div>
+  </div>
+
+  <div class="warn">
+    <strong>⚠ Kõige levinum viga ratsionaalsetel võratusel:</strong> Korrutada mõlemat poolt <em>(x+1)</em>-ga ilma märki muutmata — aga me ei tea, kas (x+1) on positiivne või negatiivne! Selle asemel: <strong>vii kõik ühele poole nullist.</strong>
+  </div>
+
+  <div class="rule">
+    <div class="label">Õige meetod</div>
+    <ol class="steps">
+      <li>Vii kõik vasemale poole: f(x)/g(x) − c &gt; 0 kujule</li>
+      <li>Vii ühise nimetaja alla üheks murruga</li>
+      <li>Rakenda intervallide meetodit lugejale ja nimetajale</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <strong>g) (2x+1)/(x+1) &gt; −2</strong>
+    <div class="math-block">
+Samm 1: Vii kõik ühele poole
+  (2x+1)/(x+1) + 2 > 0
+
+Samm 2: Ühine nimetaja
+  (2x+1)/(x+1) + 2(x+1)/(x+1) > 0
+  (2x+1 + 2x+2) / (x+1) > 0
+  (4x+3) / (x+1) > 0
+
+Samm 3: Kriitilised punktid
+  Lugeja null: 4x+3 = 0  →  x = −¾
+  Nimetaja null: x+1 = 0  →  x = −1  (EI kuulu lahendusse!)
+
+Samm 4: Märgiskeem (vt allpool)
+    </div>
+
+    <!-- VISUAL SIGN CHART -->
+    <div style="overflow-x:auto; margin: 16px 0;">
+      <table style="border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:13px; min-width:500px;">
+        <tr>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:left;">Tegur</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &lt; −1</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x = −1</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">−1 &lt; x &lt; −¾</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x = −¾</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &gt; −¾</th>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(4x+3)</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x+1)</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr style="background:#f0e8d4;">
+          <td style="padding:8px 12px;font-weight:700;">Murru märk</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">∄</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">− ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#1a6b6b;font-weight:bold;">0 ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="answer">x ∈ (−∞; −1) ∪ (−¾; +∞)</div>
+    <p style="font-size:14px;color:#6b5d40;margin-top:8px;">x = −1 ei kuulu, sest nimetaja = 0 (jagamine nulliga on keelatud!)<br>x = −¾ ei kuulu, sest tingimus on <strong>range</strong> &gt; (mitte ≥)</p>
+  </div>
+
+  <!-- ===== CHAPTER 9: SIGN CHART GENERAL ===== -->
+  <div class="chapter">
+    <div class="chapter-num">9</div>
+    <div><h2>Märgiskeem — universaalne visuaalne meetod</h2></div>
+  </div>
+
+  <div class="rule">
+    <div class="label">Märgiskeemi koostamine samm-sammult</div>
+    <ol class="steps">
+      <li>Kirjuta kõik tegurid eraldi ridadena tabelisse</li>
+      <li>Märgi iga teguri nullkohad arvteljele (veerud tabelis)</li>
+      <li>Täida iga teguri märk igas intervallis (+ või −)</li>
+      <li>Korruta märgid ridade kaupa — saad koguavaldise märgi</li>
+      <li>Vali nõutava märgiga intervallid; kontrolli piirpunktide kuulumist</li>
+    </ol>
+  </div>
+
+  <div class="def">
+    <div class="label">Kasulikud märgireegud</div>
+    <table>
+      <tr><th>Tegur</th><th>Käitumine nullkohas</th><th>Märki muutub?</th></tr>
+      <tr><td>(x − a)¹</td><td>null, astme 1</td><td><strong>Jah</strong> — märk pöördub</td></tr>
+      <tr><td>(x − a)²</td><td>null, astme 2</td><td><strong>Ei</strong> — jääb samaks (ruut ≥ 0)</td></tr>
+      <tr><td>(x − a)³</td><td>null, astme 3</td><td><strong>Jah</strong> — märk pöördub (paaritu aste)</td></tr>
+      <tr><td>(x − a)ⁿ, n paaris</td><td>null</td><td><strong>Ei</strong> — märk ei muutu</td></tr>
+      <tr><td>(x − a)ⁿ, n paaritu</td><td>null</td><td><strong>Jah</strong> — märk pöördub</td></tr>
+    </table>
+  </div>
+
+  <div class="example">
+    <strong>Näide täielikust märgiskeemist: (x+1)²(x−4)/(x+8) ≥ 0</strong>
+    <div style="overflow-x:auto; margin: 16px 0;">
+      <table style="border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:13px; min-width:560px;">
+        <tr>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:left;">Tegur</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &lt; −8</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x=−8</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">−8&lt;x&lt;−1</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x=−1</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">−1&lt;x&lt;4</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x=4</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &gt; 4</th>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x+1)²</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x−4)</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x+8)</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr style="background:#f0e8d4;">
+          <td style="padding:8px 12px;font-weight:700;">Kogu märk</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">− ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">∄</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#1a6b6b;font-weight:bold;">0 ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">− ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#1a6b6b;font-weight:bold;">0 ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+        </tr>
+      </table>
+    </div>
+    <div class="answer">x ∈ (−8; −1] ∪ [4; +∞)</div>
+  </div>
+
+  <!-- ===== CHAPTER 10: PARAMETRIC ===== -->
+  <div class="chapter">
+    <div class="chapter-num">10</div>
+    <div><h2>Parameetriga võrratused</h2></div>
+  </div>
+
+  <div class="def">
+    <div class="label">Mis on parameeter?</div>
+    Parameeter on teine täht (tavaliselt <em>a</em>, <em>k</em> või <em>m</em>), mida käsitletakse <strong>konstandina</strong>. Ülesandes küsitakse: "milliste parameetri väärtuste korral kehtib tingimus?"
+  </div>
+
+  <div class="rule">
+    <div class="label">Lahendamise skeem</div>
+    <ol class="steps">
+      <li>Lahenda võratus x suhtes nii nagu tavaliselt</li>
+      <li>Jaga juhtumiteks parameetri väärtuste järgi (nt a &gt; 0, a = 0, a &lt; 0)</li>
+      <li>Iga juhtumi korral kirjuta vastus eraldi</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <strong>Näide: Lahenda võratus ax &gt; 3 parameetri a suhtes</strong>
+    <div class="math-block">
+Juhtum 1: a > 0
+  x > 3/a
+
+Juhtum 2: a = 0
+  0 > 3 — see on alati vale!
+  → lahend puudub
+
+Juhtum 3: a < 0
+  Jagame negatiivse arvuga → märk pöördub!
+  x < 3/a
+    </div>
+    <table>
+      <tr><th>Tingimus</th><th>Lahend</th></tr>
+      <tr><td>a &gt; 0</td><td>x ∈ (3/a; +∞)</td></tr>
+      <tr><td>a = 0</td><td>lahend puudub</td></tr>
+      <tr><td>a &lt; 0</td><td>x ∈ (−∞; 3/a)</td></tr>
+    </table>
+  </div>
+
+  <div class="example">
+    <strong>Raskem näide: Leia a väärtused, mille korral x² − 2ax + a² − 1 &lt; 0 on lahenditega</strong>
+    <div class="math-block">
+See on ruutvõratus kujul x² − 2ax + (a²−1) < 0
+
+Ruutvõratus on lahenditega ⟺ D > 0 (paraboolil on kaks reaalset nullkohta)
+
+D = (2a)² − 4·1·(a²−1)
+  = 4a² − 4a² + 4
+  = 4 > 0
+
+D = 4 > 0 alati, sõltumata a väärtusest!
+    </div>
+    <div class="answer">Kõikide a ∈ ℝ korral on võratusel lahendid.</div>
+  </div>
+
+  <!-- ===== CHAPTER 11: PRACTICE ===== -->
+  <div class="chapter">
+    <div class="chapter-num">11</div>
+    <div><h2>Harjutusülesanded</h2></div>
+  </div>
+
+  <div class="section">
+    <h3>Lahenda iseseisvalt</h3>
+    <p style="margin-bottom:20px; font-size:15px;">Proovi esmalt ise lahendada, seejärel kontrolli vastu!</p>
+
+    <div style="display:grid; gap:12px;">
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 1 — LINEAARNE</div>
+        <strong>3(x − 2) &gt; 5x + 4</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+3x − 6 > 5x + 4
+−2x > 10
+x < −5          ← jagame −2-ga, märk pöördub!
+          </div>
+          <div class="answer">x ∈ (−∞; −5)</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 2 — RUUTVÕRATUS</div>
+        <strong>x² − x − 6 &lt; 0</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Nullid: x² − x − 6 = 0 → (x−3)(x+2) = 0
+x₁ = −2,  x₂ = 3
+
+a = 1 > 0, parabool haru üles
+< 0 nullide VAHEL
+          </div>
+          <div class="answer">x ∈ (−2; 3)</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 3 — RATSIONAALNE</div>
+        <strong>(x − 1)/(x + 2) ≤ 0</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Kriitilised punktid: x = 1 (lugeja null) ja x = −2 (nimetaja null, EI kuulu!)
+
+Märgiskeem:
+  x < −2:   (−)/(−) = + > 0  ✗
+  −2 < x < 1: (−)/(+) = − < 0  ✓
+  x = 1:    0/(+) = 0 ≤ 0  ✓
+  x > 1:    (+)/(+) = + > 0  ✗
+          </div>
+          <div class="answer">x ∈ (−2; 1]</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 4 — ABSOLUUTVÄÄRTUS</div>
+        <strong>|2x − 3| ≤ 5</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+|f(x)| ≤ a  ⟺  −a ≤ f(x) ≤ a
+
+−5 ≤ 2x − 3 ≤ 5
+−2 ≤ 2x ≤ 8
+−1 ≤ x ≤ 4
+          </div>
+          <div class="answer">x ∈ [−1; 4]</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 5 — RATSIONAALNE (VII ÜHELE POOLE)</div>
+        <strong>x/(x − 3) &gt; 2</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Vii kõik ühele poole:
+x/(x−3) − 2 > 0
+
+Ühine nimetaja:
+x/(x−3) − 2(x−3)/(x−3) > 0
+(x − 2x + 6) / (x−3) > 0
+(−x + 6) / (x−3) > 0
+
+Kriitilised punktid: x = 6 (lugeja) ja x = 3 (nimetaja, EI kuulu!)
+
+Märgiskeem:
+  x < 3:   (+)/(−) < 0  ✗
+  3 < x < 6: (+)/(+) > 0  ✓
+  x = 6:   0/(+) = 0, range >  ✗
+  x > 6:   (−)/(+) < 0  ✗
+          </div>
+          <div class="answer">x ∈ (3; 6)</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 6 — SÜSTEEM</div>
+        <strong>{ x² − 4 &lt; 0<br>&nbsp;&nbsp;x + 1 &gt; 0</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Esimene: x² − 4 < 0  →  (x−2)(x+2) < 0  →  x ∈ (−2; 2)
+Teine:   x + 1 > 0   →  x > −1            →  x ∈ (−1; +∞)
+
+Ühisosa: (−2; 2) ∩ (−1; +∞) = (−1; 2)
+          </div>
+          <div class="answer">x ∈ (−1; 2)</div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CHAPTER 12: SUMMARY ===== -->
+  <div class="chapter">
+    <div class="chapter-num">12</div>
     <div><h2>Kokkuvõte ja meelespea</h2></div>
   </div>
 
