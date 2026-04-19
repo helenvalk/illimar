@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Illiamri õppematerjalid — Psühholoogia</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #2e1065 50%, #1a0e3d 100%);
+    color: white;
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(124,58,237,0.35) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.2) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 999px; padding: 5px 16px;
+    font-size: 0.8rem; font-weight: 700; text-decoration: none;
+    color: white; margin-bottom: 22px; transition: background 0.15s;
+  }
+  .hero-back:hover { background: rgba(255,255,255,0.2); }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #7c3aed, #0d9488);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 {
+    font-size: 2.6rem; font-weight: 900;
+    line-height: 1.1; margin-bottom: 10px;
+  }
+  .hero h1 span { color: #c4b5fd; }
+  .hero-sub {
+    font-size: 1.05rem; opacity: 0.75;
+    max-width: 480px; margin: 0 auto 24px;
+  }
+  .hero-stats {
+    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+  }
+  .stat {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px;
+    text-align: center;
+  }
+  .stat-num { font-size: 1.6rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.75rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 960px; margin: 0 auto; padding: 48px 24px 64px; }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 20px; margin-top: 40px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ===== MATERIAL CARDS ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .mat-card {
+    background: var(--card);
+    border-radius: 18px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .mat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .mat-header {
+    padding: 22px 22px 16px;
+    position: relative;
+  }
+  .mat-icon {
+    font-size: 2.2rem; margin-bottom: 10px; display: block;
+  }
+  .mat-badge {
+    position: absolute; top: 18px; right: 18px;
+    font-size: 0.7rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px;
+  }
+  .mat-title {
+    font-size: 1.15rem; font-weight: 900;
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .mat-subtitle {
+    font-size: 0.82rem; color: var(--muted);
+    font-weight: 600;
+  }
+
+  .mat-topics {
+    padding: 0 22px 18px;
+    flex: 1;
+  }
+  .topic-item {
+    display: flex; align-items: flex-start; gap: 7px;
+    padding: 5px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.84rem; color: var(--text);
+  }
+  .topic-item:last-child { border-bottom: none; }
+  .topic-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 5px;
+  }
+
+  .mat-footer {
+    padding: 14px 22px;
+    border-top: 1.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+  }
+  .mat-file {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem; color: var(--muted);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .open-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem; font-weight: 800;
+    text-decoration: none;
+    color: white; flex-shrink: 0;
+    transition: opacity 0.15s;
+  }
+  .open-btn:hover { opacity: 0.85; }
+
+  /* Color themes */
+  .theme-purple .mat-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-purple .mat-badge { background: var(--purple-light); color: var(--purple); }
+  .theme-purple .topic-dot { background: var(--purple); }
+  .theme-purple .open-btn { background: var(--purple); }
+
+  .theme-blue .mat-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-blue .mat-badge { background: var(--blue-light); color: var(--blue); }
+  .theme-blue .topic-dot { background: var(--blue); }
+  .theme-blue .open-btn { background: var(--blue); }
+
+  .theme-teal .mat-header { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+  .theme-teal .mat-badge { background: var(--teal-light); color: var(--teal); }
+  .theme-teal .topic-dot { background: var(--teal); }
+  .theme-teal .open-btn { background: var(--teal); }
+
+  .theme-green .mat-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-green .mat-badge { background: var(--green-light); color: var(--green); }
+  .theme-green .topic-dot { background: var(--green); }
+  .theme-green .open-btn { background: var(--green); }
+
+  .theme-orange .mat-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-orange .mat-badge { background: var(--orange-light); color: var(--orange); }
+  .theme-orange .topic-dot { background: var(--orange); }
+  .theme-orange .open-btn { background: var(--orange); }
+
+  /* COMING SOON card */
+  .mat-card.coming-soon {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  .badge-soon {
+    background: #f1f5f9; color: var(--muted);
+  }
+  .open-btn-soon {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 14px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 800;
+    background: #e2e8f0; color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* ===== TIPS ===== */
+  .tips-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px 20px;
+    border: 2px solid var(--border);
+    display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.5rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    color: var(--muted);
+    font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <a href="index.html" class="hero-back">← Avaleht</a>
+    <div class="hero-avatar">🧠</div>
+    <h1>Illiamri <span>psühholoogia</span></h1>
+    <p class="hero-sub">Psühholoogia · 10. klass · Kõik teemad ühes kohas</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">teemat</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1</div>
+        <div class="stat-label">materjali</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+</div>
+        <div class="stat-label">tulemas</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="section-label">📂 Kõik materjalid</div>
+
+  <div class="grid">
+
+    <!-- CARD 1: Mälu ja mnemotehnikad -->
+    <div class="mat-card theme-purple">
+      <div class="mat-header">
+        <span class="mat-icon">🧩</span>
+        <span class="mat-badge">Loeng + kodutöö</span>
+        <div class="mat-title">Mälu ja mnemotehnikad</div>
+        <div class="mat-subtitle">Mälusüsteemid · 4 tehnikat · Kodutöö juhend</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Mälu 3 põhifunktsiooni</div>
+        <div class="topic-item"><div class="topic-dot"></div>5 mälusüsteemi (lühiajaline, semantiline jne)</div>
+        <div class="topic-item"><div class="topic-dot"></div>Endel Tulving + Henry Molaison juhtum</div>
+        <div class="topic-item"><div class="topic-dot"></div>4 mnemotehnikat koos näidetega</div>
+        <div class="topic-item"><div class="topic-dot"></div>Teekonna meetod samm-sammult</div>
+        <div class="topic-item"><div class="topic-dot"></div>Kodutöö juhend + analüüsiküsimused</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">psyhholoogia_malu_mnemotehnikad.html</div>
+        <a class="open-btn" href="psyhholoogia_malu_mnemotehnikad.html">Ava →</a>
+      </div>
+    </div>
+
+    <!-- COMING SOON cards -->
+    <div class="mat-card coming-soon theme-blue">
+      <div class="mat-header">
+        <span class="mat-icon">💭</span>
+        <span class="mat-badge badge-soon">Tulemas</span>
+        <div class="mat-title">Mõtlemine ja otsustamine</div>
+        <div class="mat-subtitle">Kognitiivsed protsessid</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Probleemilahendamine</div>
+        <div class="topic-item"><div class="topic-dot"></div>Otsustamisvead ja kallutatused</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">tulemas...</div>
+        <div class="open-btn-soon">Tulemas</div>
+      </div>
+    </div>
+
+    <div class="mat-card coming-soon theme-teal">
+      <div class="mat-header">
+        <span class="mat-icon">😊</span>
+        <span class="mat-badge badge-soon">Tulemas</span>
+        <div class="mat-title">Emotsioonid ja motivatsioon</div>
+        <div class="mat-subtitle">Tunded ja käitumise ajendid</div>
+      </div>
+      <div class="mat-topics">
+        <div class="topic-item"><div class="topic-dot"></div>Emotsiooniteooriad</div>
+        <div class="topic-item"><div class="topic-dot"></div>Motivatsiooniteooriad</div>
+      </div>
+      <div class="mat-footer">
+        <div class="mat-file">tulemas...</div>
+        <div class="open-btn-soon">Tulemas</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== NIPID ===== -->
+  <div class="section-label">💡 Kuidas neid materjale kasutada</div>
+
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">📖</div>
+      <div>
+        <div class="tip-title">Loe teooria läbi enne kodutööd</div>
+        <div class="tip-text">Iga materjali ülemine osa katab loengus räägitu. Kodutöö juhend on allpool — teooria aitab konteksti mõista.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">💬</div>
+      <div>
+        <div class="tip-title">Analüüsiküsimused — ole konkreetne</div>
+        <div class="tip-text">Psühholoogia kodutöödes on oluline oma kogemus konkreetselt kirjeldada. Üldistused ei tööta — isiklikud näited töötavad.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎨</div>
+      <div>
+        <div class="tip-title">Joonista julgelt</div>
+        <div class="tip-text">Paljud psühholoogia kodutööd hindavad lisajoonistusi — skeemid, teekonna kaardid, tabelid. Ei pea ilus olema.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔗</div>
+      <div>
+        <div class="tip-title">Seo teooria oma kogemusega</div>
+        <div class="tip-text">Psühholoogia ülesanded tahavad tihti näha, et mõistad teooria seost päriseluga. Näide oma elust = hea vastus.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Illiamri psühholoogia õppematerjalid · 10. klass · 2026
+</footer>
+
+</body>
+</html>
