@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Võrratused ja Võrratussüsteemid</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --paper: #faf6ee;
+    --amber: #c8860a;
+    --rust: #b84c1e;
+    --teal: #1a6b6b;
+    --pale: #f0e8d4;
+    --line: #d4c9a8;
+    --green: #2d6a2d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  /* Notebook lines background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent calc(1.7em * 1 - 1px),
+      var(--line) calc(1.7em * 1 - 1px),
+      var(--line) calc(1.7em * 1)
+    );
+    background-size: 100% 1.7em;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Red margin line */
+  .page::before {
+    content: '';
+    position: absolute;
+    left: 100px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: rgba(184, 76, 30, 0.2);
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 3px double var(--amber);
+  }
+
+  header .subject {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  h1 span { color: var(--rust); }
+
+  header p {
+    font-style: italic;
+    color: #6b5d40;
+    font-size: 15px;
+  }
+
+  /* Chapter headings */
+  .chapter {
+    margin: 52px 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .chapter-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--line);
+    line-height: 1;
+    min-width: 44px;
+  }
+
+  .chapter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--ink);
+    border-bottom: 2px solid var(--amber);
+    padding-bottom: 4px;
+  }
+
+  /* Section blocks */
+  .section {
+    margin: 28px 0;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--teal);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  h3::before {
+    content: '§';
+    color: var(--amber);
+    font-size: 14px;
+  }
+
+  /* Definition box */
+  .def {
+    background: white;
+    border-left: 4px solid var(--teal);
+    padding: 16px 20px;
+    margin: 16px 0;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+
+  .def .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 6px;
+  }
+
+  /* Rule box */
+  .rule {
+    background: #fff9ec;
+    border: 1.5px solid var(--amber);
+    border-radius: 2px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+
+  .rule .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+
+  /* Example box */
+  .example {
+    background: var(--pale);
+    border: 1px solid var(--line);
+    padding: 20px 24px;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  .example::before {
+    content: 'NÄIDE';
+    position: absolute;
+    top: -1px; right: 16px;
+    background: var(--rust);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 2px 8px;
+  }
+
+  /* Math display */
+  .math {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    background: white;
+    border: 1px solid var(--line);
+    padding: 10px 16px;
+    margin: 10px 0;
+    display: inline-block;
+    border-radius: 2px;
+  }
+
+  .math-block {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    background: white;
+    border: 1px solid var(--line);
+    padding: 14px 20px;
+    margin: 12px 0;
+    display: block;
+    border-radius: 2px;
+    overflow-x: auto;
+  }
+
+  /* Steps */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    margin: 12px 0;
+  }
+
+  .steps li {
+    counter-increment: step;
+    padding: 8px 0 8px 44px;
+    border-bottom: 1px dashed var(--line);
+    position: relative;
+  }
+
+  .steps li:last-child { border-bottom: none; }
+
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 28px;
+    height: 28px;
+    background: var(--teal);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  /* Answer highlight */
+  .answer {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    padding: 6px 14px;
+    margin: 8px 0;
+    font-weight: 600;
+  }
+
+  /* Warning */
+  .warn {
+    background: #fff0ee;
+    border-left: 4px solid var(--rust);
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 15px;
+  }
+
+  .warn strong { color: var(--rust); }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 15px;
+  }
+
+  th {
+    background: var(--ink);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: #f5ede0; }
+
+  /* Number line visual */
+  .numline {
+    position: relative;
+    height: 40px;
+    margin: 16px 0 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .numline .axis {
+    position: absolute;
+    top: 50%;
+    left: 20px; right: 20px;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  .numline .axis::after {
+    content: '→';
+    position: absolute;
+    right: -8px;
+    top: -9px;
+    font-size: 14px;
+  }
+
+  .numline .filled {
+    position: absolute;
+    top: calc(50% - 3px);
+    height: 8px;
+    background: var(--teal);
+    opacity: 0.7;
+  }
+
+  .numline .tick {
+    position: absolute;
+    top: calc(50% - 10px);
+    width: 2px;
+    height: 20px;
+    background: var(--ink);
+    transform: translateX(-50%);
+  }
+
+  .numline .tick-label {
+    position: absolute;
+    top: calc(50% + 10px);
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .numline .open-circle {
+    position: absolute;
+    top: calc(50% - 6px);
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--teal);
+    border-radius: 50%;
+    background: var(--paper);
+    transform: translateX(-50%);
+  }
+
+  .numline .closed-circle {
+    position: absolute;
+    top: calc(50% - 6px);
+    width: 12px;
+    height: 12px;
+    background: var(--teal);
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Grid for inequalities types */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 16px;
+    border-top: 3px solid var(--amber);
+  }
+
+  .card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  /* Summary checklist */
+  .checklist {
+    list-style: none;
+    margin: 12px 0;
+  }
+
+  .checklist li {
+    padding: 6px 0 6px 32px;
+    position: relative;
+    border-bottom: 1px dotted var(--line);
+  }
+
+  .checklist li::before {
+    content: '✦';
+    position: absolute;
+    left: 8px;
+    color: var(--amber);
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 3px double var(--amber);
+    text-align: center;
+    font-size: 13px;
+    color: #8a7555;
+    font-style: italic;
+  }
+
+  sup { font-size: 0.75em; vertical-align: super; }
+  em { color: var(--rust); font-style: normal; font-weight: 600; }
+  strong { font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .page { padding: 32px 24px; }
+    h1 { font-size: 28px; }
+    .grid2 { grid-template-columns: 1fr; }
+    .page::before { left: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="subject">Matemaatika · Algebra · Kontrolltöö V–G</div>
+    <h1>Võrratused ja<br><span>Võrratussüsteemid</span></h1>
+    <p>Täielik õppematerjal · Teooriat, näiteid ja lahendamise reegleid</p>
+  </header>
+
+  <!-- ===== CHAPTER 1 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">1</div>
+    <div><h2>Võrratuste põhimõisted</h2></div>
+  </div>
+
+  <div class="def">
+    <div class="label">Definitsioon</div>
+    <strong>Võratus</strong> on matemaatiline avaldis, mis kirjeldab kahe suuruse vahelist järjestussuhet märkidega <em>&lt;</em>, <em>&gt;</em>, <em>≤</em> või <em>≥</em>.
+  </div>
+
+  <div class="rule">
+    <div class="label">Põhireeglid</div>
+    <table>
+      <tr><th>Toiming</th><th>Reegel</th></tr>
+      <tr><td>Liitmine / lahutamine</td><td>Mõlemale poolele liita/lahutada sama arv — märk ei muutu</td></tr>
+      <tr><td>Korrutamine / jagamine <strong>positiivse</strong> arvuga</td><td>Märk <strong>ei muutu</strong></td></tr>
+      <tr><td>Korrutamine / jagamine <strong>negatiivse</strong> arvuga</td><td>Märk <em>pöördub</em> (&lt; muutub &gt;, ≤ muutub ≥ jne)</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">
+    <strong>⚠ Tähelepanu!</strong> Kõige levinum viga: negatiivse arvuga jagades/korrutades unustatakse märki pöörata!
+  </div>
+
+  <!-- ===== CHAPTER 2 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">2</div>
+    <div><h2>Lineaarne võratus</h2></div>
+  </div>
+
+  <div class="section">
+    <h3>Lahendamise sammud</h3>
+    <ol class="steps">
+      <li>Ava sulud (vajadusel)</li>
+      <li>Liigu muutujad ühele poole, arvud teisele</li>
+      <li>Jaga/korruta — pöörake märki, kui jagad negatiivsega!</li>
+      <li>Kirjuta lahend lõiguna või arvteljel</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <strong>a) 12x − 2 &gt; 17x − 1</strong>
+    <div class="math-block">
+12x − 17x &gt; −1 + 2
+−5x &gt; 1
+x &lt; −1/5       ← märk pöördub, jagame −5-ga!
+    </div>
+    <div class="answer">x ∈ (−∞; −⅕)</div>
+  </div>
+
+  <div class="example">
+    <strong>b) (3x−1)/2 − x ≤ 2</strong>
+    <div class="math-block">
+Korrutame kõik 2-ga:
+3x − 1 − 2x ≤ 4
+x ≤ 5
+    </div>
+    <div class="answer">x ∈ (−∞; 5]</div>
+  </div>
+
+  <!-- ===== CHAPTER 3 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">3</div>
+    <div><h2>Ruutkolmliige ja ruutvõratus</h2></div>
+  </div>
+
+  <div class="def">
+    <div class="label">Definitsioon</div>
+    Ruutvõratus on kujul <span class="math">ax² + bx + c ≥ 0</span> (või &lt;, &gt;, ≤). Lahend sõltub paraboli asendist.
+  </div>
+
+  <div class="rule">
+    <div class="label">Lahendamise skeem</div>
+    <ol class="steps">
+      <li>Leia ruutkolmliikme nullid (x₁, x₂) diskriminandi kaudu: <span class="math">D = b² − 4ac</span></li>
+      <li>Määra paraboli "suund" (a &gt; 0 → haru üles, a &lt; 0 → haru alla)</li>
+      <li>Rakenda allpool olevat tabelit</li>
+    </ol>
+
+    <table>
+      <tr><th>Tingimus</th><th>ax² + bx + c &gt; 0</th><th>ax² + bx + c &lt; 0</th></tr>
+      <tr><td>a &gt; 0, D &gt; 0</td><td>x &lt; x₁ või x &gt; x₂</td><td>x₁ &lt; x &lt; x₂</td></tr>
+      <tr><td>a &lt; 0, D &gt; 0</td><td>x₁ &lt; x &lt; x₂</td><td>x &lt; x₁ või x &gt; x₂</td></tr>
+      <tr><td>D &lt; 0, a &gt; 0</td><td>x ∈ ℝ (kõik arvud)</td><td>lahend puudub</td></tr>
+      <tr><td>D &lt; 0, a &lt; 0</td><td>lahend puudub</td><td>x ∈ ℝ (kõik arvud)</td></tr>
+    </table>
+  </div>
+
+  <div class="example">
+    <strong>c) −2x² + 3x + 2 ≥ 0</strong>
+    <div class="math-block">
+D = 3² − 4·(−2)·2 = 9 + 16 = 25
+x₁ = (−3 − 5) / (2·(−2)) = −8/(−4) = 2
+x₂ = (−3 + 5) / (2·(−2)) = 2/(−4) = −½
+
+a = −2 &lt; 0, seega parabool haru alla
+→ −2x² + 3x + 2 ≥ 0 nullide VAHEL:
+    </div>
+    <div class="answer">x ∈ [−½; 2]</div>
+  </div>
+
+  <!-- ===== CHAPTER 4 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">4</div>
+    <div><h2>Kõrgema astme ja ratsionaalne võratus</h2></div>
+  </div>
+
+  <div class="rule">
+    <div class="label">Intervallide meetod (märkide skeem)</div>
+    <ol class="steps">
+      <li>Vii kõik ühele poole: f(x) &gt; 0 (või ≥ 0, &lt; 0, ≤ 0)</li>
+      <li>Tegurda lugeja ja nimetaja — leia <em>kriitilised punktid</em> (nullid)</li>
+      <li>Märgi kriitilised punktid arvteljele — nad jagavad telje intervallideks</li>
+      <li>Uuri märki igas intervallis (asenda testpunkt)</li>
+      <li>Vali nõutava märgiga intervallid; kontrolli, kas piirid kuuluvad lahendusse</li>
+    </ol>
+  </div>
+
+  <div class="warn">
+    <strong>⚠ Ratsionaalsel võratusel:</strong> nimetaja nullkohad ei kuulu kunagi lahendusse (jaga nulliga on keelatud)!
+  </div>
+
+  <div class="example">
+    <strong>d) −x(1−x)³(x²−1)(x+1) &lt; 0</strong>
+    <div class="math-block">
+Tegurda: x²−1 = (x−1)(x+1)
+
+→ −x(1−x)³(x−1)(x+1)(x+1) &lt; 0
+→ −x · (−1)³(x−1)³ · (x−1)(x+1)² &lt; 0
+
+Sest (1−x) = −(x−1):
+→ −x · (−1)³(x−1)³ · (x−1)(x+1)² &lt; 0
+= −x · (−1)(x−1)³ · (x−1)(x+1)² &lt; 0
+= x(x−1)⁴(x+1)² &lt; 0
+
+(x−1)⁴ ≥ 0 alati; (x+1)² ≥ 0 alati
+→ Märk sõltub x-st:
+   x &lt; 0: lahend on x &lt; 0, x ≠ −1, x ≠ 1
+    </div>
+    <div class="answer">x ∈ (−∞; 0) \ {−1}</div>
+  </div>
+
+  <div class="example">
+    <strong>e) (x+1)²(x−4) / (x+8) ≥ 0</strong>
+    <div class="math-block">
+Kriitilised punktid: x = −1, x = 4, x = −8
+
+(x+1)² ≥ 0 alati → märki muutab ainult (x−4) ja (x+8)
+
+Intervallide analüüs:
+  x &lt; −8 : (−)(−) / (−) = − &lt; 0  ✗
+  −8 &lt; x &lt; −1: (−)(−) / (+) = + &gt; 0  ✓
+  x = −1:  0 / (pos) = 0 ≥ 0  ✓
+  −1 &lt; x &lt; 4: (−)(+) → negatiivseks... tegelikult (+)(−)/(+) = − &lt; 0  ✗
+  x = 4:  pos · 0 / pos = 0 ≥ 0  ✓
+  x &gt; 4:  (+)(+)/(+) = + &gt; 0  ✓
+    </div>
+    <div class="answer">x ∈ (−8; −1] ∪ [4; +∞)</div>
+  </div>
+
+  <!-- ===== CHAPTER 5 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">5</div>
+    <div><h2>Absoluutväärtuse võratus</h2></div>
+  </div>
+
+  <div class="rule">
+    <div class="label">Põhivalemid</div>
+    <div class="grid2">
+      <div class="card">
+        <h4>|f(x)| &lt; a (a &gt; 0)</h4>
+        <div class="math-block">−a &lt; f(x) &lt; a</div>
+        <small>Lahend on vahemik keskel</small>
+      </div>
+      <div class="card">
+        <h4>|f(x)| &gt; a (a &gt; 0)</h4>
+        <div class="math-block">f(x) &lt; −a  VÕI  f(x) &gt; a</div>
+        <small>Lahend on kaks eraldi poolt</small>
+      </div>
+      <div class="card">
+        <h4>|f(x)| = |g(x)|</h4>
+        <div class="math-block">f(x) = g(x)  VÕI  f(x) = −g(x)</div>
+        <small>Kaks võrrandit</small>
+      </div>
+      <div class="card">
+        <h4>|f(x)| ≥ 2x + 6</h4>
+        <div class="math-block">f(x) ≥ 2x+6  VÕI  f(x) ≤ −(2x+6)</div>
+        <small>Kahe haru ühend</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="example">
+    <strong>f) |5 − x| = |x + 4|</strong>
+    <div class="math-block">
+Juht 1: 5 − x = x + 4  →  1 = 2x  →  x = ½
+Juht 2: 5 − x = −(x + 4)  →  5 − x = −x − 4  →  5 = −4  (võimatu!)
+    </div>
+    <div class="answer">x = ½</div>
+  </div>
+
+  <div class="example">
+    <strong>h) |x + 4| ≥ 2x + 6</strong>
+    <div class="math-block">
+Juht 1: x + 4 ≥ 2x + 6  (kehtib, kui x + 4 ≥ 0, st x ≥ −4)
+  → −2 ≥ x  ja  x ≥ −4
+  → −4 ≤ x ≤ −2
+
+Juht 2: −(x + 4) ≥ 2x + 6  (kehtib, kui x + 4 &lt; 0, st x &lt; −4)
+  → −x − 4 ≥ 2x + 6  →  −10 ≥ 3x  →  x ≤ −10/3 ≈ −3,33
+  Kombineerides x &lt; −4 ja x ≤ −10/3 → x &lt; −4
+    </div>
+    <div class="answer">x ∈ (−∞; −4) ∪ [−4; −2] = (−∞; −2]</div>
+  </div>
+
+  <!-- ===== CHAPTER 6 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">6</div>
+    <div><h2>Võrratussüsteemid</h2></div>
+  </div>
+
+  <div class="def">
+    <div class="label">Definitsioon</div>
+    Võrratussüsteemi lahend on kõigi tingimuste <em>üheaegne</em> täitumine — lõikumiskomplekt.
+  </div>
+
+  <div class="rule">
+    <div class="label">Lahendamine</div>
+    <ol class="steps">
+      <li>Lahenda iga võratus eraldi</li>
+      <li>Kujuta mõlemad lahendid arvteljel</li>
+      <li>Leia <em>ühisosa</em> (lõikumine)</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <strong>Ülesanne 2:</strong>
+    <div class="math-block">
+{ (6−x)(x+3) ≥ 0
+{ x² − 5x + 6 ≤ 0
+
+Esimene: (6−x)(x+3) ≥ 0
+  Nullid: x = 6 ja x = −3
+  (−)(−) positiivne väljaspool, positiivne vahel? Proovi x=0: (6)(3)=18&gt;0 ✓
+  → x ∈ [−3; 6]
+
+Teine: x² − 5x + 6 ≤ 0
+  D = 25 − 24 = 1; x₁ = 2, x₂ = 3
+  a = 1 &gt; 0, parabool haru üles → ≤ 0 nullide vahel
+  → x ∈ [2; 3]
+
+Ühisosa: [−3; 6] ∩ [2; 3] = [2; 3]
+
+Suurim täisarvuline lahend: x = 3
+    </div>
+    <div class="answer">Suurim täisarv: x = 3</div>
+  </div>
+
+  <!-- ===== CHAPTER 7 ===== -->
+  <div class="chapter">
+    <div class="chapter-num">7</div>
+    <div><h2>Graafiline meetod</h2></div>
+  </div>
+
+  <div class="section">
+    <h3>Millal kasutada?</h3>
+    <p>Kui on antud kaks funktsiooni ja küsitakse, milliste x väärtuste korral üks on suurem teisest.</p>
+
+    <div class="rule">
+      <div class="label">Meetod</div>
+      <ol class="steps">
+        <li>Joonista mõlema funktsiooni graafik</li>
+        <li>Leia <em>lõikepunktid</em> (seadistuskohtades on f(x) = g(x))</li>
+        <li>Vaata, kumma graafik asub ülemal, millises intervallis</li>
+        <li>Kirjuta vastus intervallidena</li>
+      </ol>
+    </div>
+
+    <div class="example">
+      <strong>Ülesanne 3:</strong> Milliste x väärtuste korral x² − 2x − 1 &gt; −x + 1 ?
+      <div class="math-block">
+Leia lõikepunktid: x² − 2x − 1 = −x + 1
+  x² − x − 2 = 0
+  (x − 2)(x + 1) = 0
+  x₁ = −1,  x₂ = 2 → lõikepunktid (−1; 2) ja (2; −1... eik, (2; ?)
+
+Kontrolli: x=2: −x+1 = −1  ja  x²−2x−1 = 4−4−1 = −1 ✓
+Paraabol on sirgest KÕRGEMAL väljapool lõikepunkte:
+
+Arvtelg: parabool &gt; sirge, kui x &lt; −1 või x &gt; 2
+      </div>
+      <div class="answer">x ∈ (−∞; −1) ∪ (2; +∞)</div>
+      <p style="margin-top:10px; font-size:14px; color:#6b5d40;"><em>Märkus:</em> Mõnel juhul lubab ülesanne lugeda vastuse otse graafikult — vaata, kus parabool on sirgest kõrgemal (ülemal).</p>
+    </div>
+  </div>
+
+  <!-- ===== CHAPTER 8: RATIONAL INEQUALITY BRING TO ONE SIDE ===== -->
+  <div class="chapter">
+    <div class="chapter-num">8</div>
+    <div><h2>Ratsionaalne võratus: vii kõigepealt ühele poole!</h2></div>
+  </div>
+
+  <div class="warn">
+    <strong>⚠ Kõige levinum viga ratsionaalsetel võratusel:</strong> Korrutada mõlemat poolt <em>(x+1)</em>-ga ilma märki muutmata — aga me ei tea, kas (x+1) on positiivne või negatiivne! Selle asemel: <strong>vii kõik ühele poole nullist.</strong>
+  </div>
+
+  <div class="rule">
+    <div class="label">Õige meetod</div>
+    <ol class="steps">
+      <li>Vii kõik vasemale poole: f(x)/g(x) − c &gt; 0 kujule</li>
+      <li>Vii ühise nimetaja alla üheks murruga</li>
+      <li>Rakenda intervallide meetodit lugejale ja nimetajale</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <strong>g) (2x+1)/(x+1) &gt; −2</strong>
+    <div class="math-block">
+Samm 1: Vii kõik ühele poole
+  (2x+1)/(x+1) + 2 > 0
+
+Samm 2: Ühine nimetaja
+  (2x+1)/(x+1) + 2(x+1)/(x+1) > 0
+  (2x+1 + 2x+2) / (x+1) > 0
+  (4x+3) / (x+1) > 0
+
+Samm 3: Kriitilised punktid
+  Lugeja null: 4x+3 = 0  →  x = −¾
+  Nimetaja null: x+1 = 0  →  x = −1  (EI kuulu lahendusse!)
+
+Samm 4: Märgiskeem (vt allpool)
+    </div>
+
+    <!-- VISUAL SIGN CHART -->
+    <div style="overflow-x:auto; margin: 16px 0;">
+      <table style="border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:13px; min-width:500px;">
+        <tr>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:left;">Tegur</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &lt; −1</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x = −1</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">−1 &lt; x &lt; −¾</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x = −¾</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &gt; −¾</th>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(4x+3)</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x+1)</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr style="background:#f0e8d4;">
+          <td style="padding:8px 12px;font-weight:700;">Murru märk</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">∄</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">− ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#1a6b6b;font-weight:bold;">0 ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="answer">x ∈ (−∞; −1) ∪ (−¾; +∞)</div>
+    <p style="font-size:14px;color:#6b5d40;margin-top:8px;">x = −1 ei kuulu, sest nimetaja = 0 (jagamine nulliga on keelatud!)<br>x = −¾ ei kuulu, sest tingimus on <strong>range</strong> &gt; (mitte ≥)</p>
+  </div>
+
+  <!-- ===== CHAPTER 9: SIGN CHART GENERAL ===== -->
+  <div class="chapter">
+    <div class="chapter-num">9</div>
+    <div><h2>Märgiskeem — universaalne visuaalne meetod</h2></div>
+  </div>
+
+  <div class="rule">
+    <div class="label">Märgiskeemi koostamine samm-sammult</div>
+    <ol class="steps">
+      <li>Kirjuta kõik tegurid eraldi ridadena tabelisse</li>
+      <li>Märgi iga teguri nullkohad arvteljele (veerud tabelis)</li>
+      <li>Täida iga teguri märk igas intervallis (+ või −)</li>
+      <li>Korruta märgid ridade kaupa — saad koguavaldise märgi</li>
+      <li>Vali nõutava märgiga intervallid; kontrolli piirpunktide kuulumist</li>
+    </ol>
+  </div>
+
+  <div class="def">
+    <div class="label">Kasulikud märgireegud</div>
+    <table>
+      <tr><th>Tegur</th><th>Käitumine nullkohas</th><th>Märki muutub?</th></tr>
+      <tr><td>(x − a)¹</td><td>null, astme 1</td><td><strong>Jah</strong> — märk pöördub</td></tr>
+      <tr><td>(x − a)²</td><td>null, astme 2</td><td><strong>Ei</strong> — jääb samaks (ruut ≥ 0)</td></tr>
+      <tr><td>(x − a)³</td><td>null, astme 3</td><td><strong>Jah</strong> — märk pöördub (paaritu aste)</td></tr>
+      <tr><td>(x − a)ⁿ, n paaris</td><td>null</td><td><strong>Ei</strong> — märk ei muutu</td></tr>
+      <tr><td>(x − a)ⁿ, n paaritu</td><td>null</td><td><strong>Jah</strong> — märk pöördub</td></tr>
+    </table>
+  </div>
+
+  <div class="example">
+    <strong>Näide täielikust märgiskeemist: (x+1)²(x−4)/(x+8) ≥ 0</strong>
+    <div style="overflow-x:auto; margin: 16px 0;">
+      <table style="border-collapse:collapse; font-family:'JetBrains Mono',monospace; font-size:13px; min-width:560px;">
+        <tr>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:left;">Tegur</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &lt; −8</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x=−8</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">−8&lt;x&lt;−1</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x=−1</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">−1&lt;x&lt;4</th>
+          <th style="background:#b84c1e;color:white;padding:8px 12px;text-align:center;">x=4</th>
+          <th style="background:#1a1209;color:white;padding:8px 12px;text-align:center;">x &gt; 4</th>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x+1)²</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x−4)</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;font-weight:600;">(x+8)</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#b84c1e;">−</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#1a6b6b;font-weight:bold;">0</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+          <td style="padding:7px 12px;border-bottom:1px solid #d4c9a8;text-align:center;color:#2d6a2d;">+</td>
+        </tr>
+        <tr style="background:#f0e8d4;">
+          <td style="padding:8px 12px;font-weight:700;">Kogu märk</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">− ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">∄</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#1a6b6b;font-weight:bold;">0 ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#b84c1e;font-weight:bold;">− ✗</td>
+          <td style="padding:8px 12px;text-align:center;color:#1a6b6b;font-weight:bold;">0 ✓</td>
+          <td style="padding:8px 12px;text-align:center;color:#2d6a2d;font-weight:bold;">+ ✓</td>
+        </tr>
+      </table>
+    </div>
+    <div class="answer">x ∈ (−8; −1] ∪ [4; +∞)</div>
+  </div>
+
+  <!-- ===== CHAPTER 10: PARAMETRIC ===== -->
+  <div class="chapter">
+    <div class="chapter-num">10</div>
+    <div><h2>Parameetriga võrratused</h2></div>
+  </div>
+
+  <div class="def">
+    <div class="label">Mis on parameeter?</div>
+    Parameeter on teine täht (tavaliselt <em>a</em>, <em>k</em> või <em>m</em>), mida käsitletakse <strong>konstandina</strong>. Ülesandes küsitakse: "milliste parameetri väärtuste korral kehtib tingimus?"
+  </div>
+
+  <div class="rule">
+    <div class="label">Lahendamise skeem</div>
+    <ol class="steps">
+      <li>Lahenda võratus x suhtes nii nagu tavaliselt</li>
+      <li>Jaga juhtumiteks parameetri väärtuste järgi (nt a &gt; 0, a = 0, a &lt; 0)</li>
+      <li>Iga juhtumi korral kirjuta vastus eraldi</li>
+    </ol>
+  </div>
+
+  <div class="example">
+    <strong>Näide: Lahenda võratus ax &gt; 3 parameetri a suhtes</strong>
+    <div class="math-block">
+Juhtum 1: a > 0
+  x > 3/a
+
+Juhtum 2: a = 0
+  0 > 3 — see on alati vale!
+  → lahend puudub
+
+Juhtum 3: a < 0
+  Jagame negatiivse arvuga → märk pöördub!
+  x < 3/a
+    </div>
+    <table>
+      <tr><th>Tingimus</th><th>Lahend</th></tr>
+      <tr><td>a &gt; 0</td><td>x ∈ (3/a; +∞)</td></tr>
+      <tr><td>a = 0</td><td>lahend puudub</td></tr>
+      <tr><td>a &lt; 0</td><td>x ∈ (−∞; 3/a)</td></tr>
+    </table>
+  </div>
+
+  <div class="example">
+    <strong>Raskem näide: Leia a väärtused, mille korral x² − 2ax + a² − 1 &lt; 0 on lahenditega</strong>
+    <div class="math-block">
+See on ruutvõratus kujul x² − 2ax + (a²−1) < 0
+
+Ruutvõratus on lahenditega ⟺ D > 0 (paraboolil on kaks reaalset nullkohta)
+
+D = (2a)² − 4·1·(a²−1)
+  = 4a² − 4a² + 4
+  = 4 > 0
+
+D = 4 > 0 alati, sõltumata a väärtusest!
+    </div>
+    <div class="answer">Kõikide a ∈ ℝ korral on võratusel lahendid.</div>
+  </div>
+
+  <!-- ===== CHAPTER 11: PRACTICE ===== -->
+  <div class="chapter">
+    <div class="chapter-num">11</div>
+    <div><h2>Harjutusülesanded</h2></div>
+  </div>
+
+  <div class="section">
+    <h3>Lahenda iseseisvalt</h3>
+    <p style="margin-bottom:20px; font-size:15px;">Proovi esmalt ise lahendada, seejärel kontrolli vastu!</p>
+
+    <div style="display:grid; gap:12px;">
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 1 — LINEAARNE</div>
+        <strong>3(x − 2) &gt; 5x + 4</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+3x − 6 > 5x + 4
+−2x > 10
+x < −5          ← jagame −2-ga, märk pöördub!
+          </div>
+          <div class="answer">x ∈ (−∞; −5)</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 2 — RUUTVÕRATUS</div>
+        <strong>x² − x − 6 &lt; 0</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Nullid: x² − x − 6 = 0 → (x−3)(x+2) = 0
+x₁ = −2,  x₂ = 3
+
+a = 1 > 0, parabool haru üles
+< 0 nullide VAHEL
+          </div>
+          <div class="answer">x ∈ (−2; 3)</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 3 — RATSIONAALNE</div>
+        <strong>(x − 1)/(x + 2) ≤ 0</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Kriitilised punktid: x = 1 (lugeja null) ja x = −2 (nimetaja null, EI kuulu!)
+
+Märgiskeem:
+  x < −2:   (−)/(−) = + > 0  ✗
+  −2 < x < 1: (−)/(+) = − < 0  ✓
+  x = 1:    0/(+) = 0 ≤ 0  ✓
+  x > 1:    (+)/(+) = + > 0  ✗
+          </div>
+          <div class="answer">x ∈ (−2; 1]</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 4 — ABSOLUUTVÄÄRTUS</div>
+        <strong>|2x − 3| ≤ 5</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+|f(x)| ≤ a  ⟺  −a ≤ f(x) ≤ a
+
+−5 ≤ 2x − 3 ≤ 5
+−2 ≤ 2x ≤ 8
+−1 ≤ x ≤ 4
+          </div>
+          <div class="answer">x ∈ [−1; 4]</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 5 — RATSIONAALNE (VII ÜHELE POOLE)</div>
+        <strong>x/(x − 3) &gt; 2</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Vii kõik ühele poole:
+x/(x−3) − 2 > 0
+
+Ühine nimetaja:
+x/(x−3) − 2(x−3)/(x−3) > 0
+(x − 2x + 6) / (x−3) > 0
+(−x + 6) / (x−3) > 0
+
+Kriitilised punktid: x = 6 (lugeja) ja x = 3 (nimetaja, EI kuulu!)
+
+Märgiskeem:
+  x < 3:   (+)/(−) < 0  ✗
+  3 < x < 6: (+)/(+) > 0  ✓
+  x = 6:   0/(+) = 0, range >  ✗
+  x > 6:   (−)/(+) < 0  ✗
+          </div>
+          <div class="answer">x ∈ (3; 6)</div>
+        </details>
+      </div>
+
+      <div style="background:white; border:1px solid var(--line); border-left:4px solid var(--teal); padding:16px 20px;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:2px; color:var(--teal); margin-bottom:8px;">HARJUTUS 6 — SÜSTEEM</div>
+        <strong>{ x² − 4 &lt; 0<br>&nbsp;&nbsp;x + 1 &gt; 0</strong>
+        <details style="margin-top:12px;">
+          <summary style="cursor:pointer; color:var(--amber); font-size:14px; font-family:'JetBrains Mono',monospace;">▶ Näita lahendust</summary>
+          <div class="math-block" style="margin-top:10px;">
+Esimene: x² − 4 < 0  →  (x−2)(x+2) < 0  →  x ∈ (−2; 2)
+Teine:   x + 1 > 0   →  x > −1            →  x ∈ (−1; +∞)
+
+Ühisosa: (−2; 2) ∩ (−1; +∞) = (−1; 2)
+          </div>
+          <div class="answer">x ∈ (−1; 2)</div>
+        </details>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CHAPTER 12: SUMMARY ===== -->
+  <div class="chapter">
+    <div class="chapter-num">12</div>
+    <div><h2>Kokkuvõte ja meelespea</h2></div>
+  </div>
+
+  <ul class="checklist">
+    <li>Lineaarsel võratusel: negatiivse arvuga jagades pöördu märk</li>
+    <li>Ruutvõratus: leia nullid, vaata paraboli suunda, vali õiged intervallid</li>
+    <li>Kõrgemad astmed: intervallide meetod — kriitilised punktid, märgid intervallidel</li>
+    <li>Ratsionaalne võratus: nimetaja null ≠ lahendi osa (murdarv ei ole defineeritud)</li>
+    <li>Absoluutväärtus: jaga kaheks juhuks; |x| &lt; a → vahe; |x| &gt; a → ühend</li>
+    <li>Süsteem: lahenda eraldi, seejärel leia lahendite lõikumisosa</li>
+    <li>Graafiline: lõikepunktid → vaata, kumma graafik on kõrgemal</li>
+    <li>Intervallid: [ ] tähendab piir kuulub lahendusse; ( ) tähendab piir EI kuulu</li>
+  </ul>
+
+  <div class="rule" style="margin-top: 28px;">
+    <div class="label">Kirjutamisviisid — samaväärsed</div>
+    <table>
+      <tr><th>Lõigu kuju</th><th>Hulga kuju</th><th>Tähendus</th></tr>
+      <tr><td>a &lt; x &lt; b</td><td>(a; b)</td><td>vahemik, piirid ei kuulu</td></tr>
+      <tr><td>a ≤ x ≤ b</td><td>[a; b]</td><td>vahemik, piirid kuuluvad</td></tr>
+      <tr><td>x &gt; a</td><td>(a; +∞)</td><td>pool-sirge</td></tr>
+      <tr><td>x ≤ a</td><td>(−∞; a]</td><td>pool-sirge, piir kuulub</td></tr>
+      <tr><td>x ∈ ℝ</td><td>(−∞; +∞)</td><td>kõik reaalsed arvud</td></tr>
+    </table>
+  </div>
+
+  <footer>
+    Kontrolltöö V–G · Võrratused ja võrratussüsteemid · Õppematerjal
+  </footer>
+
+</div>
+</body>
+</html>
