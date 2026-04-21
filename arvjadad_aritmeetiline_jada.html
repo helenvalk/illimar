@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arvjadad & Aritmeetiline jada – Õppematerjal</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0faf4;
+    --card: #ffffff;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --pink: #db2777;
+    --pink-light: #fce7f3;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #064e3b 0%, #0d9488 55%, #1d4ed8 100%);
+    color: white;
+    padding: 52px 32px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 5px 18px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: 1.05rem;
+    opacity: 0.85;
+    max-width: 540px;
+    margin: 0 auto 22px;
+  }
+  .hero-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 18px;
+  }
+  .hero-topic {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 900px; margin: 0 auto; padding: 44px 24px 80px; }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 52px; margin-bottom: 24px;
+  }
+  .section-title:first-child { margin-top: 0; }
+  .section-num {
+    width: 44px; height: 44px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; font-weight: 900; flex-shrink: 0;
+    color: white;
+  }
+  .section-title h2 {
+    font-size: 1.45rem; font-weight: 900; color: var(--text);
+  }
+  .teal .section-num  { background: var(--teal); }
+  .blue .section-num  { background: var(--blue); }
+  .orange .section-num{ background: var(--orange); }
+  .purple .section-num{ background: var(--purple); }
+  .green .section-num { background: var(--green); }
+  .pink .section-num  { background: var(--pink); }
+  .yellow .section-num{ background: var(--yellow); }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 28px 32px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1.5px solid var(--border);
+  }
+  .card h3 {
+    font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; color: var(--text);
+  }
+  .card p { font-size: 0.97rem; line-height: 1.75; color: #334155; margin-bottom: 10px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ===== DEFINITION BOX ===== */
+  .def-box {
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    border-left: 5px solid;
+  }
+  .def-box.teal  { background: var(--teal-light);  border-color: var(--teal);  }
+  .def-box.blue  { background: var(--blue-light);  border-color: var(--blue);  }
+  .def-box.orange{ background: var(--orange-light);border-color: var(--orange);}
+  .def-box.purple{ background: var(--purple-light);border-color: var(--purple);}
+  .def-box.green { background: var(--green-light); border-color: var(--green); }
+  .def-box.pink  { background: var(--pink-light);  border-color: var(--pink);  }
+  .def-box.yellow{ background: var(--yellow-light);border-color: var(--yellow);}
+  .def-box .def-label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.65; margin-bottom: 6px;
+  }
+  .def-box p { font-size: 0.97rem; line-height: 1.7; margin-bottom: 0; }
+  .def-box strong { font-weight: 800; }
+
+  /* ===== FORMULA BOX ===== */
+  .formula-box {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 14px;
+    padding: 22px 28px;
+    margin: 16px 0;
+    text-align: center;
+  }
+  .formula-box .formula-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.55; margin-bottom: 10px;
+  }
+  .formula-box .formula-main {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: #fbbf24;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+  .formula-box .formula-note {
+    font-size: 0.85rem; opacity: 0.7; line-height: 1.6;
+  }
+
+  /* ===== SEQUENCE VISUAL ===== */
+  .seq-visual {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    margin: 18px 0 6px;
+    justify-content: center;
+  }
+  .seq-item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px;
+  }
+  .seq-bubble {
+    width: 58px; height: 58px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+  .seq-sub {
+    font-size: 11px; font-weight: 700; color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+  .seq-arrow {
+    font-size: 1.5rem; color: var(--muted);
+    padding: 0 6px; margin-bottom: 20px;
+  }
+  .seq-diff {
+    font-size: 11px; font-weight: 800; color: var(--teal);
+    text-align: center; padding: 0 4px; margin-bottom: 20px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ===== GRID LAYOUTS ===== */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) {
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.9rem; }
+  }
+
+  /* ===== TYPE CARDS ===== */
+  .type-card {
+    border-radius: 16px;
+    padding: 22px 20px;
+    border: 2px solid;
+  }
+  .type-card .type-emoji { font-size: 2rem; margin-bottom: 10px; }
+  .type-card h4 { font-size: 1rem; font-weight: 800; margin-bottom: 6px; }
+  .type-card p { font-size: 0.88rem; line-height: 1.6; }
+  .type-card .type-condition {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem; font-weight: 700;
+    margin-top: 10px;
+    padding: 7px 12px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  /* ===== EXAMPLE STEPS ===== */
+  .example-box {
+    background: #f8fafc;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin: 14px 0;
+  }
+  .example-box .ex-header {
+    font-size: 13px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px;
+  }
+  .step-list { list-style: none; }
+  .step-list li {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 9px 0; border-bottom: 1px solid var(--border);
+    font-size: 0.94rem; line-height: 1.6;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-num {
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--teal); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 1px;
+  }
+  .mono { font-family: 'Space Mono', monospace; font-size: 0.88em; }
+
+  /* ===== PROOF / DERIVATION ===== */
+  .proof-box {
+    background: linear-gradient(135deg, #ede9fe, #dbeafe);
+    border: 2px solid #c4b5fd;
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin: 16px 0;
+  }
+  .proof-box .proof-title {
+    font-size: 13px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #5b21b6; margin-bottom: 14px;
+  }
+  .proof-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 7px 0; border-bottom: 1px solid rgba(139,92,246,0.2);
+    font-size: 0.93rem;
+  }
+  .proof-row:last-child { border-bottom: none; }
+  .proof-row .proof-eq {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem; font-weight: 700; color: #4c1d95;
+    min-width: 240px;
+  }
+  .proof-row .proof-why {
+    font-size: 0.83rem; color: #6d28d9; opacity: 0.8;
+  }
+
+  /* ===== SUMMARY TABLE ===== */
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: #1e293b; color: white;
+    padding: 12px 16px; text-align: left;
+    font-size: 13px; font-weight: 700;
+  }
+  th:first-child { border-radius: 10px 0 0 0; }
+  th:last-child  { border-radius: 0 10px 0 0; }
+  td {
+    padding: 11px 16px; font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td.mono { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.85rem; }
+
+  /* ===== SUMMARY GRID ===== */
+  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 620px) { .summary-grid { grid-template-columns: 1fr 1fr; } }
+  .summary-card {
+    border-radius: 14px; padding: 18px 16px; text-align: center;
+    border: 2px solid;
+  }
+  .summary-card .emoji { font-size: 1.8rem; margin-bottom: 8px; }
+  .summary-card h4 { font-size: 0.9rem; font-weight: 800; margin-bottom: 6px; }
+  .summary-card p { font-size: 0.82rem; line-height: 1.55; }
+
+  /* ===== HIGHLIGHT STRIPE ===== */
+  .highlight {
+    border-radius: 10px;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-size: 0.93rem;
+    font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .highlight.teal  { background: var(--teal-light);  color: #065f46; }
+  .highlight.blue  { background: var(--blue-light);  color: #1e3a8a; }
+  .highlight.orange{ background: var(--orange-light);color: #7c2d12; }
+  .highlight.green { background: var(--green-light); color: #14532d; }
+  .highlight.purple{ background: var(--purple-light);color: #4c1d95; }
+
+  /* ===== NUMBER LINE ===== */
+  .numline-wrap { overflow-x: auto; padding: 8px 0; }
+  .numline {
+    display: flex; align-items: center; gap: 2px;
+    min-width: 500px; padding: 12px 8px;
+  }
+  .nl-item {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    flex: 1;
+  }
+  .nl-dot {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem;
+    font-weight: 700; color: white;
+  }
+  .nl-label { font-size: 10px; font-weight: 700; color: var(--muted); font-family: 'Space Mono', monospace; }
+  .nl-connector {
+    height: 2px; flex: 1; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+  }
+  .nl-connector::before {
+    content: ''; display: block; width: 100%; height: 2px;
+    background: #cbd5e1;
+  }
+  .nl-d {
+    position: absolute;
+    font-size: 10px; font-weight: 800; color: var(--teal);
+    background: white; padding: 0 4px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ===== CALLOUT ===== */
+  .callout {
+    border-radius: 14px; padding: 18px 22px; margin: 14px 0;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .callout.warn  { background: #fef9c3; border: 1.5px solid #fde047; }
+  .callout.info  { background: #dbeafe; border: 1.5px solid #93c5fd; }
+  .callout.tip   { background: #dcfce7; border: 1.5px solid #86efac; }
+  .callout-icon  { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+  .callout h4    { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+  .callout p     { font-size: 0.87rem; line-height: 1.6; }
+
+  /* ===== BREADCRUMB / NAV ===== */
+  .nav-hint {
+    text-align: center; margin-top: 10px;
+    font-size: 0.83rem; opacity: 0.65;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-badge">📚 Gümnaasiumi lai matemaatika · III osa</div>
+  <h1>Arvjadad &amp;<br>Aritmeetiline jada</h1>
+  <p>Kaldmäe · Kontson · Matiisen · Pais — Funktsioonid. Arvjadad. Eksponent- ja logaritmfunktsioon</p>
+  <div class="hero-topics">
+    <div class="hero-topic">📐 Jada mõiste</div>
+    <div class="hero-topic">📈 Kasvav &amp; kahanev jada</div>
+    <div class="hero-topic">🔁 Aritmeetiline jada</div>
+    <div class="hero-topic">🔢 Üldliige aₙ</div>
+    <div class="hero-topic">Σ Summa valem</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== 1. JADA MÕISTE ===== -->
+<div class="section-title teal">
+  <div class="section-num">1</div>
+  <h2>Jada mõiste ja põhimõisted</h2>
+</div>
+
+<div class="card">
+  <div class="def-box teal">
+    <div class="def-label">📖 Definitsioon</div>
+    <p><strong>Jada</strong> on arvude loend kindlas järjestuses. Iga jada arvu nimetatakse <strong>jada liikmeks</strong> (elemendiks). Liikmed on nummerdatud: esimene, teine, kolmas jne.</p>
+  </div>
+
+  <p>Jada tähistatakse üldiselt nii: <span class="mono">(aₙ)</span> ehk <span class="mono">a₁, a₂, a₃, …, aₙ, …</span></p>
+
+  <div class="two-col" style="margin-top:16px;">
+    <div class="def-box blue" style="margin-bottom:0;">
+      <div class="def-label">✏️ Tähistus</div>
+      <p><strong>a₁</strong> — jada <strong>esimene</strong> liige<br>
+         <strong>a₂</strong> — jada <strong>teine</strong> liige<br>
+         <strong>aₙ</strong> — jada <strong>n-es</strong> liige (üldliige)<br>
+         <strong>aₙ₊₁</strong> — liige, mis järgneb aₙ-le</p>
+    </div>
+    <div class="def-box orange" style="margin-bottom:0;">
+      <div class="def-label">💡 Näide</div>
+      <p>Jada: <span class="mono">2, 5, 8, 11, 14, …</span><br><br>
+         <strong>a₁ = 2</strong>, <strong>a₂ = 5</strong>, <strong>a₃ = 8</strong><br>
+         Iga järgmine liige on <strong>3 võrra suurem</strong> eelmisest.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Sequence visual -->
+<div class="card">
+  <h3>🔵 Jada liikmete visualiseerimine</h3>
+  <div class="seq-visual">
+    <div class="seq-item">
+      <div class="seq-bubble" style="background:#0d9488;">2</div>
+      <div class="seq-sub">a₁</div>
+    </div>
+    <div class="seq-diff">+3</div>
+    <div class="seq-item">
+      <div class="seq-bubble" style="background:#0891b2;">5</div>
+      <div class="seq-sub">a₂</div>
+    </div>
+    <div class="seq-diff">+3</div>
+    <div class="seq-item">
+      <div class="seq-bubble" style="background:#1d4ed8;">8</div>
+      <div class="seq-sub">a₃</div>
+    </div>
+    <div class="seq-diff">+3</div>
+    <div class="seq-item">
+      <div class="seq-bubble" style="background:#4f46e5;">11</div>
+      <div class="seq-sub">a₄</div>
+    </div>
+    <div class="seq-diff">+3</div>
+    <div class="seq-item">
+      <div class="seq-bubble" style="background:#7c3aed;">14</div>
+      <div class="seq-sub">a₅</div>
+    </div>
+    <div class="seq-diff">…</div>
+  </div>
+  <p style="text-align:center; font-size:0.87rem; color:var(--muted);">Iga kahe naaberliikmete vaheline nihe on konstantne: <span class="mono">+3</span></p>
+</div>
+
+
+<!-- ===== 2. JADA LIIGID ===== -->
+<div class="section-title blue">
+  <div class="section-num">2</div>
+  <h2>Kasvav, kahanev ja konstantne jada</h2>
+</div>
+
+<div class="three-col">
+  <div class="type-card" style="background:#ccfbf1; border-color:#0d9488;">
+    <div class="type-emoji">📈</div>
+    <h4 style="color:#065f46;">Kasvav jada</h4>
+    <p style="color:#065f46;">Iga järgmine liige on <strong>suurem</strong> eelmisest.</p>
+    <div class="type-condition" style="background:#0d9488; color:white;">aₙ₊₁ &gt; aₙ</div>
+    <p style="color:#065f46; font-size:0.83rem; margin-top:10px;">Näide: 1, 3, 5, 7, 9, …</p>
+  </div>
+  <div class="type-card" style="background:#fee2e2; border-color:#dc2626;">
+    <div class="type-emoji">📉</div>
+    <h4 style="color:#7f1d1d;">Kahanev jada</h4>
+    <p style="color:#7f1d1d;">Iga järgmine liige on <strong>väiksem</strong> eelmisest.</p>
+    <div class="type-condition" style="background:#dc2626; color:white;">aₙ₊₁ &lt; aₙ</div>
+    <p style="color:#7f1d1d; font-size:0.83rem; margin-top:10px;">Näide: 10, 7, 4, 1, −2, …</p>
+  </div>
+  <div class="type-card" style="background:#fef9c3; border-color:#ca8a04;">
+    <div class="type-emoji">➡️</div>
+    <h4 style="color:#713f12;">Konstantne jada</h4>
+    <p style="color:#713f12;">Kõik liikmed on <strong>võrdsed</strong> ehk ühesuurused.</p>
+    <div class="type-condition" style="background:#ca8a04; color:white;">aₙ₊₁ = aₙ</div>
+    <p style="color:#713f12; font-size:0.83rem; margin-top:10px;">Näide: 5, 5, 5, 5, 5, …</p>
+  </div>
+</div>
+
+<div class="card" style="margin-top:16px;">
+  <h3>🔎 Kuidas otsustada, mis liiki jada on?</h3>
+  <p>Vaata naaberliikme vahet: <span class="mono">aₙ₊₁ − aₙ</span></p>
+  <div class="highlight teal">📈 Kui vahe on <strong>positiivne</strong> → kasvav jada</div>
+  <div class="highlight" style="background:#fee2e2; color:#7f1d1d;">📉 Kui vahe on <strong>negatiivne</strong> → kahanev jada</div>
+  <div class="highlight" style="background:#fef9c3; color:#713f12;">➡️ Kui vahe on <strong>null</strong> → konstantne jada</div>
+</div>
+
+
+<!-- ===== 3. JADA ÜLDLIIGE ===== -->
+<div class="section-title orange">
+  <div class="section-num">3</div>
+  <h2>Jada üldliige aₙ</h2>
+</div>
+
+<div class="card">
+  <div class="def-box orange">
+    <div class="def-label">📖 Definitsioon</div>
+    <p><strong>Jada üldliige</strong> ehk <strong>aₙ</strong> on valem, mis annab jada <strong>iga liikme väärtuse</strong> tema järjekorranumbri n kaudu. Sisestades n = 1, 2, 3, … saad vastavad jada liikmed.</p>
+  </div>
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div>
+      <h4>Mida üldliige teeb?</h4>
+      <p>Üldliige on nagu "retsept" — sisesta jadanumber <strong>n</strong> ja saad vastava jada liikme. Sa ei pea kõiki eelmisi liikmeid arvutama.</p>
+    </div>
+  </div>
+
+  <div class="example-box">
+    <div class="ex-header">📝 Näide: leia jada liikmed üldliikme aₙ = 2n + 1 järgi</div>
+    <ul class="step-list">
+      <li><div class="step-num">1</div><div>n = 1: <span class="mono">a₁ = 2·1 + 1 = 3</span></div></li>
+      <li><div class="step-num">2</div><div>n = 2: <span class="mono">a₂ = 2·2 + 1 = 5</span></div></li>
+      <li><div class="step-num">3</div><div>n = 3: <span class="mono">a₃ = 2·3 + 1 = 7</span></div></li>
+      <li><div class="step-num">4</div><div>n = 10: <span class="mono">a₁₀ = 2·10 + 1 = 21</span></div></li>
+    </ul>
+    <div style="margin-top:12px; padding:12px; background:var(--teal-light); border-radius:10px; font-size:0.88rem;">
+      ✅ Jada: <strong>3, 5, 7, 9, 11, …, 21, …</strong> — kasvav jada (vahe igal korral +2)
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== 4. ARITMEETILINE JADA ===== -->
+<div class="section-title purple">
+  <div class="section-num">4</div>
+  <h2>Aritmeetiline jada</h2>
+</div>
+
+<div class="card">
+  <div class="def-box purple">
+    <div class="def-label">📖 Definitsioon</div>
+    <p><strong>Aritmeetiline jada</strong> on jada, kus iga järgmine liige saadakse eelmisele <strong>konstantse arvu liitmisega</strong>. Seda konstanti nimetatakse <strong>aritmeetilise jada diferentsiks</strong> ja tähistatakse <strong>d</strong>-ga.</p>
+  </div>
+
+  <div class="formula-box" style="background:#4c1d95;">
+    <div class="formula-label">Aritmeetilise jada tunnustingimus</div>
+    <div class="formula-main">aₙ₊₁ = aₙ + d</div>
+    <div class="formula-note">ehk: aₙ₊₁ − aₙ = d (kõigil n-del sama)</div>
+  </div>
+
+  <div class="two-col">
+    <div class="def-box green" style="margin-bottom:0;">
+      <div class="def-label">✅ Nõuanne: kuidas leida d?</div>
+      <p><span class="mono">d = a₂ − a₁ = a₃ − a₂ = aₙ₊₁ − aₙ</span><br><br>
+      Lahuta <strong>igast liikmest eelmine</strong> — kui tulemus on alati sama, on tegu aritmeetilise jadaga!</p>
+    </div>
+    <div style="background:#f8fafc; border: 1.5px solid var(--border); border-radius:14px; padding:18px 20px;">
+      <div style="font-size:13px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:12px;">📊 Näited</div>
+      <p style="font-size:0.87rem; margin-bottom:8px;"><span class="mono">1, 4, 7, 10, 13</span> → d = <strong>+3</strong> (kasvav)</p>
+      <p style="font-size:0.87rem; margin-bottom:8px;"><span class="mono">20, 15, 10, 5, 0</span> → d = <strong>−5</strong> (kahanev)</p>
+      <p style="font-size:0.87rem;"><span class="mono">7, 7, 7, 7, 7</span> → d = <strong>0</strong> (konstantne)</p>
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-top:16px;">
+    <div class="callout-icon">⚠️</div>
+    <div>
+      <h4>Oluline meeles pidada!</h4>
+      <p>Aritmeetiline jada võib olla <strong>kasvav</strong> (d &gt; 0), <strong>kahanev</strong> (d &lt; 0) või <strong>konstantne</strong> (d = 0). Konstantne jada on aritmeetilise jada <strong>erijuht</strong>.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== 5. ÜLDLIIGE ===== -->
+<div class="section-title green">
+  <div class="section-num">5</div>
+  <h2>Aritmeetilise jada üldliige</h2>
+</div>
+
+<div class="card">
+  <p>Aritmeetilises jadas kasvab iga liige diferentsi <strong>d</strong> võrra. Kuni n-nda liikmeni on lisatud d-d kokku <strong>(n−1) korda</strong>:</p>
+
+  <div class="proof-box">
+    <div class="proof-title">🔍 Valemi tuletus (mõtlemiseks)</div>
+    <div class="proof-row">
+      <div class="proof-eq">a₁ = a₁</div>
+      <div class="proof-why">esimene liige — algpunkt</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">a₂ = a₁ + d</div>
+      <div class="proof-why">lisame d 1 kord</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">a₃ = a₁ + d + d = a₁ + 2d</div>
+      <div class="proof-why">lisame d 2 korda</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">a₄ = a₁ + 3d</div>
+      <div class="proof-why">lisame d 3 korda</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">aₙ = a₁ + (n−1)·d</div>
+      <div class="proof-why">lisame d kokku (n−1) korda ✅</div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">⭐ Aritmeetilise jada üldliige</div>
+    <div class="formula-main">aₙ = a₁ + (n − 1) · d</div>
+    <div class="formula-note">
+      a₁ — esimene liige &nbsp;|&nbsp; d — diferents &nbsp;|&nbsp; n — liikme järjekorranumber
+    </div>
+  </div>
+
+  <div class="example-box">
+    <div class="ex-header">📝 Näide 1 — leia 12. liige</div>
+    <p style="font-size:0.9rem; margin-bottom:12px;">Jada: <span class="mono">3, 7, 11, 15, …</span>&nbsp; Leia a₁₂.</p>
+    <ul class="step-list">
+      <li><div class="step-num">1</div><div>Tuvastan: <span class="mono">a₁ = 3</span>, <span class="mono">d = 7 − 3 = 4</span></div></li>
+      <li><div class="step-num">2</div><div>Kirjutan valemi: <span class="mono">aₙ = a₁ + (n−1)·d = 3 + (n−1)·4</span></div></li>
+      <li><div class="step-num">3</div><div>Asendame n = 12: <span class="mono">a₁₂ = 3 + (12−1)·4 = 3 + 11·4 = 3 + 44 = 47</span></div></li>
+    </ul>
+    <div style="margin-top:10px; padding:10px 14px; background:var(--green-light); border-radius:10px; font-size:0.88rem; font-weight:700; color:#166534;">
+      ✅ Vastus: a₁₂ = 47
+    </div>
+  </div>
+
+  <div class="example-box" style="margin-top:10px;">
+    <div class="ex-header">📝 Näide 2 — leia diferents ja puuduv liige</div>
+    <p style="font-size:0.9rem; margin-bottom:12px;">Aritmeetilises jadas a₁ = 5 ja a₆ = 25. Leia diferents d ja a₁₀.</p>
+    <ul class="step-list">
+      <li><div class="step-num">1</div><div>Kasutan üldliiget: <span class="mono">a₆ = a₁ + 5d</span> → <span class="mono">25 = 5 + 5d</span></div></li>
+      <li><div class="step-num">2</div><div>Lahendan: <span class="mono">5d = 20</span> → <span class="mono">d = 4</span></div></li>
+      <li><div class="step-num">3</div><div>Leian a₁₀: <span class="mono">a₁₀ = 5 + 9·4 = 5 + 36 = 41</span></div></li>
+    </ul>
+    <div style="margin-top:10px; padding:10px 14px; background:var(--green-light); border-radius:10px; font-size:0.88rem; font-weight:700; color:#166534;">
+      ✅ Vastus: d = 4, a₁₀ = 41
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== 6. SUMMA VALEM ===== -->
+<div class="section-title pink">
+  <div class="section-num">6</div>
+  <h2>Aritmeetilise jada n esimese liikme summa</h2>
+</div>
+
+<div class="card">
+  <p>Aritmeetilise jada <strong>n esimese liikme summa</strong> tähistatakse <strong>Sₙ</strong>:</p>
+  <div class="highlight blue" style="margin-top:10px;">🔢 Sₙ = a₁ + a₂ + a₃ + … + aₙ</div>
+
+  <div class="proof-box" style="margin-top:18px;">
+    <div class="proof-title">💡 Kuidas valem tuletati? (Gaussi trikk)</div>
+    <p style="font-size:0.88rem; color:#5b21b6; margin-bottom:12px;">Kirjutame summa kaks korda — üks otse, teine tagurpidi:</p>
+    <div class="proof-row">
+      <div class="proof-eq">Sₙ = a₁ + a₂ + … + aₙ</div>
+      <div class="proof-why">otse</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">Sₙ = aₙ + aₙ₋₁ + … + a₁</div>
+      <div class="proof-why">tagurpidi</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">2Sₙ = (a₁+aₙ) + (a₁+aₙ) + … n korda</div>
+      <div class="proof-why">liidame rida-realt</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">2Sₙ = n · (a₁ + aₙ)</div>
+      <div class="proof-why">iga paar annab sama summa</div>
+    </div>
+    <div class="proof-row">
+      <div class="proof-eq">Sₙ = n(a₁ + aₙ) / 2</div>
+      <div class="proof-why">jagame 2-ga ✅</div>
+    </div>
+  </div>
+
+  <div class="formula-box">
+    <div class="formula-label">⭐ Summa valem — põhikuju</div>
+    <div class="formula-main">Sₙ = n · (a₁ + aₙ) / 2</div>
+    <div class="formula-note">
+      n — liikmete arv &nbsp;|&nbsp; a₁ — esimene liige &nbsp;|&nbsp; aₙ — viimane liige (n-es liige)
+    </div>
+  </div>
+
+  <div class="callout info">
+    <div class="callout-icon">🔄</div>
+    <div>
+      <h4>Teine kuju — kui viimast liiget pole antud</h4>
+      <p>Asendame <span class="mono">aₙ = a₁ + (n−1)d</span> esimesse valemisse:</p>
+    </div>
+  </div>
+
+  <div class="formula-box" style="background:#1e3a5f;">
+    <div class="formula-label">⭐ Summa valem — diferentsiga</div>
+    <div class="formula-main">Sₙ = n · (2a₁ + (n−1)·d) / 2</div>
+    <div class="formula-note">
+      Kasulik, kui teada on a₁, d ja n (viimast liiget ei pea eraldi leidma)
+    </div>
+  </div>
+
+  <!-- Example 1 -->
+  <div class="example-box" style="margin-top:18px;">
+    <div class="ex-header">📝 Näide 1 — summa kui esimene ja viimane liige on teada</div>
+    <p style="font-size:0.9rem; margin-bottom:12px;">Leia aritmeetilise jada 3, 7, 11, …, 47 liikmete summa.</p>
+    <ul class="step-list">
+      <li><div class="step-num">1</div><div>Tuvastan: <span class="mono">a₁ = 3</span>, <span class="mono">aₙ = 47</span>, <span class="mono">d = 4</span></div></li>
+      <li><div class="step-num">2</div><div>Leian n: <span class="mono">47 = 3 + (n−1)·4 → 44 = (n−1)·4 → n−1 = 11 → n = 12</span></div></li>
+      <li><div class="step-num">3</div><div>Arvutan: <span class="mono">S₁₂ = 12·(3 + 47)/2 = 12·50/2 = 12·25 = 300</span></div></li>
+    </ul>
+    <div style="margin-top:10px; padding:10px 14px; background:var(--pink-light); border-radius:10px; font-size:0.88rem; font-weight:700; color:#9d174d;">
+      ✅ Vastus: S₁₂ = 300
+    </div>
+  </div>
+
+  <!-- Example 2 -->
+  <div class="example-box" style="margin-top:10px;">
+    <div class="ex-header">📝 Näide 2 — diferentsiga valem</div>
+    <p style="font-size:0.9rem; margin-bottom:12px;">Aritmeetiline jada: a₁ = 5, d = 3. Leia 10 esimese liikme summa S₁₀.</p>
+    <ul class="step-list">
+      <li><div class="step-num">1</div><div>Kasutan teist valemit: <span class="mono">S₁₀ = 10·(2·5 + (10−1)·3) / 2</span></div></li>
+      <li><div class="step-num">2</div><div>Arvutan sulud: <span class="mono">2·5 + 9·3 = 10 + 27 = 37</span></div></li>
+      <li><div class="step-num">3</div><div>Arvutan: <span class="mono">S₁₀ = 10·37/2 = 370/2 = 185</span></div></li>
+    </ul>
+    <div style="margin-top:10px; padding:10px 14px; background:var(--pink-light); border-radius:10px; font-size:0.88rem; font-weight:700; color:#9d174d;">
+      ✅ Vastus: S₁₀ = 185
+    </div>
+  </div>
+
+  <!-- Example 3 -->
+  <div class="example-box" style="margin-top:10px;">
+    <div class="ex-header">📝 Näide 3 — esimeste naturaalarvude summa</div>
+    <p style="font-size:0.9rem; margin-bottom:12px;">Leia summeerida 1 + 2 + 3 + … + 100</p>
+    <ul class="step-list">
+      <li><div class="step-num">1</div><div>See on aritmeetiline jada: <span class="mono">a₁ = 1</span>, <span class="mono">a₁₀₀ = 100</span>, <span class="mono">n = 100</span></div></li>
+      <li><div class="step-num">2</div><div>Arvutan: <span class="mono">S₁₀₀ = 100·(1 + 100)/2 = 100·101/2 = 5050</span></div></li>
+    </ul>
+    <div style="margin-top:10px; padding:10px 14px; background:var(--pink-light); border-radius:10px; font-size:0.88rem; font-weight:700; color:#9d174d;">
+      ✅ Vastus: S₁₀₀ = 5050 &nbsp; (Gaussi klassikaline tulemus! 🏆)
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== 7. KUMMULI TABEL ===== -->
+<div class="section-title yellow">
+  <div class="section-num">7</div>
+  <h2>Valemite meelespea — kogu teema kokkuvõte</h2>
+</div>
+
+<div class="card" style="padding:0; overflow:hidden;">
+  <table>
+    <tr>
+      <th>Mõiste</th>
+      <th>Valem / Tingimus</th>
+      <th>Selgitus</th>
+    </tr>
+    <tr>
+      <td><strong>Kasvav jada</strong></td>
+      <td class="mono">aₙ₊₁ &gt; aₙ</td>
+      <td>Iga järgmine liige on suurem</td>
+    </tr>
+    <tr>
+      <td><strong>Kahanev jada</strong></td>
+      <td class="mono">aₙ₊₁ &lt; aₙ</td>
+      <td>Iga järgmine liige on väiksem</td>
+    </tr>
+    <tr>
+      <td><strong>Konstantne jada</strong></td>
+      <td class="mono">aₙ₊₁ = aₙ (d = 0)</td>
+      <td>Kõik liikmed võrdsed</td>
+    </tr>
+    <tr>
+      <td><strong>Arit. jada tunnus</strong></td>
+      <td class="mono">aₙ₊₁ − aₙ = d = konst.</td>
+      <td>Naaberliikme vahe on alati sama</td>
+    </tr>
+    <tr>
+      <td><strong>Arit. jada üldliige</strong></td>
+      <td class="mono">aₙ = a₁ + (n−1)·d</td>
+      <td>Leia suvaline liige otse</td>
+    </tr>
+    <tr>
+      <td><strong>Summa valem I</strong></td>
+      <td class="mono">Sₙ = n·(a₁ + aₙ)/2</td>
+      <td>Kasutatakse kui aₙ on teada</td>
+    </tr>
+    <tr>
+      <td><strong>Summa valem II</strong></td>
+      <td class="mono">Sₙ = n·(2a₁+(n−1)d)/2</td>
+      <td>Kasutatakse kui d on teada</td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- ===== SUMMARY CARDS ===== -->
+<div class="section-title teal">
+  <div class="section-num">⭐</div>
+  <h2>Kiire kokkuvõte — mida meeles pidada</h2>
+</div>
+
+<div class="summary-grid">
+  <div class="summary-card" style="background:#ccfbf1; border-color:#0d9488;">
+    <div class="emoji">📐</div>
+    <h4 style="color:#065f46;">Üldliige</h4>
+    <p style="color:#065f46;"><span class="mono">aₙ = a₁ + (n−1)·d</span><br>Iga liikme leidmiseks.</p>
+  </div>
+  <div class="summary-card" style="background:#ede9fe; border-color:#7c3aed;">
+    <div class="emoji">🔄</div>
+    <h4 style="color:#4c1d95;">Diferents d</h4>
+    <p style="color:#4c1d95;"><span class="mono">d = aₙ₊₁ − aₙ</span><br>Alati üks ja sama vahe.</p>
+  </div>
+  <div class="summary-card" style="background:#fce7f3; border-color:#db2777;">
+    <div class="emoji">Σ</div>
+    <h4 style="color:#9d174d;">Summa</h4>
+    <p style="color:#9d174d;"><span class="mono">Sₙ = n·(a₁+aₙ)/2</span><br>Esimene + viimane, jagatud 2-ga, korda n.</p>
+  </div>
+  <div class="summary-card" style="background:#ffedd5; border-color:#ea580c;">
+    <div class="emoji">📈</div>
+    <h4 style="color:#7c2d12;">d &gt; 0</h4>
+    <p style="color:#7c2d12;">Diferents positiivne = <strong>kasvav</strong> aritmeetiline jada.</p>
+  </div>
+  <div class="summary-card" style="background:#fee2e2; border-color:#dc2626;">
+    <div class="emoji">📉</div>
+    <h4 style="color:#7f1d1d;">d &lt; 0</h4>
+    <p style="color:#7f1d1d;">Diferents negatiivne = <strong>kahanev</strong> aritmeetiline jada.</p>
+  </div>
+  <div class="summary-card" style="background:#fef9c3; border-color:#ca8a04;">
+    <div class="emoji">➡️</div>
+    <h4 style="color:#713f12;">d = 0</h4>
+    <p style="color:#713f12;">Diferents null = <strong>konstantne</strong> jada (erijuht).</p>
+  </div>
+</div>
+
+<!-- ===== HARJUTUSÜLESANDED ===== -->
+<div class="section-title" style="margin-top:52px;">
+  <div class="section-num" style="background:#0f172a;">✏️</div>
+  <h2>Harjutusülesanded</h2>
+</div>
+
+<style>
+  .task-card {
+    background: white;
+    border-radius: 18px;
+    border: 2px solid var(--border);
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .task-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .task-header:hover { background: #f8fafc; }
+  .task-badge {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 12px;
+    border-radius: 999px; white-space: nowrap; flex-shrink: 0;
+  }
+  .badge-easy   { background: #dcfce7; color: #166534; }
+  .badge-medium { background: #fef9c3; color: #713f12; }
+  .badge-hard   { background: #fee2e2; color: #7f1d1d; }
+  .task-q {
+    font-size: 0.97rem; font-weight: 700; color: var(--text); flex: 1;
+  }
+  .task-toggle {
+    font-size: 1.2rem; color: var(--muted); flex-shrink: 0;
+    transition: transform 0.25s;
+  }
+  .task-toggle.open { transform: rotate(180deg); }
+  .task-body {
+    display: none;
+    padding: 0 24px 22px;
+    border-top: 1.5px solid var(--border);
+  }
+  .task-body.open { display: block; }
+  .task-hint {
+    background: #fef9c3; border: 1.5px solid #fde047;
+    border-radius: 10px; padding: 10px 16px;
+    font-size: 0.87rem; color: #713f12; margin: 14px 0;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .task-answer {
+    display: none;
+    background: #dcfce7; border: 1.5px solid #86efac;
+    border-radius: 12px; padding: 14px 18px; margin-top: 12px;
+  }
+  .task-answer.open { display: block; }
+  .task-answer .ans-label {
+    font-size: 11px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #166534; margin-bottom: 8px;
+  }
+  .task-answer .ans-steps { font-size: 0.9rem; line-height: 1.8; color: #14532d; }
+  .btn-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  .btn-hint, .btn-ans {
+    padding: 8px 18px; border-radius: 10px; font-size: 13px;
+    font-weight: 800; border: none; cursor: pointer; transition: opacity 0.15s;
+  }
+  .btn-hint { background: #fef9c3; color: #713f12; border: 1.5px solid #fde047; }
+  .btn-ans  { background: #dcfce7; color: #166534; border: 1.5px solid #86efac; }
+  .btn-hint:hover, .btn-ans:hover { opacity: 0.75; }
+</style>
+
+<!-- ÜL 1 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-easy">⭐ Lihtne</span>
+    <div class="task-q">1. Kas järgmised jadad on aritmeetilised? Kui jah, leia diferentes d.<br>
+      <span class="mono" style="font-weight:400;">a) 4, 9, 14, 19, 24, …&nbsp;&nbsp; b) 3, 6, 12, 24, …&nbsp;&nbsp; c) 10, 7, 4, 1, −2, …</span>
+    </div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Lahuta iga liikmest eelmine: kui vahe on alati sama, on tegu aritmeetilise jadaga.</div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        <strong>a)</strong> 9−4 = 5, 14−9 = 5, 19−14 = 5 → <strong>Jah, aritmeetiline, d = 5</strong> (kasvav)<br>
+        <strong>b)</strong> 6−3 = 3, 12−6 = 6 → vahed ei ole võrdsed → <strong>Ei, ei ole aritmeetiline</strong> (see on geomeetriline jada)<br>
+        <strong>c)</strong> 7−10 = −3, 4−7 = −3, 1−4 = −3 → <strong>Jah, aritmeetiline, d = −3</strong> (kahanev)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜL 2 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-easy">⭐ Lihtne</span>
+    <div class="task-q">2. Aritmeetilises jadas a₁ = 6 ja d = 4. Leia a₅ ja a₁₅.</div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Kasuta üldliiget: <span class="mono">aₙ = a₁ + (n−1)·d</span></div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        <span class="mono">a₅  = 6 + (5−1)·4  = 6 + 16 = <strong>22</strong></span><br>
+        <span class="mono">a₁₅ = 6 + (15−1)·4 = 6 + 56 = <strong>62</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜL 3 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-easy">⭐ Lihtne</span>
+    <div class="task-q">3. Aritmeetilise jada esimesed liikmed on 2, 5, 8, 11, … Leia summa S₈.</div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Leia kõigepealt a₈, seejärel kasuta <span class="mono">Sₙ = n·(a₁+aₙ)/2</span></div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        d = 3, a₁ = 2<br>
+        <span class="mono">a₈ = 2 + 7·3 = 23</span><br>
+        <span class="mono">S₈ = 8·(2 + 23)/2 = 8·25/2 = <strong>100</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜL 4 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-medium">🌟 Keskmine</span>
+    <div class="task-q">4. Aritmeetilises jadas a₃ = 11 ja a₇ = 27. Leia a₁, d ja a₂₀.</div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Kirjuta kaks üldliikmete valemit: a₃ = a₁ + 2d ja a₇ = a₁ + 6d. Lahuta üks teisest — saad d.</div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        <span class="mono">a₇ − a₃ = (a₁+6d) − (a₁+2d) = 4d = 27 − 11 = 16</span><br>
+        <span class="mono">d = 4</span><br>
+        <span class="mono">a₁ = a₃ − 2d = 11 − 8 = <strong>3</strong></span><br>
+        <span class="mono">a₂₀ = 3 + 19·4 = 3 + 76 = <strong>79</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜL 5 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-medium">🌟 Keskmine</span>
+    <div class="task-q">5. Leia 20 esimese paaritu naturaalarvude summa: 1 + 3 + 5 + … + 39.</div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Paaritud arvud moodustavad aritmeetilise jada: a₁ = 1, d = 2. Kontrolli, et a₂₀ = 39.</div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        <span class="mono">a₁ = 1, d = 2, n = 20</span><br>
+        <span class="mono">a₂₀ = 1 + 19·2 = 39 ✓</span><br>
+        <span class="mono">S₂₀ = 20·(1 + 39)/2 = 20·40/2 = <strong>400</strong></span><br><br>
+        Huvitav fakt: n esimese paaritu arvu summa = n². Siin 20² = 400 ✅
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜL 6 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-hard">🔥 Raskem</span>
+    <div class="task-q">6. Aritmeetilises jadas on liikmete arv 15, esimene liige 4 ja viimane liige 60. Leia kõigi liikmete summa ning diferentes d.</div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Summa valem annab Sₙ otse, d leidmiseks kasuta üldliiget: a₁₅ = a₁ + 14d.</div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        <span class="mono">S₁₅ = 15·(4 + 60)/2 = 15·64/2 = 15·32 = <strong>480</strong></span><br>
+        <span class="mono">a₁₅ = a₁ + 14d → 60 = 4 + 14d → 14d = 56 → d = <strong>4</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ÜL 7 -->
+<div class="task-card">
+  <div class="task-header" onclick="toggleTask(this)">
+    <span class="task-badge badge-hard">🔥 Raskem</span>
+    <div class="task-q">7. Mitmes liige aritmeetilises jadas 5, 8, 11, … on arv 98?</div>
+    <div class="task-toggle">▼</div>
+  </div>
+  <div class="task-body">
+    <div class="btn-row">
+      <button class="btn-hint" onclick="toggleHint(this)">💡 Vihje</button>
+      <button class="btn-ans"  onclick="toggleAns(this)">✅ Vastus</button>
+    </div>
+    <div class="task-hint" style="display:none;">Pane aₙ = 98 ja lahenda n suhtes üldliikmest.</div>
+    <div class="task-answer">
+      <div class="ans-label">Lahendus</div>
+      <div class="ans-steps">
+        <span class="mono">a₁ = 5, d = 3</span><br>
+        <span class="mono">aₙ = 5 + (n−1)·3 = 98</span><br>
+        <span class="mono">(n−1)·3 = 93 → n−1 = 31 → n = <strong>32</strong></span><br><br>
+        Vastus: 98 on selle jada <strong>32. liige</strong>.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleTask(header) {
+    const body = header.nextElementSibling;
+    const icon = header.querySelector('.task-toggle');
+    body.classList.toggle('open');
+    icon.classList.toggle('open');
+  }
+  function toggleHint(btn) {
+    const hint = btn.closest('.task-body').querySelector('.task-hint');
+    hint.style.display = hint.style.display === 'none' ? 'flex' : 'none';
+  }
+  function toggleAns(btn) {
+    const ans = btn.closest('.task-body').querySelector('.task-answer');
+    ans.classList.toggle('open');
+  }
+</script>
+
+<!-- CLOSING MOTIVATIONAL BANNER -->
+<div style="text-align:center; margin-top:52px; padding:30px 24px; background:linear-gradient(135deg,#064e3b,#0d9488,#1d4ed8); border-radius:18px; color:white;">
+  <div style="font-size:2.2rem; margin-bottom:10px;">🎯</div>
+  <div style="font-size:1.25rem; font-weight:900; margin-bottom:8px;">Tubli töö, Illimar!</div>
+  <div style="opacity:0.85; font-size:0.95rem; max-width:480px; margin:0 auto; line-height:1.6;">
+    Kaks võtmevalemit on kõige olulisemad: <strong>aₙ = a₁ + (n−1)d</strong> ja <strong>Sₙ = n(a₁+aₙ)/2</strong>. Kui need selged, oled teemaga relvastatud! 💪
+  </div>
+</div>
+
+</div>
+</body>
+</html>
