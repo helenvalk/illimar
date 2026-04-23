@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Füüsika · Impulss — 10. klass</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #0d9488 100%);
+    color: white;
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(99,102,241,0.35) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #3b82f6, #0d9488);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #6ee7b7; }
+  .hero-sub { font-size: 1rem; opacity: 0.78; max-width: 500px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 64px; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 20px; margin-top: 40px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* SECTION BLOCK */
+  .section-block {
+    background: var(--card);
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  .section-header {
+    padding: 22px 26px 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+
+  /* Theme colors */
+  .theme-blue .section-header { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-teal .section-header { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+  .theme-red .section-header { background: linear-gradient(135deg, #fff5f5, #fee2e2); }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px; margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+
+  /* FORMULA BOX */
+  .formula-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
+  .formula-card {
+    border-radius: 14px; border: 2px solid var(--border);
+    overflow: hidden;
+  }
+  .formula-header {
+    padding: 12px 16px 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .formula-icon { font-size: 1.4rem; }
+  .formula-name { font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+  .formula-body { padding: 4px 16px 16px; }
+  .formula-eq {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem; font-weight: 700;
+    margin-bottom: 6px; letter-spacing: 0.02em;
+  }
+  .formula-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .formula-units {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
+  }
+  .unit-tag {
+    background: #f8fafc; border: 1px solid var(--border);
+    border-radius: 6px; padding: 2px 8px;
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); font-weight: 700;
+  }
+
+  .formula-blue .formula-header { background: var(--blue-light); }
+  .formula-blue .formula-name { color: var(--blue); }
+  .formula-blue .formula-eq { color: var(--blue); }
+
+  .formula-green .formula-header { background: var(--green-light); }
+  .formula-green .formula-name { color: var(--green); }
+  .formula-green .formula-eq { color: var(--green); }
+
+  .formula-purple .formula-header { background: var(--purple-light); }
+  .formula-purple .formula-name { color: var(--purple); }
+  .formula-purple .formula-eq { color: var(--purple); }
+
+  .formula-orange .formula-header { background: var(--orange-light); }
+  .formula-orange .formula-name { color: var(--orange); }
+  .formula-orange .formula-eq { color: var(--orange); }
+
+  .formula-teal .formula-header { background: var(--teal-light); }
+  .formula-teal .formula-name { color: var(--teal); }
+  .formula-teal .formula-eq { color: var(--teal); }
+
+  /* INFO BOX */
+  .info-box {
+    border-radius: 12px; padding: 14px 18px; margin-top: 14px;
+    font-size: 0.88rem; line-height: 1.6;
+    border-left: 4px solid;
+  }
+  .info-blue { background: var(--blue-light); border-color: var(--blue); color: #1e3a8a; }
+  .info-green { background: var(--green-light); border-color: var(--green); color: #14532d; }
+  .info-orange { background: var(--orange-light); border-color: var(--orange); color: #7c2d12; }
+  .info-purple { background: var(--purple-light); border-color: var(--purple); color: #4c1d95; }
+  .info-yellow { background: var(--yellow-light); border-color: var(--yellow); color: #713f12; }
+  .info-red { background: var(--red-light); border-color: var(--red); color: #7f1d1d; }
+  .info-box strong { font-weight: 900; }
+
+  /* STEPS */
+  .steps { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .step {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: #f8fafc; border-radius: 12px; padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 900; flex-shrink: 0;
+    color: white;
+  }
+  .step-blue { background: var(--blue); }
+  .step-green { background: var(--green); }
+  .step-orange { background: var(--orange); }
+  .step-purple { background: var(--purple); }
+  .step-teal { background: var(--teal); }
+  .step-content { flex: 1; }
+  .step-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 3px; }
+  .step-text { font-size: 0.88rem; line-height: 1.6; }
+  .step-mono { font-family: 'Space Mono', monospace; font-size: 0.88rem; color: var(--blue); font-weight: 700; margin-top: 4px; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.88rem; }
+  .data-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px;
+    text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border);
+    background: #f8fafc;
+  }
+  .data-table td {
+    padding: 10px 14px; border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: #f8fafc; }
+  .mono { font-family: 'Space Mono', monospace; font-weight: 700; }
+  .col-blue { color: var(--blue); font-weight: 800; }
+  .col-green { color: var(--green); font-weight: 800; }
+  .col-orange { color: var(--orange); font-weight: 800; }
+  .col-purple { color: var(--purple); font-weight: 800; }
+
+  /* WORKED EXAMPLE */
+  .example-box {
+    background: #f8fafc; border: 2px solid var(--border);
+    border-radius: 16px; overflow: hidden; margin-top: 16px;
+  }
+  .example-header {
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .example-badge {
+    font-size: 0.7rem; font-weight: 900; text-transform: uppercase;
+    letter-spacing: 0.08em; border-radius: 999px; padding: 4px 12px;
+  }
+  .example-title { font-size: 0.95rem; font-weight: 800; flex: 1; }
+  .example-body { padding: 4px 20px 20px; }
+  .example-problem {
+    background: white; border-radius: 12px; padding: 14px 16px;
+    border-left: 4px solid; margin-bottom: 14px;
+    font-size: 0.9rem; line-height: 1.6;
+  }
+  .given-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .given-chip {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 4px 10px;
+    font-family: 'Space Mono', monospace; font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .given-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+  .solution-step {
+    background: white; border-radius: 10px; padding: 10px 14px;
+    margin-bottom: 8px; font-size: 0.87rem; line-height: 1.6;
+    border: 1px solid var(--border);
+  }
+  .sol-label { font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+  .sol-eq { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.9rem; margin-top: 4px; }
+  .answer-box {
+    border-radius: 10px; padding: 12px 16px; margin-top: 12px;
+    font-size: 0.9rem; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* COLLISION DIAGRAM */
+  .collision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  @media(max-width:600px){ .collision-grid { grid-template-columns: 1fr; } }
+  .collision-card {
+    border-radius: 16px; border: 2px solid var(--border); overflow: hidden;
+  }
+  .collision-head {
+    padding: 14px 16px 10px;
+    font-weight: 900; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .collision-body { padding: 4px 16px 16px; font-size: 0.85rem; line-height: 1.6; color: var(--text); }
+  .diagram { text-align: center; font-family: 'Space Mono', monospace; font-size: 1rem; margin: 10px 0; letter-spacing: 0.03em; }
+
+  /* PHRASE BOX */
+  .phrase-box {
+    background: var(--yellow-light); border: 2px solid #d97706;
+    border-radius: 16px; padding: 22px; margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 0.95rem; font-weight: 900; color: #92400e;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+  .phrase {
+    background: white; border-radius: 8px; padding: 8px 12px;
+    font-size: 0.83rem; border-left: 3px solid #d97706; line-height: 1.5;
+  }
+
+  /* TIPS */
+  .tips-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-top: 8px; }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  footer {
+    text-align: center; padding: 28px 24px;
+    color: var(--muted); font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">⚡</div>
+    <h1>Füüsika · <span>Impulss</span></h1>
+    <p class="hero-sub">Keha impulss · Jõuimpulss · Impulsi jäävus · Põrkumised · Näidisülesanded</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">teemat</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">valemit</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">lahendatud ülesannet</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ===== 1. KEHA IMPULSS ===== -->
+  <div class="section-label">⚡ 1. teema — Mis on impulss?</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🎯</div>
+      <div>
+        <div class="section-title">Keha impulss <span class="badge badge-blue">p = mv</span></div>
+        <div class="section-subtitle">Mõiste, valem, ühikud, suund</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-box info-blue">
+        <strong>Mida impulss mõõdab?</strong><br>
+        Impulss näitab, kui „raske" on liikuvat keha peatada. Kiire ja raske keha on palju raskem peatada kui aeglane ja kerge — seda just impulss kirjeldabki. Mida suurem impulss, seda rohkem on vaja jõudu ja aega, et keha seisma saada.
+      </div>
+
+      <div class="formula-grid">
+        <div class="formula-card formula-blue">
+          <div class="formula-header">
+            <div class="formula-icon">📐</div>
+            <div class="formula-name">Keha impulss</div>
+          </div>
+          <div class="formula-body">
+            <div class="formula-eq">p = m · v</div>
+            <div class="formula-desc">Impulss = mass × kiirus</div>
+            <div class="formula-units">
+              <span class="unit-tag">p [kg·m/s]</span>
+              <span class="unit-tag">m [kg]</span>
+              <span class="unit-tag">v [m/s]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box info-orange" style="margin-top:14px;">
+        <strong>⚠️ Impulss on vektoriaalne suurus!</strong><br>
+        Impulssil on nii suurus kui ka <strong>suund</strong> — sama nagu kiirusel. Kui keha liigub vasakule, on selle impulss negatiivne (kui paremale on positiivne). Ülesannetes vali <strong>enne lahendamist</strong> positiivne suund!
+      </div>
+
+      <table class="data-table" style="margin-top:14px;">
+        <thead>
+          <tr>
+            <th>Näide</th>
+            <th>Mass m</th>
+            <th>Kiirus v</th>
+            <th>Impulss p = mv</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tennisepall</td>
+            <td>0,057 kg</td>
+            <td>50 m/s</td>
+            <td class="col-blue mono">2,85 kg·m/s</td>
+          </tr>
+          <tr>
+            <td>Jalgpallur (jooksmisel)</td>
+            <td>75 kg</td>
+            <td>6 m/s</td>
+            <td class="col-blue mono">450 kg·m/s</td>
+          </tr>
+          <tr>
+            <td>Auto (linnasõit)</td>
+            <td>1200 kg</td>
+            <td>14 m/s</td>
+            <td class="col-blue mono">16 800 kg·m/s</td>
+          </tr>
+          <tr>
+            <td>Kuul (püstolilt)</td>
+            <td>0,008 kg</td>
+            <td>400 m/s</td>
+            <td class="col-blue mono">3,2 kg·m/s</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ===== 2. IMPULSI MUUT JA JÕUIMPULSS ===== -->
+  <div class="section-label">💥 2. teema — Jõuimpulss ja impulsi muut</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">🔄</div>
+      <div>
+        <div class="section-title">Jõuimpulss <span class="badge badge-green">F·Δt = Δp</span></div>
+        <div class="section-subtitle">Kuidas jõud muudab keha impulssi?</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-box info-green">
+        <strong>Põhimõte:</strong> Newtoni 2. seaduse järgi tekitab jõud kiirenduse. Aga sama põhimõtet saab väljendada ka impulsi kaudu: <strong>jõud × aeg = impulsi muut</strong>. See seos on ülimalt kasulik ülesannetes, kus on antud jõud ja aeg (või vastupidi).
+      </div>
+
+      <div class="formula-grid">
+        <div class="formula-card formula-green">
+          <div class="formula-header">
+            <div class="formula-icon">⏱️</div>
+            <div class="formula-name">Jõuimpulss = impulsi muut</div>
+          </div>
+          <div class="formula-body">
+            <div class="formula-eq">F · Δt = Δp</div>
+            <div class="formula-desc">Jõud × ajavahemik = impulsi muut</div>
+            <div class="formula-units">
+              <span class="unit-tag">F [N]</span>
+              <span class="unit-tag">Δt [s]</span>
+              <span class="unit-tag">Δp [kg·m/s]</span>
+            </div>
+          </div>
+        </div>
+        <div class="formula-card formula-purple">
+          <div class="formula-header">
+            <div class="formula-icon">📏</div>
+            <div class="formula-name">Impulsi muut</div>
+          </div>
+          <div class="formula-body">
+            <div class="formula-eq">Δp = m·v₂ − m·v₁</div>
+            <div class="formula-desc">Lõpp-impulss miinus alg-impulss</div>
+            <div class="formula-units">
+              <span class="unit-tag">v₁ [m/s] — algkiirus</span>
+              <span class="unit-tag">v₂ [m/s] — lõppkiirus</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box info-purple" style="margin-top:14px;">
+        <strong>💡 Praktiline tähendus:</strong><br>
+        Sama impulsi muutuse (nt auto aeglustamine 0-ni) saab saavutada kas <em>suure jõuga lühikese aja jooksul</em> (kõva löök) või <em>väikese jõuga pika aja jooksul</em> (pehme aeglustamine). Sellepärast on autodel turvapadjad ja sportlastel pehmed maandumisalad — need pikendavad kontaktiaega, vähendades jõudu!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== 3. IMPULSI JÄÄVUSE SEADUS ===== -->
+  <div class="section-label">⚖️ 3. teema — Impulsi jäävuse seadus</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">⚖️</div>
+      <div>
+        <div class="section-title">Impulsi jäävuse seadus <span class="badge badge-purple">Suljetud süsteem</span></div>
+        <div class="section-subtitle">Keha süsteemi kogupulss ei muutu</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-box info-purple">
+        <strong>Seadus:</strong> Suletud süsteemis (kus välised jõud puuduvad) <strong>jääb keha süsteemi kogupulss muutumatuks</strong> — nii enne kui ka pärast kehadevahelisi koostoimeid (põrkumisi, lõhkumisi jne).
+      </div>
+
+      <div class="formula-grid">
+        <div class="formula-card formula-purple">
+          <div class="formula-header">
+            <div class="formula-icon">⚖️</div>
+            <div class="formula-name">Impulsi jäävus (2 keha)</div>
+          </div>
+          <div class="formula-body">
+            <div class="formula-eq" style="font-size:1.1rem;">m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'</div>
+            <div class="formula-desc">Enne põrkumist = pärast põrkumist</div>
+            <div class="formula-units">
+              <span class="unit-tag">v₁, v₂ — enne</span>
+              <span class="unit-tag">v₁', v₂' — pärast</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box info-blue" style="margin-top:14px;">
+        <strong>🚀 Rakendused elus:</strong><br>
+        • <strong>Rakett:</strong> gaasid lendavad tagasi → rakett lendab edasi<br>
+        • <strong>Püss:</strong> kuul lendab ette → püss tagasilöök<br>
+        • <strong>Jäähokilöök:</strong> keppide põrkumisel kandub impulss üle<br>
+        • <strong>Autode kokkupõrge:</strong> kehade massid ja kiirused muutuvad, kogupulss jääb
+      </div>
+
+      <div class="info-box info-orange" style="margin-top:10px;">
+        <strong>⚠️ Märkide reegel!</strong> Valige enne lahendust positiivne suund (nt paremale = +). Vastassuunas liikuv keha on <strong>negatiivse</strong> kiirusega. Ärge unustage märke!
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== 4. PÕRKUMISTE TÜÜBID ===== -->
+  <div class="section-label">🎱 4. teema — Põrkumiste liigid</div>
+
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">🎱</div>
+      <div>
+        <div class="section-title">Põrkumiste liigid <span class="badge badge-orange">2 tüüpi</span></div>
+        <div class="section-subtitle">Elastne ja mitteelastne põrkumine</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="collision-grid">
+
+        <!-- Elastne -->
+        <div class="collision-card">
+          <div class="collision-head" style="background: var(--green-light);">
+            <span>🟢</span>
+            <span style="color: var(--green);">Elastne põrkumine</span>
+          </div>
+          <div class="collision-body">
+            <div class="diagram">●──→   ○<br>m₁v₁  m₂=0<br>↓<br>○   ●──→<br>v₁'=0  v₂'</div>
+            <div class="info-box info-green" style="margin-top:10px;">
+              <strong>Säilib NII impulss KUI KA kineetiline energia.</strong><br>
+              Kehad põrkuvad ja eralduuvad. Keegi ei deformeeru.
+            </div>
+            <div style="margin-top:10px; font-size:0.85rem;">
+              <strong>Tüüpnäited:</strong><br>
+              biljardipallist, ideaalsed gaasmolekulid, elastsed pallid
+            </div>
+            <div class="info-box info-green" style="margin-top:10px;">
+              Lisavalem:<br>
+              <span class="mono" style="font-size:0.85rem;">E_k = ½mv² säilib</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mitteelastne -->
+        <div class="collision-card">
+          <div class="collision-head" style="background: var(--orange-light);">
+            <span>🟠</span>
+            <span style="color: var(--orange);">Täiesti mitteelastne põrkumine</span>
+          </div>
+          <div class="collision-body">
+            <div class="diagram">●──→   ○<br>m₁v₁  m₂=0<br>↓<br>[●○]──→<br>(m₁+m₂)·v'</div>
+            <div class="info-box info-orange" style="margin-top:10px;">
+              <strong>Säilib ainult impulss.</strong> Kehad jäävad kokku ja liiguvad ühise kiirusega.
+            </div>
+            <div style="margin-top:10px; font-size:0.85rem;">
+              <strong>Tüüpnäited:</strong><br>
+              auto kokkupõrge, muda sisse lendav kuul, raudteevaguniühendus
+            </div>
+            <div class="info-box info-orange" style="margin-top:10px;">
+              Lihtsustatud valem:<br>
+              <span class="mono" style="font-size:0.85rem;">m₁v₁ = (m₁+m₂)·v'</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <table class="data-table" style="margin-top:16px;">
+        <thead>
+          <tr>
+            <th>Omadus</th>
+            <th>Elastne põrkumine</th>
+            <th>Täiesti mitteelastne</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Impulsi jäävus</td>
+            <td class="col-green">✔ Jah</td>
+            <td class="col-green">✔ Jah</td>
+          </tr>
+          <tr>
+            <td>Kin. energia jäävus</td>
+            <td class="col-green">✔ Jah</td>
+            <td class="col-orange">✘ Ei (muundub soojuseks)</td>
+          </tr>
+          <tr>
+            <td>Kehad pärast põrkumist</td>
+            <td>Eralduvad</td>
+            <td>Jäävad kokku</td>
+          </tr>
+          <tr>
+            <td>Tüüpülesande valem</td>
+            <td class="mono" style="font-size:0.8rem;">m₁v₁+m₂v₂=m₁v₁'+m₂v₂'</td>
+            <td class="mono" style="font-size:0.8rem;">m₁v₁=(m₁+m₂)·v'</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ===== 5. NÄIDISÜLESANDED ===== -->
+  <div class="section-label">✏️ 5. teema — Lahendatud näidisülesanded</div>
+
+  <!-- Näide 1 -->
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">1️⃣</div>
+      <div>
+        <div class="section-title">Ülesanne 1 — Impulsi arvutamine</div>
+        <div class="section-subtitle">Alusülesanne: p = mv</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="example-box">
+        <div class="example-header" style="background: var(--blue-light);">
+          <span class="example-badge badge-blue" style="background:var(--blue); color:white;">Ülesanne</span>
+          <span class="example-title">Jalgpallur massiga 75 kg jookseb kiirusega 6 m/s. Leia tema impulss.</span>
+        </div>
+        <div class="example-body">
+          <div class="given-label">✏️ Antud</div>
+          <div class="given-row">
+            <span class="given-chip">m = 75 kg</span>
+            <span class="given-chip">v = 6 m/s</span>
+            <span class="given-chip">p = ?</span>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num step-blue">1</div>
+              <div class="step-content">
+                <div class="step-label">Valem</div>
+                <div class="step-text">Impulsi valem on:</div>
+                <div class="step-mono">p = m · v</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-blue">2</div>
+              <div class="step-content">
+                <div class="step-label">Asendus</div>
+                <div class="step-text">Asendan teadaolevad suurused:</div>
+                <div class="step-mono">p = 75 kg · 6 m/s</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-blue">3</div>
+              <div class="step-content">
+                <div class="step-label">Vastus</div>
+                <div class="step-mono">p = 450 kg·m/s</div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-box" style="background:var(--blue-light); color:var(--blue);">
+            ✅ <span>Vastus: Jalgpalluri impulss on <strong>450 kg·m/s</strong> (jooksmissuunas).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näide 2 -->
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">2️⃣</div>
+      <div>
+        <div class="section-title">Ülesanne 2 — Jõuimpulss</div>
+        <div class="section-subtitle">Jõu leidmine impulsi muudu kaudu</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="example-box">
+        <div class="example-header" style="background: var(--green-light);">
+          <span class="example-badge" style="background:var(--green); color:white; font-size:0.7rem; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; border-radius:999px; padding:4px 12px;">Ülesanne</span>
+          <span class="example-title">Tennis: pall (mass 57 g, kiirus 0) saab löögi ja liigub kiirusega 50 m/s. Kontaktiaeg 4 ms. Leia jõud.</span>
+        </div>
+        <div class="example-body">
+          <div class="given-label">✏️ Antud</div>
+          <div class="given-row">
+            <span class="given-chip">m = 0,057 kg</span>
+            <span class="given-chip">v₁ = 0 m/s</span>
+            <span class="given-chip">v₂ = 50 m/s</span>
+            <span class="given-chip">Δt = 0,004 s</span>
+            <span class="given-chip">F = ?</span>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num step-green">1</div>
+              <div class="step-content">
+                <div class="step-label">Impulsi muut</div>
+                <div class="step-mono">Δp = m·v₂ − m·v₁</div>
+                <div class="step-mono">Δp = 0,057 · 50 − 0,057 · 0 = 2,85 kg·m/s</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-green">2</div>
+              <div class="step-content">
+                <div class="step-label">Jõuimpulsi valem</div>
+                <div class="step-mono">F · Δt = Δp  →  F = Δp / Δt</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-green">3</div>
+              <div class="step-content">
+                <div class="step-label">Asendus</div>
+                <div class="step-mono">F = 2,85 / 0,004 = 712,5 N</div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-box" style="background:var(--green-light); color:var(--green);">
+            ✅ <span>Vastus: Racket mõjutab palli jõuga <strong>≈ 713 N</strong> (umbes 73 kg raskus!).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näide 3 -->
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">3️⃣</div>
+      <div>
+        <div class="section-title">Ülesanne 3 — Täiesti mitteelastne põrkumine</div>
+        <div class="section-subtitle">Impulsi jäävus: kehad jäävad kokku</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="example-box">
+        <div class="example-header" style="background: var(--purple-light);">
+          <span class="example-badge" style="background:var(--purple); color:white; font-size:0.7rem; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; border-radius:999px; padding:4px 12px;">Ülesanne</span>
+          <span class="example-title">Vagun (mass 20 000 kg, kiirus 5 m/s) põrkab seisvasse vaguniesse (mass 15 000 kg). Nad jäävad kokku. Leia ühine kiirus.</span>
+        </div>
+        <div class="example-body">
+          <div class="given-label">✏️ Antud</div>
+          <div class="given-row">
+            <span class="given-chip">m₁ = 20 000 kg</span>
+            <span class="given-chip">v₁ = 5 m/s</span>
+            <span class="given-chip">m₂ = 15 000 kg</span>
+            <span class="given-chip">v₂ = 0 m/s</span>
+            <span class="given-chip">v' = ?</span>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num step-purple">1</div>
+              <div class="step-content">
+                <div class="step-label">Tunnused → mitteelastne põrkumine</div>
+                <div class="step-text">Kehad jäävad kokku → kasutan täiesti mitteelastse põrkumise valemit.</div>
+                <div class="step-mono">m₁v₁ + m₂v₂ = (m₁ + m₂) · v'</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-purple">2</div>
+              <div class="step-content">
+                <div class="step-label">Asendus</div>
+                <div class="step-mono">20000·5 + 15000·0 = (20000+15000)·v'</div>
+                <div class="step-mono">100 000 = 35 000 · v'</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-purple">3</div>
+              <div class="step-content">
+                <div class="step-label">Lahendus</div>
+                <div class="step-mono">v' = 100 000 / 35 000 ≈ 2,86 m/s</div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-box" style="background:var(--purple-light); color:var(--purple);">
+            ✅ <span>Vastus: Ühendatud vagunid liiguvad edasi kiirusega <strong>≈ 2,86 m/s</strong>.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näide 4 -->
+  <div class="section-block theme-teal">
+    <div class="section-header">
+      <div class="section-emoji">4️⃣</div>
+      <div>
+        <div class="section-title">Ülesanne 4 — Rakett (impulsi jäävus)</div>
+        <div class="section-subtitle">Vastassuundades liikumine — negatiivne kiirus!</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="example-box">
+        <div class="example-header" style="background: var(--teal-light);">
+          <span class="example-badge" style="background:var(--teal); color:white; font-size:0.7rem; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; border-radius:999px; padding:4px 12px;">Ülesanne</span>
+          <span class="example-title">Puhkav inimene (mass 70 kg) suusatab ja tõukab saua abil maha kepi (mass 0,5 kg) kiirusega 20 m/s tahapoole. Kui suur on inimese kiirus edasi?</span>
+        </div>
+        <div class="example-body">
+          <div class="given-label">✏️ Antud</div>
+          <div class="given-row">
+            <span class="given-chip">m₁ = 70 kg (inimene)</span>
+            <span class="given-chip">m₂ = 0,5 kg (kepp)</span>
+            <span class="given-chip">v₂' = −20 m/s (tahapoole)</span>
+            <span class="given-chip">v_algne = 0</span>
+            <span class="given-chip">v₁' = ?</span>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num step-teal">1</div>
+              <div class="step-content">
+                <div class="step-label">Algolukord — puhkusel</div>
+                <div class="step-text">Süsteem seisab: kogu alg-impulss = 0</div>
+                <div class="step-mono">p_alg = 0</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-teal">2</div>
+              <div class="step-content">
+                <div class="step-label">Impulsi jäävus</div>
+                <div class="step-mono">0 = m₁·v₁' + m₂·v₂'</div>
+                <div class="step-mono">0 = 70·v₁' + 0,5·(−20)</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num step-teal">3</div>
+              <div class="step-content">
+                <div class="step-label">Lahendus</div>
+                <div class="step-mono">70·v₁' = 0,5 · 20 = 10</div>
+                <div class="step-mono">v₁' = 10 / 70 ≈ 0,14 m/s</div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-box" style="background:var(--teal-light); color:var(--teal);">
+            ✅ <span>Vastus: Inimene liigub edasi kiirusega <strong>≈ 0,14 m/s</strong> (rakett-efekt!).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KOKKUVÕTTETABEL ===== -->
+  <div class="section-label">📋 Kiire meelespea — kokkuvõttetabel</div>
+
+  <div class="section-block" style="border-color: var(--border);">
+    <div class="section-header" style="background: linear-gradient(135deg, #f8fafc, #f1f5f9);">
+      <div class="section-emoji">📋</div>
+      <div>
+        <div class="section-title">Kõik valemid korraga</div>
+        <div class="section-subtitle">Kiirviide — kui teema selgeks saanud, piisab sellest tabelist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Olukord</th>
+            <th>Valem</th>
+            <th>Tähised</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Keha impulss</strong></td>
+            <td class="mono col-blue">p = m · v</td>
+            <td>m [kg], v [m/s], p [kg·m/s]</td>
+          </tr>
+          <tr>
+            <td><strong>Impulsi muut</strong></td>
+            <td class="mono col-green">Δp = m·v₂ − m·v₁</td>
+            <td>v₁ algkiirus, v₂ lõppkiirus</td>
+          </tr>
+          <tr>
+            <td><strong>Jõuimpulss = impulsi muut</strong></td>
+            <td class="mono col-purple">F · Δt = Δp</td>
+            <td>F [N], Δt [s]</td>
+          </tr>
+          <tr>
+            <td><strong>Impulsi jäävus (2 keha)</strong></td>
+            <td class="mono col-orange" style="font-size:0.8rem;">m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'</td>
+            <td>v' — kiirus pärast</td>
+          </tr>
+          <tr>
+            <td><strong>Täiesti mitteelastne põrkumine</strong></td>
+            <td class="mono" style="color:var(--teal); font-size:0.8rem;">m₁v₁ = (m₁+m₂)·v'</td>
+            <td>kehad jäävad kokku</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== NIPID ===== -->
+  <div class="section-label">💡 Lahendamise nipid</div>
+
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">🔢</div>
+      <div>
+        <div class="tip-title">Struktuur: antud → otsin → valem → asendus → vastus</div>
+        <div class="tip-text">Kirjuta iga kord välja antud suurused, seejärel valem, siis asendus ja lõpuks vastus ühikuga.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">➕➖</div>
+      <div>
+        <div class="tip-title">Määra positiivne suund enne lahendust</div>
+        <div class="tip-text">Vali üks suund positiivseks (nt paremale). Kõik vastassuunalised kiiused on siis negatiivsed.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🧩</div>
+      <div>
+        <div class="tip-title">Tunnusta ülesande tüüp esmalt</div>
+        <div class="tip-text">Kas kehad jäävad kokku (mitteelastne) või lahkuvad (elastne)? See määrab, millist valemit kasutad.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚠️</div>
+      <div>
+        <div class="tip-title">Ühikud: gramm → kilogramm!</div>
+        <div class="tip-text">Massi ühik on kg. Kui ülesandes on gramm (g), tee teisendus: 1 g = 0,001 kg. Samuti ms → s.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FRAASIPANK ===== -->
+  <div class="section-label">✍️ Fraasipank — eksamiks</div>
+
+  <div class="phrase-box">
+    <h3>📝 Valmis laused füüsika ülesannete kirjutamiseks</h3>
+    <div class="phrases-grid">
+      <div class="phrase">„Koostan impulsi jäävuse võrrandi: m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'"</div>
+      <div class="phrase">„Kuna kehad jäävad kokku, on tegemist täiesti mitteelastse põrkumisega."</div>
+      <div class="phrase">„Valin positiivseks suunaks paremale, seega vasak on negatiivne."</div>
+      <div class="phrase">„Süsteem oli algselt puhkusel, seega kogu alg-impulss = 0."</div>
+      <div class="phrase">„Rakendan impulsi jäävuse seadust: kogu impulss enne = kogu impulss pärast."</div>
+      <div class="phrase">„Impulsi muut: Δp = m·v₂ − m·v₁ = ..."</div>
+      <div class="phrase">„Jõu leidmiseks kasutan: F = Δp / Δt"</div>
+      <div class="phrase">„Seega on [keha] impulss / kiirus / jõud = __ [ühik]."</div>
+      <div class="phrase">„Kontrollin: kogupulss enne = ... = kogupulss pärast ✔"</div>
+      <div class="phrase">„Vastus: [kirjutan täislausena koos ühikuga kg·m/s]"</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Füüsika · Impulss · 10. klass · Illimar · 2026
+</footer>
+
+</body>
+</html>
