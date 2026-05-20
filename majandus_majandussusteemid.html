@@ -214,6 +214,17 @@
     text-align: center; padding: 28px 24px; color: var(--muted);
     font-size: 0.82rem; border-top: 1px solid var(--border);
   }
+
+  .video-wrap {
+    position: relative; width: 100%; height: 0;
+    padding-bottom: 56.25%;
+    border-radius: 14px; overflow: hidden;
+    border: 2px solid var(--border);
+  }
+  .video-wrap iframe {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%; border: 0;
+  }
 </style>
 </head>
 <body>
@@ -234,6 +245,24 @@
 <div class="container">
 
   <a class="backlink" href="majandus_index.html">← Tagasi õppematerjalide kogusse</a>
+
+  <!-- ===== VIDEO ===== -->
+  <div class="section-label">🎬 Videoõppetund</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🎬</div>
+      <div>
+        <div class="section-title">Majandussüsteemid videos <span class="badge badge-purple">Vaata kõigepealt</span></div>
+        <div class="section-subtitle">Lühike sissejuhatus teemasse — vaata see enne lugemist läbi</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/uie8sXCr4Mg" title="Majandussüsteemid" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
 
   <!-- OSA 1 -->
   <div class="section-label">🏛️ 1. osa — Vaba ettevõtluse alustalad</div>
