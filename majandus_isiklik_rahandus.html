@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majandus — Isiklik rahandus · 4. peatükk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 48%, #134e4a 100%);
+    color: white; padding: 56px 32px 48px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(251,191,36,0.22) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #fbbf24, #0d9488);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #fcd34d; }
+  .hero-sub { font-size: 1rem; opacity: 0.78; max-width: 560px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
+  .backlink {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    text-decoration: none; margin-bottom: 8px;
+  }
+  .backlink:hover { color: var(--blue); }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 18px; margin-top: 38px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-block {
+    background: var(--card); border-radius: 20px; border: 2px solid var(--border);
+    overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px;
+  }
+  .section-header { padding: 22px 26px 16px; display: flex; align-items: flex-start; gap: 14px; }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+  .section-body p.lead { font-size: 0.92rem; line-height: 1.6; margin-top: 14px; }
+
+  .section-block.theme-blue   { --accent:#2563eb; --accent-light:#dbeafe; }
+  .section-block.theme-green  { --accent:#16a34a; --accent-light:#dcfce7; }
+  .section-block.theme-purple { --accent:#7c3aed; --accent-light:#ede9fe; }
+  .section-block.theme-orange { --accent:#ea580c; --accent-light:#ffedd5; }
+  .section-block.theme-teal   { --accent:#0d9488; --accent-light:#ccfbf1; }
+  .theme-blue .section-header   { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-teal .section-header   { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px; margin-left: 8px; vertical-align: middle;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+
+  .key-box {
+    background: linear-gradient(135deg, #1e3a8a, #312e81);
+    color: white; border-radius: 16px; padding: 20px 22px; margin: 16px 0 4px;
+  }
+  .key-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 7px;
+  }
+  .key-text { font-size: 1.02rem; line-height: 1.55; font-weight: 700; }
+  .key-text strong { color: #fcd34d; }
+
+  .concept-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .concept-card {
+    background: #f8fafc; border: 2px solid var(--border);
+    border-left: 5px solid var(--accent, var(--blue));
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .c-term {
+    font-size: 1.02rem; font-weight: 900; color: var(--accent, var(--blue));
+    margin-bottom: 5px; display: flex; align-items: center; gap: 7px;
+  }
+  .c-term .c-emoji { font-size: 1.1rem; }
+  .c-def { font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+  .c-example {
+    font-size: 0.8rem; line-height: 1.5; color: var(--muted);
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);
+  }
+  .c-example strong { color: var(--accent, var(--blue)); }
+  .concept-card.wide { grid-column: 1 / -1; }
+
+  .formula-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 2px solid var(--blue); border-radius: 14px;
+    padding: 16px 20px; text-align: center; margin: 14px 0 4px;
+  }
+  .formula-main { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--blue); }
+  .formula-note { font-size: 0.82rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+  .ref-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .ref-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px; text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border); background: #f8fafc;
+  }
+  .ref-table td {
+    padding: 10px 14px; font-size: 0.86rem; border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.5;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: #f8fafc; }
+  .ref-term { font-weight: 800; color: var(--blue); white-space: nowrap; }
+
+  .qa {
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; overflow: hidden;
+  }
+  .qa summary {
+    padding: 13px 18px; font-weight: 800; font-size: 0.9rem;
+    cursor: pointer; list-style: none;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before { content: '❓'; flex-shrink: 0; }
+  .qa[open] summary::before { content: '✅'; }
+  .qa[open] summary { background: #f8fafc; }
+  .qa-answer {
+    padding: 12px 18px 15px; font-size: 0.86rem; line-height: 1.6;
+    color: var(--text); border-top: 1px solid var(--border);
+  }
+  .qa-answer strong { color: var(--green); }
+
+  .tips-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  .phrase-box {
+    background: var(--yellow-light); border: 2px solid var(--yellow);
+    border-radius: 16px; padding: 22px; margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 0.95rem; font-weight: 900; color: var(--yellow);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+  .phrase {
+    background: white; border-radius: 8px; padding: 9px 12px;
+    font-size: 0.83rem; border-left: 3px solid var(--yellow); line-height: 1.45;
+  }
+  .phrase strong { color: var(--text); }
+
+  footer {
+    text-align: center; padding: 28px 24px; color: var(--muted);
+    font-size: 0.82rem; border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">🏦</div>
+    <h1>Isiklik <span>rahandus</span></h1>
+    <p class="hero-sub">Majandus · 4. peatükk · Tarbija, eelarve, säästmine, investeerimine, laenud ja kindlustus</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">teemaplokki</div></div>
+      <div class="stat"><div class="stat-num">22</div><div class="stat-label">mõistet</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">enesekontrolli</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <a class="backlink" href="majandus_index.html">← Tagasi majanduse portaali</a>
+
+  <div class="key-box">
+    <div class="key-label">📌 Kogu peatüki tuum</div>
+    <div class="key-text">Isiklik rahandus on oskus oma raha targalt juhtida: <strong>planeeri</strong> (eelarve) → <strong>kogu</strong> (säästud) → <strong>kasvata</strong> (investeerimine) → <strong>kaitse</strong> (kindlustus).</div>
+  </div>
+
+  <!-- OSA 1 -->
+  <div class="section-label">🛍️ 1. osa — Tarbija ja eelarve</div>
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🛍️</div>
+      <div>
+        <div class="section-title">Tarbija ja eelarve <span class="badge badge-blue">Alus</span></div>
+        <div class="section-subtitle">Kes on tarbija ja kuidas raha planeeritakse</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🙋</span>Tarbija</div>
+          <div class="c-def">Inimene, kes ostab tooteid või teenuseid <strong>isiklikuks kasutamiseks</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> sina, kui ostad poest süüa või tellid voogedastusteenuse.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📅</span>Eelarve</div>
+          <div class="c-def">Finantsplaan, mis koostatakse <strong>tulevaste tulude ja kulude</strong> kavandamiseks.</div>
+          <div class="c-example"><strong>Näide:</strong> kuueelarve, kuhu paned kirja oodatava sissetuleku ja planeeritud kulud.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 2 -->
+  <div class="section-label">🌱 2. osa — Säästmine ja investeerimine</div>
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">🌱</div>
+      <div>
+        <div class="section-title">Säästmine ja investeerimine <span class="badge badge-green">Raha kasvatamine</span></div>
+        <div class="section-subtitle">Kuidas raha kõrvale panna ja kasvama panna</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🐷</span>Säästud</div>
+          <div class="c-def">Osa sissetulekust, mida <strong>kohe</strong> toodete ja teenuste ostmiseks ei kulutata.</div>
+          <div class="c-example"><strong>Näide:</strong> teenid 100 €, kulutad 80 € — säästud on 20 €.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📈</span>Investeerimine</div>
+          <div class="c-def">Kasu saamise eesmärgil tehtud <strong>pikaajaline rahapaigutus</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> raha paigutamine aktsiatesse või fondi, et see aja jooksul kasvaks.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">➕</span>Lihtintress</div>
+          <div class="c-def">Investeeringu <strong>algsummalt</strong> mingi aja jooksul teenitav koguintress.</div>
+          <div class="c-example"><strong>Näide:</strong> intressi arvutatakse alati ainult esialgselt summalt.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📊</span>Liitintress</div>
+          <div class="c-def">Arvutatakse investeeritud summalt <strong>ja</strong> sellelt eelmistel perioodidel teenitud intressidelt — raha ja teenitud intress investeeritakse uuesti (reinvesteeritakse).</div>
+          <div class="c-example"><strong>Näide:</strong> intressilt teenid omakorda intressi — raha kasvab kiiremini.</div>
+        </div>
+      </div>
+      <div class="formula-box">
+        <div class="formula-main">LIHTINTRESS = ainult algsummalt &nbsp;·&nbsp; LIITINTRESS = ka intressilt</div>
+        <div class="formula-note">Põhivahe: lihtintressi puhul intress ei kasva, liitintressi puhul teenib ka varem teenitud intress uut intressi. Pikas plaanis annab liitintress tunduvalt suurema tulu.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 3 -->
+  <div class="section-label">🏦 3. osa — Laenud</div>
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">🏦</div>
+      <div>
+        <div class="section-title">8 levinud laenuliiki <span class="badge badge-orange">Võrdlus</span></div>
+        <div class="section-subtitle">Iga laenu eesmärk ja tingimused</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p class="lead">Laen on raha, mille saad kohe, kuid pead <strong>hiljem koos intressiga tagasi maksma</strong>. Erinevad laenud sobivad erinevateks olukordadeks.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏠</span>Kodulaen</div>
+          <div class="c-def">Pikaajaline eluasemelaen praeguse eluaseme remontimiseks või uue ostmiseks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> võib võtta üksi või kaastaotlejaga; summa suur, tähtaeg aastakümneid; nõutav tagatis (tavaliselt kinnisvara).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔑</span>Hüpoteeklaen</div>
+          <div class="c-def">Vaba sihtotstarbega laen suuremate kulutuste (remont, õpe, ravi, äri, investeeringud) finantseerimiseks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> laenusumma kuni 66–75% tagatise turuväärtusest; nõutav kinnisvaratagatis.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🛒</span>Tarbimislaen (väikelaen)</div>
+          <div class="c-def">Tagatiseta laen suuremate ostude või remondi finantseerimiseks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> pank lähtub sissetuleku stabiilsusest; summa mõnisada kuni 10 000 eurot.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚡</span>Kiirlaen (SMS-laen)</div>
+          <div class="c-def">Kiire ja lihtne taotlemine ootamatute väljaminekute katmiseks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> maksevõimet ei kontrollita; intressid kõrged, tähtajad lühikesed — nõuab väga head maksedistsipliini.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🚗</span>Liising</div>
+          <div class="c-def">Vara omanik annab vara liisinguvõtjale kasutada kokkulepitud tasu eest; kasutatakse peamiselt sõiduki ostuks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> kapitalirent — vara läheb lõpuks omandiks; kasutusrent — vara tagastatakse, kuid võib jääkväärtuse eest välja osta.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🧾</span>Järelmaks</div>
+          <div class="c-def">Pakutakse kallimate kaupade või koduelektroonika ostu finantseerimiseks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> tasutakse osamaksetena, kuid omandiõigus läheb ostjale üle kohe pärast tehingut.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">💳</span>Krediitkaart</div>
+          <div class="c-def">Rahvusvaheline pangakaart, mis võimaldab tasuda ostude eest hiljem.</div>
+          <div class="c-example"><strong>Tingimused:</strong> makstav summa sõltub vabast krediidilimiidist (mitte kontojäägist); limiidi kasutamise eest makstakse intressi.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🎓</span>Riiklik õppelaen</div>
+          <div class="c-def">Hariduse omandamisega kaasnevate kulutuste katmiseks.</div>
+          <div class="c-example"><strong>Tingimused:</strong> sissetulekut pole vaja, tagatiseks käendus või kinnisvara; tagasimakse algab pärast õpingute lõppu, õpingute ajal makstakse intressi.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 4 -->
+  <div class="section-label">🛡️ 4. osa — Kindlustus</div>
+  <div class="section-block theme-teal">
+    <div class="section-header">
+      <div class="section-emoji">🛡️</div>
+      <div>
+        <div class="section-title">Kindlustus <span class="badge badge-teal">Riski kaitse</span></div>
+        <div class="section-subtitle">Kuidas end ootamatute kahjude vastu kaitsta</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <p class="lead">Kindlustus jaguneb laias laastus kaheks. <strong>Elukindlustus</strong> kaitseb inimest, <strong>kahjukindlustus</strong> kaitseb vara.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">❤️</span>Elukindlustus</div>
+          <div class="c-def">Kaitseb inimese <strong>elu ja tervisega</strong> seotud riskide vastu ja pakub võimalust säästa raha pensioniks.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏚️</span>Kahjukindlustus</div>
+          <div class="c-def">Kaitseb <strong>vara või tegevusega</strong> seotud riski vastu.</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <table class="ref-table">
+          <thead><tr><th>Kindlustusteenus</th><th>Liik</th><th>Mida kaitseb</th></tr></thead>
+          <tbody>
+            <tr><td><span class="ref-term">Liikluskindlustus</span></td><td>Kohustuslik kahjukindlustus</td><td>Sõiduki valdaja vastutust tema sõidukiga tekitatud kahju eest. <strong>Eestis kohustuslik.</strong></td></tr>
+            <tr><td><span class="ref-term">Sõidukikindlustus (kasko)</span></td><td>Vabatahtlik kahjukindlustus</td><td>Auto või muu mootorsõiduki kahjustumisest või hävinemisest tulenev kahju.</td></tr>
+            <tr><td><span class="ref-term">Kodukindlustus</span></td><td>Vabatahtlik kahjukindlustus</td><td>Eluruumid, juurde kuuluvad ehitised ja kodune vara.</td></tr>
+            <tr><td><span class="ref-term">Ettevõttekindlustus</span></td><td>Vabatahtlik kahjukindlustus</td><td>Ettevõtte hooned ja vara, äritegevuse katkemine, vastutus kolmandate ees.</td></tr>
+            <tr><td><span class="ref-term">Reisikindlustus</span></td><td>Vabatahtlik kahjukindlustus</td><td>Ootamatu ravikulu välisreisil; ka pagas ja reisi ärajäämine.</td></tr>
+            <tr><td><span class="ref-term">Õnnetusjuhtumikindlustus</span></td><td>Vabatahtlik elu- ja kahjukindlustus</td><td>Õnnetusega seotud väljaminekud — vigastus, töövõimetus, puue, surm.</td></tr>
+            <tr><td><span class="ref-term">Elukindlustus</span></td><td>Vabatahtlik elukindlustus</td><td>Elu ja tervisega seotud riskid; võimalus säästa raha pensioniks.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIIRVIIDE -->
+  <div class="section-label">📋 Mõistete kiirviide</div>
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">📋</div>
+      <div>
+        <div class="section-title">Kõik mõisted ühes tabelis</div>
+        <div class="section-subtitle">Kiire kordamine vahetult enne järelvastamist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="ref-table">
+        <thead><tr><th>Mõiste</th><th>Lühike seletus</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ref-term">Tarbija</span></td><td>Inimene, kes ostab tooteid/teenuseid isiklikuks kasutamiseks.</td></tr>
+          <tr><td><span class="ref-term">Eelarve</span></td><td>Finantsplaan tulevaste tulude ja kulude kavandamiseks.</td></tr>
+          <tr><td><span class="ref-term">Säästud</span></td><td>Osa sissetulekust, mida kohe ei kulutata.</td></tr>
+          <tr><td><span class="ref-term">Investeerimine</span></td><td>Kasu saamiseks tehtud pikaajaline rahapaigutus.</td></tr>
+          <tr><td><span class="ref-term">Lihtintress</span></td><td>Intress ainult investeeringu algsummalt.</td></tr>
+          <tr><td><span class="ref-term">Liitintress</span></td><td>Intress algsummalt + varem teenitud intressilt (reinvesteeritakse).</td></tr>
+          <tr><td><span class="ref-term">Kodulaen</span></td><td>Pikaajaline eluasemelaen; nõutav kinnisvaratagatis.</td></tr>
+          <tr><td><span class="ref-term">Hüpoteeklaen</span></td><td>Vaba sihtotstarbega laen kinnisvaratagatisega.</td></tr>
+          <tr><td><span class="ref-term">Tarbimislaen</span></td><td>Tagatiseta väikelaen, summa kuni 10 000 €.</td></tr>
+          <tr><td><span class="ref-term">Kiirlaen</span></td><td>Kiire tagatiseta laen; kõrge intress, lühike tähtaeg.</td></tr>
+          <tr><td><span class="ref-term">Liising</span></td><td>Vara kasutus tasu eest; peamiselt sõiduki ost.</td></tr>
+          <tr><td><span class="ref-term">Järelmaks</span></td><td>Osamaksetega tasumine; omand läheb üle kohe.</td></tr>
+          <tr><td><span class="ref-term">Krediitkaart</span></td><td>Hiljem tasumine vaba krediidilimiidi piires.</td></tr>
+          <tr><td><span class="ref-term">Õppelaen</span></td><td>Hariduslaen; sissetulekut ei nõuta, tagatiseks käendus/kinnisvara.</td></tr>
+          <tr><td><span class="ref-term">Elukindlustus</span></td><td>Kaitseb inimese elu ja tervist; säästmine pensioniks.</td></tr>
+          <tr><td><span class="ref-term">Kahjukindlustus</span></td><td>Kaitseb vara või tegevusega seotud riski vastu.</td></tr>
+          <tr><td><span class="ref-term">Liikluskindlustus</span></td><td>Kohustuslik kahjukindlustus sõidukiga tekitatud kahju eest.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ENESEKONTROLL -->
+  <div class="section-label">🧠 Enesekontroll — proovi enne, siis vaata vastust</div>
+  <details class="qa"><summary>Mis on eelarve ja milleks seda koostatakse?</summary>
+    <div class="qa-answer">Eelarve on <strong>finantsplaan</strong>, mis koostatakse tulevaste <strong>tulude ja kulude kavandamiseks</strong> — et raha jaguks ja kulud ei ületaks tulusid.</div></details>
+  <details class="qa"><summary>Mille poolest erinevad säästmine ja investeerimine?</summary>
+    <div class="qa-answer"><strong>Säästmine</strong> on raha kõrvale panemine (ei kulutata kohe). <strong>Investeerimine</strong> on raha pikaajaline paigutamine, et see kasu saamise eesmärgil <strong>kasvaks</strong>.</div></details>
+  <details class="qa"><summary>Mille poolest erineb liitintress lihtintressist?</summary>
+    <div class="qa-answer"><strong>Lihtintress</strong> arvutatakse ainult algsummalt. <strong>Liitintress</strong> arvutatakse algsummalt JA varem teenitud intressilt — st intress teenib omakorda intressi. Liitintress kasvatab raha kiiremini.</div></details>
+  <details class="qa"><summary>Mis on kodulaenu ja tarbimislaenu peamine erinevus?</summary>
+    <div class="qa-answer"><strong>Kodulaen</strong> nõuab tagatist (kinnisvara), on suur ja pikaajaline. <strong>Tarbimislaen</strong> on tagatiseta ja väiksem (kuni 10 000 €).</div></details>
+  <details class="qa"><summary>Miks on kiirlaen riskantne?</summary>
+    <div class="qa-answer">Kiirlaenul ei kontrollita maksevõimet, <strong>intressimäärad on kõrged</strong> ja tagasimaksetähtajad lühikesed. See nõuab väga head maksedistsipliini, muidu võib võlg kiiresti kasvada.</div></details>
+  <details class="qa"><summary>Mille poolest erinevad elukindlustus ja kahjukindlustus?</summary>
+    <div class="qa-answer"><strong>Elukindlustus</strong> kaitseb inimese elu ja tervisega seotud riske. <strong>Kahjukindlustus</strong> kaitseb vara või tegevusega seotud riske.</div></details>
+  <details class="qa"><summary>Milline kindlustus on Eestis kohustuslik?</summary>
+    <div class="qa-answer"><strong>Liikluskindlustus</strong> — see on kohustuslik kahjukindlustus, mis katab sõidukiga teistele tekitatud kahju.</div></details>
+
+  <!-- FRAASIPANK -->
+  <div class="section-label">✍️ Fraasipank — valmis definitsioonid</div>
+  <div class="phrase-box">
+    <h3>📝 Valmislaused järelvastamiseks</h3>
+    <div class="phrases-grid">
+      <div class="phrase"><strong>Tarbija</strong> on inimene, kes ostab tooteid või teenuseid isiklikuks kasutamiseks.</div>
+      <div class="phrase"><strong>Eelarve</strong> on finantsplaan tulude ja kulude kavandamiseks.</div>
+      <div class="phrase"><strong>Säästud</strong> on osa sissetulekust, mida kohe ei kulutata.</div>
+      <div class="phrase"><strong>Investeerimine</strong> on kasu saamiseks tehtud pikaajaline rahapaigutus.</div>
+      <div class="phrase"><strong>Lihtintress</strong> teenitakse ainult algsummalt.</div>
+      <div class="phrase"><strong>Liitintress</strong> teenitakse ka varem teenitud intressilt.</div>
+      <div class="phrase"><strong>Kodu- ja hüpoteeklaen</strong> nõuavad kinnisvaratagatist.</div>
+      <div class="phrase"><strong>Kiirlaenul</strong> on kõrge intress ja lühike tähtaeg.</div>
+      <div class="phrase"><strong>Järelmaksu</strong> puhul läheb omand ostjale üle kohe.</div>
+      <div class="phrase"><strong>Elukindlustus</strong> kaitseb inimese elu ja tervist.</div>
+      <div class="phrase"><strong>Kahjukindlustus</strong> kaitseb vara või tegevusega seotud riski.</div>
+      <div class="phrase"><strong>Liikluskindlustus</strong> on Eestis kohustuslik.</div>
+    </div>
+  </div>
+
+  <!-- NIPID -->
+  <div class="section-label">💡 Õppimise nipid</div>
+  <div class="tips-row">
+    <div class="tip-card"><div class="tip-icon">🔁</div><div>
+      <div class="tip-title">Raha 4 sammu</div>
+      <div class="tip-text">Planeeri → kogu → kasvata → kaitse. Eelarve, säästud, investeerimine, kindlustus — selles järjekorras.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🏦</div><div>
+      <div class="tip-title">Laenud: tagatis või mitte</div>
+      <div class="tip-text">Kodu- ja hüpoteeklaen = tagatisega. Tarbimis- ja kiirlaen = tagatiseta. See on lihtsaim eristus.</div></div></div>
+    <div class="tip-card"><div class="tip-icon">🛡️</div><div>
+      <div class="tip-title">Kindlustus: inimene vs vara</div>
+      <div class="tip-text">Elukindlustus kaitseb inimest, kahjukindlustus kaitseb vara. Küsi: keda või mida see kaitseb?</div></div></div>
+    <div class="tip-card"><div class="tip-icon">📋</div><div>
+      <div class="tip-title">Kiirviide viimaseks</div>
+      <div class="tip-text">Vahetult enne vastamist loe üle ainult mõistete tabel ja fraasipank.</div></div></div>
+  </div>
+
+</div>
+
+<footer>Illimari majanduse õppematerjalid · 4. peatükk — Isiklik rahandus · 2026</footer>
+
+</body>
+</html>

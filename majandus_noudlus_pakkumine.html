@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majandus — Nõudlus ja pakkumine · 3. peatükk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 48%, #134e4a 100%);
+    color: white; padding: 56px 32px 48px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(251,191,36,0.22) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #fbbf24, #0d9488);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #fcd34d; }
+  .hero-sub { font-size: 1rem; opacity: 0.78; max-width: 540px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
+  .backlink {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    text-decoration: none; margin-bottom: 8px;
+  }
+  .backlink:hover { color: var(--blue); }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 18px; margin-top: 38px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-block {
+    background: var(--card); border-radius: 20px; border: 2px solid var(--border);
+    overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px;
+  }
+  .section-header { padding: 22px 26px 16px; display: flex; align-items: flex-start; gap: 14px; }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+  .section-body p.lead { font-size: 0.92rem; line-height: 1.6; margin-top: 14px; }
+
+  .section-block.theme-blue   { --accent:#2563eb; --accent-light:#dbeafe; }
+  .section-block.theme-green  { --accent:#16a34a; --accent-light:#dcfce7; }
+  .section-block.theme-purple { --accent:#7c3aed; --accent-light:#ede9fe; }
+  .section-block.theme-orange { --accent:#ea580c; --accent-light:#ffedd5; }
+  .section-block.theme-teal   { --accent:#0d9488; --accent-light:#ccfbf1; }
+  .theme-blue .section-header   { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-teal .section-header   { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px; margin-left: 8px; vertical-align: middle;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+
+  .key-box {
+    background: linear-gradient(135deg, #1e3a8a, #312e81);
+    color: white; border-radius: 16px; padding: 20px 22px; margin: 16px 0 4px;
+  }
+  .key-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 7px;
+  }
+  .key-text { font-size: 1.02rem; line-height: 1.55; font-weight: 700; }
+  .key-text strong { color: #fcd34d; }
+
+  .concept-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .concept-card {
+    background: #f8fafc; border: 2px solid var(--border);
+    border-left: 5px solid var(--accent, var(--blue));
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .c-term {
+    font-size: 1.02rem; font-weight: 900; color: var(--accent, var(--blue));
+    margin-bottom: 5px; display: flex; align-items: center; gap: 7px;
+  }
+  .c-term .c-emoji { font-size: 1.1rem; }
+  .c-def { font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+  .c-example {
+    font-size: 0.8rem; line-height: 1.5; color: var(--muted);
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);
+  }
+  .c-example strong { color: var(--accent, var(--blue)); }
+  .concept-card.wide { grid-column: 1 / -1; }
+
+  .formula-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 2px solid var(--blue); border-radius: 14px;
+    padding: 16px 20px; text-align: center; margin: 14px 0 4px;
+  }
+  .formula-main { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--blue); }
+  .formula-note { font-size: 0.82rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+  .ref-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .ref-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px; text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border); background: #f8fafc;
+  }
+  .ref-table td {
+    padding: 10px 14px; font-size: 0.86rem; border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.5;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: #f8fafc; }
+  .ref-term { font-weight: 800; color: var(--blue); white-space: nowrap; }
+
+  .qa {
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; overflow: hidden;
+  }
+  .qa summary {
+    padding: 13px 18px; font-weight: 800; font-size: 0.9rem;
+    cursor: pointer; list-style: none;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before { content: '❓'; flex-shrink: 0; }
+  .qa[open] summary::before { content: '✅'; }
+  .qa[open] summary { background: #f8fafc; }
+  .qa-answer {
+    padding: 12px 18px 15px; font-size: 0.86rem; line-height: 1.6;
+    color: var(--text); border-top: 1px solid var(--border);
+  }
+  .qa-answer strong { color: var(--green); }
+
+  .tips-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  .phrase-box {
+    background: var(--yellow-light); border: 2px solid var(--yellow);
+    border-radius: 16px; padding: 22px; margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 0.95rem; font-weight: 900; color: var(--yellow);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+  .phrase {
+    background: white; border-radius: 8px; padding: 9px 12px;
+    font-size: 0.83rem; border-left: 3px solid var(--yellow); line-height: 1.45;
+  }
+  .phrase strong { color: var(--text); }
+
+  footer {
+    text-align: center; padding: 28px 24px; color: var(--muted);
+    font-size: 0.82rem; border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">💹</div>
+    <h1>Nõudlus ja <span>pakkumine</span></h1>
+    <p class="hero-sub">Majandus · 3. peatükk · Hind, turg ja tasakaal</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">teemaplokki</div></div>
+      <div class="stat"><div class="stat-num">14</div><div class="stat-label">mõistet</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">enesekontrolli</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <a class="backlink" href="majandus_index.html">← Tagasi õppematerjalide kogusse</a>
+
+  <div class="key-box">
+    <div class="key-label">📌 Kogu peatüki tuum</div>
+    <div class="key-text"><strong>Nõudlus</strong> tuleb ostjatelt, <strong>pakkumine</strong> tuleb müüjatelt. Seal, kus need kohtuvad, tekib <strong>turuhind</strong>.</div>
+  </div>
+
+  <!-- OSA 1 -->
+  <div class="section-label">🛒 1. osa — Nõudlus</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🛒</div>
+      <div>
+        <div class="section-title">Nõudlus — ostja pool <span class="badge badge-blue">Ostja</span></div>
+        <div class="section-subtitle">Kui palju inimesed soovivad ja suudavad osta</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📊</span>Nõudlus</div>
+          <div class="c-def">Toodete ja teenuste kogused, mida inimene <strong>soovib ja suudab osta</strong> erinevate hindadega antud ajahetkel.</div>
+          <div class="c-example"><strong>NB!</strong> peab olema nii soov kui ka suutlikkus (raha) — ainult soovist ei piisa.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⬇️</span>Nõudlusseadus</div>
+          <div class="c-def">Kõrgema hinnaga ostavad inimesed tooteid <strong>vähem</strong> kui madalama hinnaga (kui muud tingimused jäävad samaks).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔁</span>Hinnamõju</div>
+          <div class="c-def">Näitab, kuidas inimesed antud nõudluse juures <strong>sõltuvalt hinnast</strong> ostetavaid koguseid muudavad.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🌍</span>Turunõudlus</div>
+          <div class="c-def">Toodangu kogused, mida <strong>kõik inimesed kokku</strong> soovivad ja suudavad osta antud turul kindlal ajahetkel.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📐</span>Nõudluse hinnaelastsus</div>
+          <div class="c-def">Näitab nõudluse <strong>tundlikkust hinnamuutuse suhtes</strong> — kui tugevalt ostukogus hinna muutudes muutub.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 2 -->
+  <div class="section-label">🧲 2. osa — Mis mõjutab nõudlust?</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🧲</div>
+      <div>
+        <div class="section-title">Nõudlust mõjutavad tegurid <span class="badge badge-purple">Tegurid</span></div>
+        <div class="section-subtitle">Miks inimesed ostavad rohkem või vähem</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">💶</span>Ostujõud</div>
+          <div class="c-def">Nõudlus, mis on <strong>rahaga tagatud</strong> — inimesel on tegelikult raha ostmiseks.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔄</span>Asenduskaubad</div>
+          <div class="c-def">Kaubad, mis rahuldavad <strong>sarnaseid vajadusi</strong> — ühe saab teisega asendada.</div>
+          <div class="c-example"><strong>Näide:</strong> või ja margariin, tee ja kohv.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔗</span>Täiend- ehk siduskaubad</div>
+          <div class="c-def">Kaubad, mida <strong>sageli kasutatakse koos</strong> — ühte ostes vajad ka teist.</div>
+          <div class="c-example"><strong>Näide:</strong> auto ja bensiin, telefon ja laadija.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📉</span>Kahaneva piirkasulikkuse seadus</div>
+          <div class="c-def">Iga järgmine tarbitud ühik pakub <strong>vähem rahulolu kui eelmine</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> esimene jäätis on suurepärane, viies enam ei maitse.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 3 -->
+  <div class="section-label">🏭 3. osa — Pakkumine</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">🏭</div>
+      <div>
+        <div class="section-title">Pakkumine — müüja pool <span class="badge badge-green">Müüja</span></div>
+        <div class="section-subtitle">Kui palju tootjad soovivad ja suudavad müüa</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">📦</span>Pakkumine</div>
+          <div class="c-def">Kaupade või teenuste kogus, mida <strong>tootjad soovivad ja suudavad müügiks anda</strong> erinevate hindadega teatud ajahetkel.</div>
+          <div class="c-example"><strong>NB!</strong> pakkumine on nõudluse peegelpilt — kõrgema hinnaga soovivad müüjad <em>rohkem</em> müüa.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 4 -->
+  <div class="section-label">⚖️ 4. osa — Turuhind ja tasakaal</div>
+
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">⚖️</div>
+      <div>
+        <div class="section-title">Kui nõudlus ja pakkumine kohtuvad <span class="badge badge-orange">Tasakaal</span></div>
+        <div class="section-subtitle">Turuhind, defitsiit ja ülejääk</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🎯</span>Turuhind ehk tasakaaluhind</div>
+          <div class="c-def">Hind, mille puhul <strong>pakutav kogus on võrdne nõutava kogusega</strong>. Turg on tasakaalus.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔴</span>Defitsiit</div>
+          <div class="c-def">Olukord, kus kaupade <strong>nõudlus ületab pakkumise</strong> — kaupa napib.</div>
+          <div class="c-example"><strong>Mäluabi:</strong> defitsiit = liiga <em>vähe</em> kaupa.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔵</span>Ülejääk</div>
+          <div class="c-def">Olukord, kus tarbijad <strong>ei soovi osta kogu toodangut</strong>, mida müüjad antud hinnaga müügiks pakuvad.</div>
+          <div class="c-example"><strong>Mäluabi:</strong> ülejääk = liiga <em>palju</em> kaupa.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🗂️</span>Normimine</div>
+          <div class="c-def">Kaupade <strong>jaotamine hinnasüsteemi kaudu</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIIRVIIDE -->
+  <div class="section-label">📋 Mõistete kiirviide</div>
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">📋</div>
+      <div>
+        <div class="section-title">Kõik mõisted ühes tabelis</div>
+        <div class="section-subtitle">Kiire kordamine vahetult enne järelvastamist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="ref-table">
+        <thead><tr><th>Mõiste</th><th>Lühike seletus</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ref-term">Nõudlus</span></td><td>Kogused, mida inimene soovib ja suudab osta erinevate hindadega.</td></tr>
+          <tr><td><span class="ref-term">Nõudlusseadus</span></td><td>Kõrgema hinnaga ostetakse vähem kui madalama hinnaga.</td></tr>
+          <tr><td><span class="ref-term">Hinnamõju</span></td><td>Kuidas ostukogus hinnast sõltuvalt muutub.</td></tr>
+          <tr><td><span class="ref-term">Turunõudlus</span></td><td>Kogused, mida kõik ostjad kokku soovivad ja suudavad osta.</td></tr>
+          <tr><td><span class="ref-term">Hinnaelastsus</span></td><td>Nõudluse tundlikkus hinnamuutuse suhtes.</td></tr>
+          <tr><td><span class="ref-term">Ostujõud</span></td><td>Nõudlus, mis on rahaga tagatud.</td></tr>
+          <tr><td><span class="ref-term">Asenduskaubad</span></td><td>Kaubad, mis rahuldavad sarnaseid vajadusi.</td></tr>
+          <tr><td><span class="ref-term">Siduskaubad</span></td><td>Kaubad, mida kasutatakse koos.</td></tr>
+          <tr><td><span class="ref-term">Kahanev piirkasulikkus</span></td><td>Iga järgmine ühik pakub vähem rahulolu kui eelmine.</td></tr>
+          <tr><td><span class="ref-term">Pakkumine</span></td><td>Kogus, mida tootjad soovivad ja suudavad müüa.</td></tr>
+          <tr><td><span class="ref-term">Turuhind</span></td><td>Hind, mille juures pakkumine = nõudlus (tasakaaluhind).</td></tr>
+          <tr><td><span class="ref-term">Defitsiit</span></td><td>Nõudlus ületab pakkumise — kaupa napib.</td></tr>
+          <tr><td><span class="ref-term">Ülejääk</span></td><td>Pakkumine ületab nõudluse — kaupa jääb üle.</td></tr>
+          <tr><td><span class="ref-term">Normimine</span></td><td>Kaupade jaotamine hinnasüsteemi kaudu.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ENESEKONTROLL -->
+  <div class="section-label">🧠 Enesekontroll — proovi enne, siis vaata vastust</div>
+
+  <details class="qa">
+    <summary>Mis on nõudlus? Mida peab ostjal olema?</summary>
+    <div class="qa-answer">Nõudlus on kogused, mida inimene <strong>soovib ja suudab osta</strong> erinevate hindadega. Ostjal peab olema nii <strong>soov</strong> kui ka <strong>raha</strong> — ainult soovist ei piisa.</div>
+  </details>
+  <details class="qa">
+    <summary>Sõnasta nõudlusseadus.</summary>
+    <div class="qa-answer">Kõrgema hinnaga ostavad inimesed tooteid ja teenuseid <strong>vähem</strong> kui madalama hinnaga, juhul kui muud tingimused jäävad samaks.</div>
+  </details>
+  <details class="qa">
+    <summary>Mille poolest erinevad asenduskaubad ja siduskaubad?</summary>
+    <div class="qa-answer"><strong>Asenduskaubad</strong> rahuldavad sarnaseid vajadusi (või ↔ margariin). <strong>Siduskaubad</strong> kuuluvad kokku ja neid kasutatakse koos (auto + bensiin).</div>
+  </details>
+  <details class="qa">
+    <summary>Selgita kahaneva piirkasulikkuse seadust.</summary>
+    <div class="qa-answer">Iga järgmine tarbitud ühik pakub <strong>vähem rahulolu kui eelmine</strong>. Esimene jäätis maitseb suurepäraselt, kuid kümnes enam ei paku rõõmu.</div>
+  </details>
+  <details class="qa">
+    <summary>Mis on turuhind ehk tasakaaluhind?</summary>
+    <div class="qa-answer">Hind, mille juures <strong>pakutav kogus on võrdne nõutava kogusega</strong> — turg on tasakaalus, defitsiiti ega ülejääki ei teki.</div>
+  </details>
+  <details class="qa">
+    <summary>Mille poolest erinevad defitsiit ja ülejääk?</summary>
+    <div class="qa-answer"><strong>Defitsiit:</strong> nõudlus ületab pakkumise, kaupa on liiga vähe. <strong>Ülejääk:</strong> pakkumine ületab nõudluse, kaupa jääb üle.</div>
+  </details>
+  <details class="qa">
+    <summary>Mida tähendab ostujõud?</summary>
+    <div class="qa-answer">Ostujõud on <strong>nõudlus, mis on rahaga tagatud</strong> — inimesel on tegelikult olemas raha selle ostu sooritamiseks.</div>
+  </details>
+
+  <!-- FRAASIPANK -->
+  <div class="section-label">✍️ Fraasipank — valmis definitsioonid järelvastamiseks</div>
+  <div class="phrase-box">
+    <h3>📝 Valmislaused — kasuta järelvastamisel!</h3>
+    <div class="phrases-grid">
+      <div class="phrase"><strong>Nõudlus</strong> on kogused, mida inimene soovib ja suudab osta erinevate hindadega.</div>
+      <div class="phrase"><strong>Nõudlusseaduse</strong> järgi ostetakse kõrgema hinnaga vähem kui madalama hinnaga.</div>
+      <div class="phrase"><strong>Turunõudlus</strong> on kõigi ostjate soovitud ja ostetavate koguste summa.</div>
+      <div class="phrase"><strong>Ostujõud</strong> on rahaga tagatud nõudlus.</div>
+      <div class="phrase"><strong>Asenduskaubad</strong> rahuldavad sarnaseid vajadusi.</div>
+      <div class="phrase"><strong>Siduskaubad</strong> on kaubad, mida kasutatakse koos.</div>
+      <div class="phrase">Kahaneva piirkasulikkuse järgi pakub <strong>iga järgmine ühik vähem rahulolu</strong>.</div>
+      <div class="phrase"><strong>Pakkumine</strong> on kogus, mida tootjad soovivad ja suudavad müüa.</div>
+      <div class="phrase"><strong>Turuhind</strong> on hind, mille juures pakkumine võrdub nõudlusega.</div>
+      <div class="phrase"><strong>Defitsiit</strong> tekib, kui nõudlus ületab pakkumise.</div>
+      <div class="phrase"><strong>Ülejääk</strong> tekib, kui pakkumine ületab nõudluse.</div>
+      <div class="phrase"><strong>Nõudluse hinnaelastsus</strong> näitab nõudluse tundlikkust hinnamuutuse suhtes.</div>
+    </div>
+  </div>
+
+  <!-- NIPID -->
+  <div class="section-label">💡 Õppimise nipid</div>
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">🛒</div>
+      <div>
+        <div class="tip-title">Nõudlus = ostja, pakkumine = müüja</div>
+        <div class="tip-text">See üks lause aitab pooltel mõistetest kohe paika minna.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚖️</div>
+      <div>
+        <div class="tip-title">Defitsiit vs ülejääk</div>
+        <div class="tip-text">Defitsiit = kaupa liiga <strong>vähe</strong>. Ülejääk = kaupa liiga <strong>palju</strong>.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔄</div>
+      <div>
+        <div class="tip-title">Asendus ↔ sidus</div>
+        <div class="tip-text">Asenduskaup <em>asendab</em> (või–margariin). Siduskaup käib <em>kaasas</em> (auto–bensiin).</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🍦</div>
+      <div>
+        <div class="tip-title">Mõtle jäätisele</div>
+        <div class="tip-text">Kahanev piirkasulikkus: esimene jäätis on parim, viies juba mitte. Lihtne meelde jätta.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Illimari majanduse õppematerjalid · 3. peatükk — Nõudlus ja pakkumine · 2026
+</footer>
+
+</body>
+</html>

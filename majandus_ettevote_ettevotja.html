@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majandus — Ettevõte ja ettevõtja · 5. peatükk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 48%, #134e4a 100%);
+    color: white;
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(251,191,36,0.22) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #fbbf24, #0d9488);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #fcd34d; }
+  .hero-sub { font-size: 1rem; opacity: 0.78; max-width: 540px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    text-decoration: none; margin-bottom: 8px;
+  }
+  .backlink:hover { color: var(--blue); }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 18px; margin-top: 38px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ===== SECTION BLOCK ===== */
+  .section-block {
+    background: var(--card);
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  .section-header {
+    padding: 22px 26px 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+  .section-body p.lead { font-size: 0.92rem; line-height: 1.6; margin-top: 14px; }
+
+  /* Theme colors — set --accent for child elements */
+  .section-block.theme-blue   { --accent:#2563eb; --accent-light:#dbeafe; }
+  .section-block.theme-green  { --accent:#16a34a; --accent-light:#dcfce7; }
+  .section-block.theme-purple { --accent:#7c3aed; --accent-light:#ede9fe; }
+  .section-block.theme-orange { --accent:#ea580c; --accent-light:#ffedd5; }
+  .section-block.theme-teal   { --accent:#0d9488; --accent-light:#ccfbf1; }
+  .theme-blue .section-header   { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-teal .section-header   { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px; margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ===== KEY BOX (core idea) ===== */
+  .key-box {
+    background: linear-gradient(135deg, #1e3a8a, #312e81);
+    color: white; border-radius: 16px;
+    padding: 20px 22px; margin: 16px 0 4px;
+  }
+  .key-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 7px;
+  }
+  .key-text { font-size: 1.02rem; line-height: 1.55; font-weight: 700; }
+  .key-text strong { color: #fcd34d; }
+
+  /* ===== CONCEPT CARDS ===== */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .concept-card {
+    background: #f8fafc;
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--accent, var(--blue));
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .c-term {
+    font-size: 1.02rem; font-weight: 900;
+    color: var(--accent, var(--blue));
+    margin-bottom: 5px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .c-term .c-emoji { font-size: 1.1rem; }
+  .c-def { font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+  .c-example {
+    font-size: 0.8rem; line-height: 1.5; color: var(--muted);
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px dashed var(--border);
+  }
+  .c-example strong { color: var(--accent, var(--blue)); }
+  .concept-card.wide { grid-column: 1 / -1; }
+
+  /* ===== MASLOW PYRAMID ===== */
+  .pyramid {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; margin: 18px 0 6px;
+  }
+  .pyr-level {
+    color: white; border-radius: 12px;
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .pyr-num {
+    width: 30px; height: 30px; flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.95rem;
+  }
+  .pyr-name { font-weight: 900; font-size: 0.95rem; line-height: 1.2; }
+  .pyr-ex { font-size: 0.78rem; opacity: 0.92; margin-top: 2px; }
+  .pyr-l5 { width: 56%; background: linear-gradient(135deg,#7c3aed,#9333ea); }
+  .pyr-l4 { width: 67%; background: linear-gradient(135deg,#ea580c,#f97316); }
+  .pyr-l3 { width: 78%; background: linear-gradient(135deg,#16a34a,#22c55e); }
+  .pyr-l2 { width: 89%; background: linear-gradient(135deg,#0d9488,#14b8a6); }
+  .pyr-l1 { width: 100%; background: linear-gradient(135deg,#2563eb,#3b82f6); }
+  .pyr-note {
+    font-size: 0.82rem; color: var(--muted); line-height: 1.55;
+    background: var(--blue-light); border-radius: 10px;
+    padding: 10px 14px; margin-top: 10px;
+  }
+  @media (max-width: 600px) {
+    .pyr-level { width: 100% !important; }
+  }
+
+  /* ===== FORMULA BOX ===== */
+  .formula-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 2px solid var(--blue);
+    border-radius: 14px;
+    padding: 16px 20px; text-align: center;
+    margin: 14px 0 4px;
+  }
+  .formula-main {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem; font-weight: 700; color: var(--blue);
+  }
+  .formula-note { font-size: 0.82rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+  /* ===== REFERENCE TABLE ===== */
+  .ref-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .ref-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px;
+    text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border);
+    background: #f8fafc;
+  }
+  .ref-table td {
+    padding: 10px 14px; font-size: 0.86rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.5;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: #f8fafc; }
+  .ref-term { font-weight: 800; color: var(--blue); white-space: nowrap; }
+
+  /* ===== SELF-CHECK (details/summary) ===== */
+  .qa {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .qa summary {
+    padding: 13px 18px;
+    font-weight: 800; font-size: 0.9rem;
+    cursor: pointer; list-style: none;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before { content: '❓'; flex-shrink: 0; }
+  .qa[open] summary::before { content: '✅'; }
+  .qa[open] summary { background: #f8fafc; }
+  .qa-answer {
+    padding: 12px 18px 15px;
+    font-size: 0.86rem; line-height: 1.6; color: var(--text);
+    border-top: 1px solid var(--border);
+  }
+  .qa-answer strong { color: var(--green); }
+
+  /* ===== TIPS ===== */
+  .tips-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== PHRASE BOX ===== */
+  .phrase-box {
+    background: var(--yellow-light); border: 2px solid var(--yellow);
+    border-radius: 16px; padding: 22px; margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 0.95rem; font-weight: 900; color: var(--yellow);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+  .phrase {
+    background: white; border-radius: 8px; padding: 9px 12px;
+    font-size: 0.83rem; border-left: 3px solid var(--yellow); line-height: 1.45;
+  }
+  .phrase strong { color: var(--text); }
+
+  footer {
+    text-align: center; padding: 28px 24px;
+    color: var(--muted); font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">🚀</div>
+    <h1>Ettevõte ja <span>ettevõtja</span></h1>
+    <p class="hero-sub">Majandus · 5. peatükk · Kes majanduses tegutsevad, ettevõtte vormid ja äriideed — järelvastamiseks</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">teemaplokki</div></div>
+      <div class="stat"><div class="stat-num">24</div><div class="stat-label">mõistet</div></div>
+      <div class="stat"><div class="stat-num">11</div><div class="stat-label">enesekontrolli</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <a class="backlink" href="majandus_index.html">← Tagasi majanduse teemade juurde</a>
+
+  <!-- ===== OSA 1: ISIKUD MAJANDUSES ===== -->
+  <div class="section-label">👤 1. osa — Kes majanduses tegutsevad</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">👤</div>
+      <div>
+        <div class="section-title">Isikud majanduses <span class="badge badge-blue">Põhimõisted</span></div>
+        <div class="section-subtitle">Füüsiline isik, FIE ja juriidiline isik</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p class="lead">Majanduses tegutsevad kahte liiki isikud: <strong>füüsilised isikud</strong> (üksikinimesed) ja <strong>juriidilised isikud</strong> (organisatsioonid).</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🧍</span>Füüsiline isik</div>
+          <div class="c-def">Füüsiline isik on <strong>inimene</strong> — üksik inimene majanduse osalisena.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🛠️</span>FIE</div>
+          <div class="c-def"><strong>Füüsilisest isikust ettevõtja</strong> — inimene, kes tegeleb ettevõtlusega ja pakub enda nimel tasu eest tooteid ja teenuseid, <strong>kasutamata selleks äriühingut</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> üksi tegutsev juuksur või talupidaja, kes ei ole loonud firmat.</div>
+        </div>
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">🏛️</span>Juriidiline isik</div>
+          <div class="c-def">Juriidiline isik on <strong>organisatsioon</strong>. Eraõiguslikud juriidilised isikud on <strong>äriühingud</strong> (osaühing, aktsiaselts, tulundusühistu, usaldusühing, täisühing). Avalik-õiguslikud juriidilised isikud on <strong>riik</strong>, kohaliku omavalitsuse üksus ja teised avalikes huvides seaduse alusel loodud üksused.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 2: ETTEVÕTE JA ETTEVÕTJA ===== -->
+  <div class="section-label">🏢 2. osa — Ettevõte ja ettevõtja</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">🏢</div>
+      <div>
+        <div class="section-title">Ettevõte ja ettevõtja <span class="badge badge-green">Õpi peast</span></div>
+        <div class="section-subtitle">Ära aja segamini — üks on üksus, teine on inimene</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏭</span>Ettevõte</div>
+          <div class="c-def">Ettevõte on <strong>üksus</strong>, mis kasutab tööjõudu ja töövahendeid mingite hüviste tootmiseks või teenuste osutamiseks.</div>
+          <div class="c-example"><strong>Mäluabi:</strong> ettevõte = <em>asi</em> (organisatsioon, firma).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">👔</span>Ettevõtja</div>
+          <div class="c-def">Ettevõtja on <strong>isik</strong>, kes riski eeldades asutab ettevõtte ja organiseerib selle tegevust <strong>eesmärgiga teenida kasumit</strong>.</div>
+          <div class="c-example"><strong>Mäluabi:</strong> ettevõtja = <em>inimene</em>, kes ettevõtte loob ja juhib.</div>
+        </div>
+      </div>
+
+      <div class="key-box">
+        <div class="key-label">📌 Pea meeles</div>
+        <div class="key-text">Ettevõtja võtab <strong>riski</strong> — ta ei tea ette, kas idee õnnestub. Riski võtmise tasuks loodab ta teenida <strong>kasumit</strong>.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 3: ETTEVÕTTE VORMID ===== -->
+  <div class="section-label">📑 3. osa — Ettevõtte vormid</div>
+
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">📑</div>
+      <div>
+        <div class="section-title">Ettevõtte vormid <span class="badge badge-orange">4 äriühingut</span></div>
+        <div class="section-subtitle">Kõik algab küsimusest: kui suur on omaniku vastutus?</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p class="lead">Äriühingud erinevad selle poolest, <strong>kui suure varaga omanik ettevõtte võlgade eest vastutab</strong>. Sellest tuleneb kaks võtmemõistet.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚠️</span>Piiramatu vastutus</div>
+          <div class="c-def">Omanik vastutab ettevõtte tegevuse eest <strong>kogu oma varaga</strong> — ka isikliku varaga.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🛡️</span>Piiratud vastutus</div>
+          <div class="c-def">Omanik vastutab ettevõtte tegevuse eest <strong>ainult ettevõttesse investeeritud summa piires</strong> — isiklik vara on kaitstud.</div>
+        </div>
+      </div>
+
+      <div class="key-box">
+        <div class="key-label">📌 Seo vorm vastutusega</div>
+        <div class="key-text"><strong>Piiratud vastutus:</strong> osaühing (OÜ), aktsiaselts (AS). <strong>Piiramatu vastutus:</strong> täisühing (TÜ). <strong>Usaldusühing (UÜ)</strong> — segu mõlemast.</div>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🧩</span>Osaühing (OÜ)</div>
+          <div class="c-def">Äriühing, millel on <strong>osadeks jaotatud osakapital</strong>. Omanike (osanike) vastutus on <strong>piiratud</strong> osasse investeeritud summaga. <strong>Eestis kõige populaarsem</strong> vorm; selle saab asutada ka üksi.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📈</span>Aktsiaselts (AS)</div>
+          <div class="c-def">Äriühing, millel on <strong>aktsiateks jaotatud aktsiakapital</strong>. Omanikud on <strong>aktsionärid</strong>. Aktsiaselts tegutseb juriidiliselt oma omanikest eraldi — aktsionär ei vastuta aktsiaseltsi kohustuste eest (<strong>piiratud vastutus</strong>).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🤝</span>Täisühing (TÜ)</div>
+          <div class="c-def">Äriühing, millel on <strong>vähemalt kaks osanikku</strong>, kes vastutavad ühingu kohustuste eest <strong>solidaarselt kogu oma varaga</strong> (piiramatu vastutus).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚖️</span>Usaldusühing (UÜ)</div>
+          <div class="c-def">Ettevõte, millel on <strong>vähemalt kaks osanikku</strong>: üks peab olema <strong>täisosanik</strong> (piiramatu vastutus) ja üks <strong>piiratud vastutusega usaldusosanik</strong>.</div>
+        </div>
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">💥</span>Pankrot</div>
+          <div class="c-def">Pankrot on <strong>võlgniku maksejõuetuks kuulutamine kohtu poolt</strong> — olukord, kus ettevõte (või inimene) ei suuda enam oma võlgu tasuda.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 4: ETTEVÕTETE ERILIIGID ===== -->
+  <div class="section-label">⭐ 4. osa — Ettevõtete eriliigid</div>
+
+  <div class="section-block theme-teal">
+    <div class="section-header">
+      <div class="section-emoji">⭐</div>
+      <div>
+        <div class="section-title">Ettevõtete eriliigid <span class="badge badge-teal">Erivormid</span></div>
+        <div class="section-subtitle">Frantsiis ning sotsiaalne ja vastutustundlik ettevõtlus</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">®️</span>Frantsiis</div>
+          <div class="c-def">Frantsiis on <strong>frantsiisiandja</strong> (frantsiisi omaniku) ja <strong>frantsiisivõtja</strong> vaheline leping, mis annab frantsiisivõtjale õiguse kasutada frantsiisiandja väljatöötatud <strong>kaubamärki ja ärimudelit</strong>. Frantsiisivõtja maksab selle eest <strong>tasu</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> McDonald's ja Hesburger — sama kaubamärk ja ärimudel tegutsevad paljudes kohtades eri omanike all.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🤲</span>Sotsiaalne ettevõtlus</div>
+          <div class="c-def">Tähendab <strong>ühiskondlike probleemide lahendamist ettevõtluse kaudu</strong>.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🌱</span>Vastutustundlik ettevõtlus</div>
+          <div class="c-def">Tähendab teadlike juhtimisotsuste abil oma <strong>negatiivse mõju vähendamist</strong> ja <strong>positiivse panuse suurendamist</strong>.</div>
+        </div>
+      </div>
+
+      <div class="key-box">
+        <div class="key-label">📌 Ära aja segamini</div>
+        <div class="key-text"><strong>Sotsiaalne ettevõtlus</strong> — probleemi lahendamine ongi ettevõtte eesmärk. <strong>Vastutustundlik ettevõtlus</strong> — tavaline ettevõte, mis püüab tegutseda võimalikult vähe kahju ja võimalikult palju kasu tuues.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 5: ÄRIIDEED ===== -->
+  <div class="section-label">💡 5. osa — Kuidas tekivad äriideed</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">💡</div>
+      <div>
+        <div class="section-title">Kaheksa tüüpi ettevõtlikku inimest <span class="badge badge-purple">Tüübid</span></div>
+        <div class="section-subtitle">Erinevad inimesed leiavad äriideid erineval moel</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🧠</span>Ideede generaatorid</div>
+          <div class="c-def">Inimesed, kellel tekib pidevalt <strong>uusi huvitavaid ideid</strong>. Vajavad meeskonda, kes ideed toodeteks arendaks.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔧</span>Arendajad</div>
+          <div class="c-def">Arendavad <strong>olemasolevaid</strong> tooteid ja teenuseid edasi, et need vastaksid paremini tarbijate vajadustele.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">👨‍👩‍👧</span>Jätkajad</div>
+          <div class="c-def">Perefirmades tegutsevad inimesed. <strong>Perefirma pärandatakse</strong> sageli põlvest põlve.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📋</span>Kopeerijad</div>
+          <div class="c-def">Endil häid ideid ei teki, kuid <strong>oskavad märgata</strong>, milliste olemasolevate äridega saab kasumit teenida.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📣</span>Turustajad</div>
+          <div class="c-def">Otsivad uusi ja efektiivseid <strong>müügimeetodeid</strong> (nt e-kaubandus, võrkturundus).</div>
+          <div class="c-example"><strong>Näide:</strong> amazon.com, alibaba.com.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔭</span>Võimaluste otsijad</div>
+          <div class="c-def">Uurivad, <strong>mida mujal maailmas leiutatakse</strong>, ja püüavad siseneda uute võimaluste "aknasse".</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">👀</span>Võimaluste märkajad</div>
+          <div class="c-def">Näevad <strong>võimalusi seal, kus teised ainult nurisevad</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> Ingvar Kamprad märkas, kui tülikas on suure mööbli vedu — nii sündis IKEA.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🚀</span>Start-up ettevõtjad</div>
+          <div class="c-def">Arendavad mingit toodet <strong>lootuses, et sellest saab kunagi edukas</strong>, isegi kui turgu veel pole.</div>
+          <div class="c-example"><strong>Näide:</strong> Bolt, Wolf3D — tuntud Eesti start-up'id.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 6: KLASTER ===== -->
+  <div class="section-label">🔗 6. osa — Klaster</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🔗</div>
+      <div>
+        <div class="section-title">Klaster <span class="badge badge-blue">Ettevõtete koostöö</span></div>
+        <div class="section-subtitle">Kui sarnased ettevõtted koonduvad ühte kohta</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">🔗</span>Klaster</div>
+          <div class="c-def">Klaster on <strong>geograafiliselt lähestikku</strong> paiknevate, ühe valdkonna tootmisele <strong>spetsialiseerunud</strong> ettevõtete ja institutsioonide (ülikoolid, agentuurid, kaubanduskojad) kooslus, mis teeb <strong>koostööd</strong> ja samas <strong>konkureerib sisemiselt</strong>.</div>
+          <div class="c-example"><strong>Pea meeles 2 asja korraga:</strong> klastri ettevõtted teevad koostööd JA võistlevad omavahel.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== MÕISTETE KIIRVIIDE ===== -->
+  <div class="section-label">📋 Mõistete kiirviide</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">📋</div>
+      <div>
+        <div class="section-title">Kõik mõisted ühes tabelis</div>
+        <div class="section-subtitle">Vahetult enne järelvastamist piisab sellest tabelist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="ref-table">
+        <thead>
+          <tr><th>Mõiste</th><th>Lühike seletus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ref-term">Füüsiline isik</span></td><td>Inimene majanduse osalisena.</td></tr>
+          <tr><td><span class="ref-term">FIE</span></td><td>Füüsilisest isikust ettevõtja — tegeleb ettevõtlusega ilma äriühinguta.</td></tr>
+          <tr><td><span class="ref-term">Juriidiline isik</span></td><td>Organisatsioon (äriühing, riik, omavalitsus jne).</td></tr>
+          <tr><td><span class="ref-term">Ettevõte</span></td><td>Üksus, mis kasutab tööjõudu ja töövahendeid hüviste tootmiseks.</td></tr>
+          <tr><td><span class="ref-term">Ettevõtja</span></td><td>Isik, kes riski eeldades asutab ettevõtte ja juhib seda kasumi nimel.</td></tr>
+          <tr><td><span class="ref-term">Piiramatu vastutus</span></td><td>Omanik vastutab ettevõtte eest kogu oma (ka isikliku) varaga.</td></tr>
+          <tr><td><span class="ref-term">Piiratud vastutus</span></td><td>Omanik vastutab ainult ettevõttesse investeeritud summa piires.</td></tr>
+          <tr><td><span class="ref-term">Osaühing (OÜ)</span></td><td>Osadeks jaotatud osakapitaliga äriühing, piiratud vastutus. Eestis populaarseim.</td></tr>
+          <tr><td><span class="ref-term">Aktsiaselts (AS)</span></td><td>Aktsiateks jaotatud kapitaliga äriühing; omanikud on aktsionärid, piiratud vastutus.</td></tr>
+          <tr><td><span class="ref-term">Täisühing (TÜ)</span></td><td>Vähemalt 2 osanikku, kes vastutavad solidaarselt kogu varaga (piiramatu).</td></tr>
+          <tr><td><span class="ref-term">Usaldusühing (UÜ)</span></td><td>Vähemalt 1 täisosanik (piiramatu) ja 1 usaldusosanik (piiratud vastutus).</td></tr>
+          <tr><td><span class="ref-term">Pankrot</span></td><td>Võlgniku maksejõuetuks kuulutamine kohtu poolt.</td></tr>
+          <tr><td><span class="ref-term">Frantsiis</span></td><td>Leping, mis annab õiguse kasutada teise ettevõtte kaubamärki ja ärimudelit tasu eest.</td></tr>
+          <tr><td><span class="ref-term">Sotsiaalne ettevõtlus</span></td><td>Ühiskondlike probleemide lahendamine ettevõtluse kaudu.</td></tr>
+          <tr><td><span class="ref-term">Vastutustundlik ettevõtlus</span></td><td>Oma negatiivse mõju vähendamine ja positiivse panuse suurendamine.</td></tr>
+          <tr><td><span class="ref-term">Ideede generaatorid</span></td><td>Tekib pidevalt uusi ideid.</td></tr>
+          <tr><td><span class="ref-term">Arendajad</span></td><td>Arendavad olemasolevaid tooteid edasi.</td></tr>
+          <tr><td><span class="ref-term">Jätkajad</span></td><td>Tegutsevad perefirmas, mis pärandatakse põlvest põlve.</td></tr>
+          <tr><td><span class="ref-term">Kopeerijad</span></td><td>Märkavad, milliste olemasolevate äridega saab kasumit teenida.</td></tr>
+          <tr><td><span class="ref-term">Turustajad</span></td><td>Otsivad uusi ja tõhusaid müügimeetodeid.</td></tr>
+          <tr><td><span class="ref-term">Võimaluste otsijad</span></td><td>Uurivad, mida mujal maailmas leiutatakse.</td></tr>
+          <tr><td><span class="ref-term">Võimaluste märkajad</span></td><td>Näevad võimalusi seal, kus teised nurisevad.</td></tr>
+          <tr><td><span class="ref-term">Start-up ettevõtjad</span></td><td>Arendavad toodet lootuses, et sellest saab edukas.</td></tr>
+          <tr><td><span class="ref-term">Klaster</span></td><td>Ühe valdkonna ettevõtete kooslus, mis teeb koostööd ja konkureerib sisemiselt.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== ENESEKONTROLL ===== -->
+  <div class="section-label">🧠 Enesekontroll — proovi enne, siis vaata vastust</div>
+
+  <details class="qa">
+    <summary>Mille poolest erinevad ettevõte ja ettevõtja?</summary>
+    <div class="qa-answer"><strong>Ettevõte</strong> on üksus (organisatsioon), mis kasutab tööjõudu ja töövahendeid tootmiseks. <strong>Ettevõtja</strong> on inimene, kes selle ettevõtte asutab ja juhib kasumi teenimise eesmärgil.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on FIE ja mille poolest ta erineb äriühingust?</summary>
+    <div class="qa-answer">FIE ehk <strong>füüsilisest isikust ettevõtja</strong> tegeleb ettevõtlusega oma nimel, <strong>ilma äriühingut loomata</strong>. Äriühing on eraldi juriidiline isik (organisatsioon).</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis vahe on piiratud ja piiramatu vastutusel?</summary>
+    <div class="qa-answer"><strong>Piiramatu vastutus</strong> — omanik vastutab ettevõtte võlgade eest kogu oma varaga, ka isikliku varaga. <strong>Piiratud vastutus</strong> — omanik vastutab ainult ettevõttesse investeeritud summa piires, isiklik vara on kaitstud.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on osaühing ja miks see Eestis nii populaarne on?</summary>
+    <div class="qa-answer">Osaühing (OÜ) on osadeks jaotatud osakapitaliga äriühing, mille omanike vastutus on <strong>piiratud</strong>. See on populaarne, sest vastutus on piiratud ja selle saab asutada ka <strong>üksi</strong>.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on aktsiaselts ja kes on aktsionär?</summary>
+    <div class="qa-answer"><strong>Aktsiaselts (AS)</strong> on äriühing, millel on aktsiateks jaotatud aktsiakapital. <strong>Aktsionär</strong> on aktsiaseltsi omanik. Aktsionär ei vastuta aktsiaseltsi kohustuste eest — vastutus on piiratud.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mille poolest erinevad täisühing ja usaldusühing?</summary>
+    <div class="qa-answer"><strong>Täisühingus</strong> vastutavad kõik osanikud kogu oma varaga (piiramatu vastutus). <strong>Usaldusühingus</strong> on vähemalt üks täisosanik (piiramatu vastutus) ja vähemalt üks usaldusosanik (piiratud vastutus).</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on pankrot?</summary>
+    <div class="qa-answer">Pankrot on <strong>võlgniku maksejõuetuks kuulutamine kohtu poolt</strong> — olukord, kus võlgnik ei suuda enam oma võlgu tasuda.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on frantsiis? Too näide.</summary>
+    <div class="qa-answer">Frantsiis on <strong>leping</strong> frantsiisiandja ja frantsiisivõtja vahel: frantsiisivõtja saab tasu eest õiguse kasutada teise ettevõtte <strong>kaubamärki ja ärimudelit</strong>. Näide: McDonald's, Hesburger.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis vahe on sotsiaalsel ja vastutustundlikul ettevõtlusel?</summary>
+    <div class="qa-answer"><strong>Sotsiaalne ettevõtlus</strong> — ühiskondliku probleemi lahendamine ongi ettevõtte peamine eesmärk. <strong>Vastutustundlik ettevõtlus</strong> — tavaline ettevõte püüab vähendada oma negatiivset mõju ja suurendada positiivset panust.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis tüüpi ettevõtlik inimene oli Ingvar Kamprad (IKEA)?</summary>
+    <div class="qa-answer"><strong>Võimaluste märkaja</strong> — ta nägi võimalust seal, kus teised ainult nurisesid: suure mööbli vedu oli tülikas, nii lõi ta kokkupandava mööbli.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on klaster? Nimeta selle kaks tunnust.</summary>
+    <div class="qa-answer">Klaster on ühe valdkonna tootmisele spetsialiseerunud ettevõtete ja institutsioonide kooslus ühes piirkonnas. Kaks tunnust: nad <strong>teevad koostööd</strong> ja samal ajal <strong>konkureerivad omavahel</strong>.</div>
+  </details>
+
+  <!-- ===== FRAASIPANK ===== -->
+  <div class="section-label">✍️ Fraasipank — valmis definitsioonid järelvastamiseks</div>
+
+  <div class="phrase-box">
+    <h3>📝 Valmislaused — kasuta järelvastamisel!</h3>
+    <div class="phrases-grid">
+      <div class="phrase"><strong>Ettevõte</strong> on üksus, mis kasutab tööjõudu ja töövahendeid hüviste tootmiseks.</div>
+      <div class="phrase"><strong>Ettevõtja</strong> on isik, kes riski eeldades asutab ettevõtte ja juhib seda kasumi nimel.</div>
+      <div class="phrase"><strong>FIE</strong> tegeleb ettevõtlusega oma nimel, ilma äriühingut loomata.</div>
+      <div class="phrase"><strong>Juriidiline isik</strong> on organisatsioon, näiteks äriühing või riik.</div>
+      <div class="phrase"><strong>Piiramatu vastutuse</strong> korral vastutab omanik kogu oma varaga.</div>
+      <div class="phrase"><strong>Piiratud vastutuse</strong> korral vastutab omanik ainult investeeritud summa piires.</div>
+      <div class="phrase"><strong>Osaühing</strong> on osadeks jaotatud osakapitaliga äriühing, mille vastutus on piiratud.</div>
+      <div class="phrase"><strong>Aktsiaselts</strong> on aktsiateks jaotatud kapitaliga äriühing; omanikud on aktsionärid.</div>
+      <div class="phrase"><strong>Täisühingus</strong> vastutavad osanikud solidaarselt kogu oma varaga.</div>
+      <div class="phrase"><strong>Usaldusühingus</strong> on nii täisosanik kui ka piiratud vastutusega usaldusosanik.</div>
+      <div class="phrase"><strong>Pankrot</strong> on võlgniku maksejõuetuks kuulutamine kohtu poolt.</div>
+      <div class="phrase"><strong>Frantsiis</strong> annab tasu eest õiguse kasutada teise ettevõtte kaubamärki ja ärimudelit.</div>
+      <div class="phrase"><strong>Sotsiaalne ettevõtlus</strong> lahendab ühiskondlikke probleeme ettevõtluse kaudu.</div>
+      <div class="phrase"><strong>Vastutustundlik ettevõtlus</strong> vähendab negatiivset mõju ja suurendab positiivset panust.</div>
+      <div class="phrase"><strong>Klaster</strong> on ühe valdkonna ettevõtete kooslus, mis teeb koostööd ja konkureerib sisemiselt.</div>
+    </div>
+  </div>
+
+  <!-- ===== NIPID ===== -->
+  <div class="section-label">💡 Õppimise nipid</div>
+
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">🏢</div>
+      <div>
+        <div class="tip-title">Ettevõte ≠ ettevõtja</div>
+        <div class="tip-text">Ettevõte on <strong>asi</strong> (organisatsioon), ettevõtja on <strong>inimene</strong>. Seda küsitakse tihti — ära aja segamini.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🛡️</div>
+      <div>
+        <div class="tip-title">Vastutus on vormide võti</div>
+        <div class="tip-text">Iga äriühingu juures küsi: <strong>piiratud või piiramatu vastutus?</strong> OÜ ja AS — piiratud. TÜ — piiramatu. UÜ — mõlemad.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">®️</div>
+      <div>
+        <div class="tip-title">Frantsiis = leping</div>
+        <div class="tip-text">Frantsiisi puhul mäleta sõnu <strong>leping</strong>, <strong>kaubamärk</strong> ja <strong>tasu</strong>. Näide (McDonald's) aitab meelde jätta.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔗</div>
+      <div>
+        <div class="tip-title">Klaster — kaks asja korraga</div>
+        <div class="tip-text">Klastri ettevõtted <strong>teevad koostööd</strong> JA <strong>konkureerivad</strong>. Mõlemad peavad vastuses olema.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Illimari majanduse õppematerjalid · 5. peatükk — Ettevõte ja ettevõtja · 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majandus — Majandussüsteemid · 2. peatükk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 48%, #134e4a 100%);
+    color: white; padding: 56px 32px 48px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(251,191,36,0.22) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #fbbf24, #0d9488);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #fcd34d; }
+  .hero-sub { font-size: 1rem; opacity: 0.78; max-width: 540px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
+  .backlink {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    text-decoration: none; margin-bottom: 8px;
+  }
+  .backlink:hover { color: var(--blue); }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 18px; margin-top: 38px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .section-block {
+    background: var(--card); border-radius: 20px; border: 2px solid var(--border);
+    overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 24px;
+  }
+  .section-header { padding: 22px 26px 16px; display: flex; align-items: flex-start; gap: 14px; }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+  .section-body p.lead { font-size: 0.92rem; line-height: 1.6; margin-top: 14px; }
+
+  .section-block.theme-blue   { --accent:#2563eb; --accent-light:#dbeafe; }
+  .section-block.theme-green  { --accent:#16a34a; --accent-light:#dcfce7; }
+  .section-block.theme-purple { --accent:#7c3aed; --accent-light:#ede9fe; }
+  .section-block.theme-orange { --accent:#ea580c; --accent-light:#ffedd5; }
+  .section-block.theme-teal   { --accent:#0d9488; --accent-light:#ccfbf1; }
+  .theme-blue .section-header   { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-teal .section-header   { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px; margin-left: 8px; vertical-align: middle;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+
+  .key-box {
+    background: linear-gradient(135deg, #1e3a8a, #312e81);
+    color: white; border-radius: 16px; padding: 20px 22px; margin: 16px 0 4px;
+  }
+  .key-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 7px;
+  }
+  .key-text { font-size: 1.02rem; line-height: 1.55; font-weight: 700; }
+  .key-text strong { color: #fcd34d; }
+
+  .concept-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .concept-card {
+    background: #f8fafc; border: 2px solid var(--border);
+    border-left: 5px solid var(--accent, var(--blue));
+    border-radius: 12px; padding: 14px 16px;
+  }
+  .c-term {
+    font-size: 1.02rem; font-weight: 900; color: var(--accent, var(--blue));
+    margin-bottom: 5px; display: flex; align-items: center; gap: 7px;
+  }
+  .c-term .c-emoji { font-size: 1.1rem; }
+  .c-def { font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+  .c-example {
+    font-size: 0.8rem; line-height: 1.5; color: var(--muted);
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);
+  }
+  .c-example strong { color: var(--accent, var(--blue)); }
+  .concept-card.wide { grid-column: 1 / -1; }
+
+  .formula-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 2px solid var(--blue); border-radius: 14px;
+    padding: 16px 20px; text-align: center; margin: 14px 0 4px;
+  }
+  .formula-main { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--blue); }
+  .formula-note { font-size: 0.82rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+  .ref-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .ref-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px; text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border); background: #f8fafc;
+  }
+  .ref-table td {
+    padding: 10px 14px; font-size: 0.86rem; border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.5;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: #f8fafc; }
+  .ref-term { font-weight: 800; color: var(--blue); white-space: nowrap; }
+
+  .qa {
+    background: var(--card); border: 2px solid var(--border);
+    border-radius: 12px; margin-bottom: 10px; overflow: hidden;
+  }
+  .qa summary {
+    padding: 13px 18px; font-weight: 800; font-size: 0.9rem;
+    cursor: pointer; list-style: none;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before { content: '❓'; flex-shrink: 0; }
+  .qa[open] summary::before { content: '✅'; }
+  .qa[open] summary { background: #f8fafc; }
+  .qa-answer {
+    padding: 12px 18px 15px; font-size: 0.86rem; line-height: 1.6;
+    color: var(--text); border-top: 1px solid var(--border);
+  }
+  .qa-answer strong { color: var(--green); }
+
+  .tips-row {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  .phrase-box {
+    background: var(--yellow-light); border: 2px solid var(--yellow);
+    border-radius: 16px; padding: 22px; margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 0.95rem; font-weight: 900; color: var(--yellow);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+  .phrase {
+    background: white; border-radius: 8px; padding: 9px 12px;
+    font-size: 0.83rem; border-left: 3px solid var(--yellow); line-height: 1.45;
+  }
+  .phrase strong { color: var(--text); }
+
+  footer {
+    text-align: center; padding: 28px 24px; color: var(--muted);
+    font-size: 0.82rem; border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">⚖️</div>
+    <h1>Majandus<span>süsteemid</span></h1>
+    <p class="hero-sub">Majandus · 2. peatükk · Vaba ettevõtlus, majandusmudelid ja majandussüsteemi eesmärgid</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">teemaplokki</div></div>
+      <div class="stat"><div class="stat-num">12</div><div class="stat-label">mõistet</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">eesmärki</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <a class="backlink" href="majandus_index.html">← Tagasi õppematerjalide kogusse</a>
+
+  <!-- OSA 1 -->
+  <div class="section-label">🏛️ 1. osa — Vaba ettevõtluse alustalad</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🏛️</div>
+      <div>
+        <div class="section-title">Millel vaba ettevõtlus püsib <span class="badge badge-blue">Alustalad</span></div>
+        <div class="section-subtitle">Kolm tuge, millele turumajandus toetub</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔑</span>Eraomand</div>
+          <div class="c-def">Ressursid ja tooted, mille omanik on <strong>eraisik või eraettevõte</strong> (mitte riik).</div>
+          <div class="c-example"><strong>Näide:</strong> sinu telefon, pere auto, eraettevõtte tehas.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏷️</span>Hinnasüsteem</div>
+          <div class="c-def">Viis, kuidas nappe ressursse jaotatakse — <strong>hindade kaudu</strong>. Turg kehtestab toodetele, teenustele ja ressurssidele hinnad.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🥊</span>Turukonkurents</div>
+          <div class="c-def">Ettevõtete <strong>omavaheline võistlemine</strong> ostjate pärast.</div>
+          <div class="c-example"><strong>Näide:</strong> kaks poodi langetavad hindu, et sina just nende juurest ostaksid.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🎯</span>Spetsialiseerumine</div>
+          <div class="c-def">Protsess, milles ettevõtted ja inimesed <strong>keskenduvad ühe toote või tooteosa</strong> tootmisele.</div>
+          <div class="c-example"><strong>Näide:</strong> üks tehas teeb ainult rehve, mitte tervet autot.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 2 -->
+  <div class="section-label">❓ 2. osa — Majanduse põhiküsimused</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">❓</div>
+      <div>
+        <div class="section-title">Mida? Kuidas? Kellele? <span class="badge badge-green">3 küsimust</span></div>
+        <div class="section-subtitle">Iga majandus peab vastama kolmele põhiküsimusele</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">1️⃣</span>Mida toota?</div>
+          <div class="c-def">Milliseid tooteid ja teenuseid ning kui palju neid valmistada.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">2️⃣</span>Kuidas toota?</div>
+          <div class="c-def">Milliste ressursside ja meetoditega tooteid valmistatakse.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">3️⃣</span>Kellele toota?</div>
+          <div class="c-def">Kes saavad valmistatud tooted ja teenused endale.</div>
+        </div>
+      </div>
+      <div class="formula-box">
+        <div class="formula-main">TASUVUS = KASUM / KOGUTULU</div>
+        <div class="formula-note">Tasuvus näitab, kui <strong>suure osa kogutulust moodustab kasum</strong>. Mida suurem tasuvus, seda kasumlikum on tegevus.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OSA 3 -->
+  <div class="section-label">🌐 3. osa — Majandusmudelid</div>
+
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">🌐</div>
+      <div>
+        <div class="section-title">4 majandusmudelit <span class="badge badge-orange">Võrdle</span></div>
+        <div class="section-subtitle">Kes otsustab, mida ja kuidas toota</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🛒</span>Turumajandus</div>
+          <div class="c-def">Kasutab tootmise korraldamiseks <strong>vabatahtlikku vahetust</strong>. Otsused mida/kuidas/kellele sünnivad turul, ostjate ja müüjate koostöös.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📋</span>Käsumajandus</div>
+          <div class="c-def">Enamik omandiõigustest on <strong>riigi käes</strong>. Valitsus annab käsud mida-, kuidas- ja kellele-otsuste tegemiseks.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🪵</span>Tavamajandus</div>
+          <div class="c-def">Inimesed teevad mida-, kuidas- ja kellele-valikud eelkõige <strong>tavade ja kommete</strong> põhjal.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔀</span>Segamajandus</div>
+          <div class="c-def">Segunevad <strong>vabatahtlik vahetus ja riiklikud regulatsioonid</strong>. Maailmamajandus põhineb suuresti turumajandusel, kuid osa tooteid ja teenuseid reguleerib riik.</div>
+        </div>
+      </div>
+      <p class="lead">🔑 <strong>Pea meeles:</strong> tänapäeval on enamik riike <strong>segamajandused</strong> — puhast turu- või käsumajandust peaaegu ei esine.</p>
+    </div>
+  </div>
+
+  <!-- OSA 4 -->
+  <div class="section-label">🎯 4. osa — Majandussüsteemi eesmärgid</div>
+
+  <div class="section-block theme-teal">
+    <div class="section-header">
+      <div class="section-emoji">🎯</div>
+      <div>
+        <div class="section-title">7 eesmärki, mida hea majandus täidab <span class="badge badge-teal">Loend</span></div>
+        <div class="section-subtitle">Mille poole iga majandussüsteem püüdleb</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">💼</span>Täielik tööhõive</div>
+          <div class="c-def">Igaühel, kes tahab ja suudab töötada, peab olema selleks võimalus.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📈</span>Majandusareng</div>
+          <div class="c-def">Keskmine elatustase peab tõusma — toodete ja teenuste hulk ja kvaliteet suureneb.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚓</span>Hindade stabiilsus</div>
+          <div class="c-def">Hinnad peaksid olema üsna stabiilsed; suured tõusud või langused toovad raskusi.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🕊️</span>Majandusvabadus</div>
+          <div class="c-def">Kõigil peab olema vaba valik, kuidas teenida elatist ja kuidas kulutada raha.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🤝</span>Sotsiaalsed tagatised</div>
+          <div class="c-def">Majandussüsteem peab üleval pidama ka neid, kes ei suuda ise elatist teenida (puue, vanadus, õnnetus).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚖️</span>Õiglus</div>
+          <div class="c-def">Erapooletu suhtumine kõigisse — võrdsed majanduslikud võimalused igale kodanikule.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚡</span>Tõhusus</div>
+          <div class="c-def">Mõõdab, kui palju kasu tarbitud ressurss toob — võime piiratud ressurssidega võimalikult palju toota.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KIIRVIIDE -->
+  <div class="section-label">📋 Mõistete kiirviide</div>
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">📋</div>
+      <div>
+        <div class="section-title">Kõik mõisted ühes tabelis</div>
+        <div class="section-subtitle">Kiire kordamine vahetult enne järelvastamist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="ref-table">
+        <thead><tr><th>Mõiste</th><th>Lühike seletus</th></tr></thead>
+        <tbody>
+          <tr><td><span class="ref-term">Eraomand</span></td><td>Ressursid ja tooted, mille omanik on eraisik või eraettevõte.</td></tr>
+          <tr><td><span class="ref-term">Hinnasüsteem</span></td><td>Nappide ressursside jaotamine hindade kaudu.</td></tr>
+          <tr><td><span class="ref-term">Turukonkurents</span></td><td>Ettevõtete omavaheline võistlemine ostjate pärast.</td></tr>
+          <tr><td><span class="ref-term">Spetsialiseerumine</span></td><td>Keskendumine ühe toote või tooteosa tootmisele.</td></tr>
+          <tr><td><span class="ref-term">Majanduse põhiküsimused</span></td><td>Mida toota? Kuidas toota? Kellele toota?</td></tr>
+          <tr><td><span class="ref-term">Tasuvus</span></td><td>Kasum jagatud kogutuluga; näitab tegevuse kasumlikkust.</td></tr>
+          <tr><td><span class="ref-term">Turumajandus</span></td><td>Tootmist korraldab vabatahtlik vahetus turul.</td></tr>
+          <tr><td><span class="ref-term">Käsumajandus</span></td><td>Omandiõigus ja otsused on riigi käes.</td></tr>
+          <tr><td><span class="ref-term">Tavamajandus</span></td><td>Otsused tehakse tavade ja kommete põhjal.</td></tr>
+          <tr><td><span class="ref-term">Segamajandus</span></td><td>Vabatahtlik vahetus + riiklikud regulatsioonid koos.</td></tr>
+          <tr><td><span class="ref-term">Majandussüsteemi eesmärgid</span></td><td>Tööhõive, areng, hinnastabiilsus, vabadus, sotsiaalsed tagatised, õiglus, tõhusus.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ENESEKONTROLL -->
+  <div class="section-label">🧠 Enesekontroll — proovi enne, siis vaata vastust</div>
+
+  <details class="qa">
+    <summary>Nimeta vaba ettevõtluse kolm alustala.</summary>
+    <div class="qa-answer"><strong>Eraomand, hinnasüsteem ja turukonkurents.</strong> Nendele kolmele toele vaba ettevõtlus tugineb.</div>
+  </details>
+  <details class="qa">
+    <summary>Mis on majanduse kolm põhiküsimust?</summary>
+    <div class="qa-answer"><strong>Mida toota? Kuidas toota? Kellele toota?</strong> Igal majandusel tuleb neile vastata.</div>
+  </details>
+  <details class="qa">
+    <summary>Mille poolest erineb käsumajandus turumajandusest?</summary>
+    <div class="qa-answer"><strong>Käsumajanduses</strong> otsustab tootmise üle riik ja omand on riigi käes. <strong>Turumajanduses</strong> sünnivad otsused turul, ostjate ja müüjate vabatahtliku vahetuse kaudu.</div>
+  </details>
+  <details class="qa">
+    <summary>Mis on segamajandus ja miks see on tänapäeval levinuim?</summary>
+    <div class="qa-answer">Segamajanduses on koos <strong>vabatahtlik vahetus ja riiklikud regulatsioonid</strong>. See on levinuim, sest puhast turu- või käsumajandust praktikas peaaegu ei esine — turg toimib, kuid riik reguleerib osa tooteid ja teenuseid.</div>
+  </details>
+  <details class="qa">
+    <summary>Mida tähendab spetsialiseerumine? Too näide.</summary>
+    <div class="qa-answer">Spetsialiseerumine on <strong>keskendumine ühe toote või tooteosa tootmisele</strong>. Näide: üks tehas valmistab ainult mootoreid, teine ainult rehve.</div>
+  </details>
+  <details class="qa">
+    <summary>Nimeta vähemalt neli majandussüsteemi eesmärki.</summary>
+    <div class="qa-answer">Vali neli: <strong>täielik tööhõive, majandusareng, hindade stabiilsus, majandusvabadus, sotsiaalsed tagatised, õiglus, tõhusus.</strong></div>
+  </details>
+
+  <!-- FRAASIPANK -->
+  <div class="section-label">✍️ Fraasipank — valmis definitsioonid järelvastamiseks</div>
+  <div class="phrase-box">
+    <h3>📝 Valmislaused — kasuta järelvastamisel!</h3>
+    <div class="phrases-grid">
+      <div class="phrase">Vaba ettevõtlus tugineb <strong>eraomandile, hinnasüsteemile ja turukonkurentsile</strong>.</div>
+      <div class="phrase"><strong>Eraomand</strong> tähendab, et ressursside omanik on eraisik või eraettevõte.</div>
+      <div class="phrase"><strong>Hinnasüsteem</strong> jaotab nappe ressursse hindade kaudu.</div>
+      <div class="phrase"><strong>Spetsialiseerumine</strong> on keskendumine ühe toote tootmisele.</div>
+      <div class="phrase">Iga majandus vastab kolmele küsimusele: <strong>mida, kuidas ja kellele toota</strong>.</div>
+      <div class="phrase"><strong>Käsumajanduses</strong> otsustab tootmise üle riik.</div>
+      <div class="phrase"><strong>Turumajanduses</strong> sünnivad otsused turul vabatahtliku vahetuse kaudu.</div>
+      <div class="phrase"><strong>Segamajandus</strong> ühendab turumajanduse ja riikliku reguleerimise.</div>
+      <div class="phrase"><strong>Tavamajanduses</strong> tehakse otsused tavade ja kommete põhjal.</div>
+      <div class="phrase">Majandussüsteemi eesmärk on muu hulgas <strong>täielik tööhõive ja hindade stabiilsus</strong>.</div>
+    </div>
+  </div>
+
+  <!-- NIPID -->
+  <div class="section-label">💡 Õppimise nipid</div>
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">🏛️</div>
+      <div>
+        <div class="tip-title">3 alustala — 3 sõrme</div>
+        <div class="tip-text">Eraomand · hinnasüsteem · turukonkurents. Loe need kolm alati üle.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">❓</div>
+      <div>
+        <div class="tip-title">Mida–kuidas–kellele</div>
+        <div class="tip-text">Need 3 küsimust tulevad tihti tagasi — ka majandusmudelite juures.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔀</div>
+      <div>
+        <div class="tip-title">Mudelid: kes otsustab?</div>
+        <div class="tip-text">Küsi iga mudeli kohta: kes otsustab? Turg, riik, tavad või mõlemad?</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div>
+        <div class="tip-title">7 eesmärki — õpi paari kaupa</div>
+        <div class="tip-text">Jaga 7 eesmärki rühmadeks: tööhõive+areng, hinnad+vabadus, tagatised+õiglus+tõhusus.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Illimari majanduse õppematerjalid · 2. peatükk — Majandussüsteemid · 2026
+</footer>
+
+</body>
+</html>
