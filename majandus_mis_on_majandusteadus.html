@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Majandus — Mis on majandusteadus? · 1. peatükk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --card: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 48%, #134e4a 100%);
+    color: white;
+    padding: 56px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(251,191,36,0.22) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(13,148,136,0.25) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    background: linear-gradient(135deg, #fbbf24, #0d9488);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+    box-shadow: 0 0 0 4px rgba(255,255,255,0.15);
+  }
+  .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 8px; }
+  .hero h1 span { color: #fcd34d; }
+  .hero-sub { font-size: 1rem; opacity: 0.78; max-width: 540px; margin: 0 auto 24px; }
+  .hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .stat {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px; padding: 10px 20px; text-align: center;
+  }
+  .stat-num { font-size: 1.5rem; font-weight: 900; line-height: 1; }
+  .stat-label { font-size: 0.72rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ===== LAYOUT ===== */
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px 64px; }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; font-weight: 800; color: var(--muted);
+    text-decoration: none; margin-bottom: 8px;
+  }
+  .backlink:hover { color: var(--blue); }
+
+  .section-label {
+    font-size: 0.75rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted);
+    margin-bottom: 18px; margin-top: 38px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ===== SECTION BLOCK ===== */
+  .section-block {
+    background: var(--card);
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    margin-bottom: 24px;
+  }
+  .section-header {
+    padding: 22px 26px 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .section-emoji { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+  .section-title { font-size: 1.3rem; font-weight: 900; margin-bottom: 4px; }
+  .section-subtitle { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+  .section-body { padding: 0 26px 26px; }
+  .section-body p.lead { font-size: 0.92rem; line-height: 1.6; margin-top: 14px; }
+
+  /* Theme colors — set --accent for child elements */
+  .section-block.theme-blue   { --accent:#2563eb; --accent-light:#dbeafe; }
+  .section-block.theme-green  { --accent:#16a34a; --accent-light:#dcfce7; }
+  .section-block.theme-purple { --accent:#7c3aed; --accent-light:#ede9fe; }
+  .section-block.theme-orange { --accent:#ea580c; --accent-light:#ffedd5; }
+  .section-block.theme-teal   { --accent:#0d9488; --accent-light:#ccfbf1; }
+  .theme-blue .section-header   { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+  .theme-green .section-header  { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+  .theme-purple .section-header { background: linear-gradient(135deg, #faf5ff, #ede9fe); }
+  .theme-orange .section-header { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+  .theme-teal .section-header   { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+    border-radius: 999px; padding: 3px 10px; margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-purple { background: var(--purple-light); color: var(--purple); }
+  .badge-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ===== KEY BOX (core idea) ===== */
+  .key-box {
+    background: linear-gradient(135deg, #1e3a8a, #312e81);
+    color: white; border-radius: 16px;
+    padding: 20px 22px; margin: 16px 0 4px;
+  }
+  .key-label {
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 7px;
+  }
+  .key-text { font-size: 1.02rem; line-height: 1.55; font-weight: 700; }
+  .key-text strong { color: #fcd34d; }
+
+  /* ===== CONCEPT CARDS ===== */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .concept-card {
+    background: #f8fafc;
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--accent, var(--blue));
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .c-term {
+    font-size: 1.02rem; font-weight: 900;
+    color: var(--accent, var(--blue));
+    margin-bottom: 5px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .c-term .c-emoji { font-size: 1.1rem; }
+  .c-def { font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+  .c-example {
+    font-size: 0.8rem; line-height: 1.5; color: var(--muted);
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px dashed var(--border);
+  }
+  .c-example strong { color: var(--accent, var(--blue)); }
+  .concept-card.wide { grid-column: 1 / -1; }
+
+  /* ===== MASLOW PYRAMID ===== */
+  .pyramid {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; margin: 18px 0 6px;
+  }
+  .pyr-level {
+    color: white; border-radius: 12px;
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  }
+  .pyr-num {
+    width: 30px; height: 30px; flex-shrink: 0;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.95rem;
+  }
+  .pyr-name { font-weight: 900; font-size: 0.95rem; line-height: 1.2; }
+  .pyr-ex { font-size: 0.78rem; opacity: 0.92; margin-top: 2px; }
+  .pyr-l5 { width: 56%; background: linear-gradient(135deg,#7c3aed,#9333ea); }
+  .pyr-l4 { width: 67%; background: linear-gradient(135deg,#ea580c,#f97316); }
+  .pyr-l3 { width: 78%; background: linear-gradient(135deg,#16a34a,#22c55e); }
+  .pyr-l2 { width: 89%; background: linear-gradient(135deg,#0d9488,#14b8a6); }
+  .pyr-l1 { width: 100%; background: linear-gradient(135deg,#2563eb,#3b82f6); }
+  .pyr-note {
+    font-size: 0.82rem; color: var(--muted); line-height: 1.55;
+    background: var(--blue-light); border-radius: 10px;
+    padding: 10px 14px; margin-top: 10px;
+  }
+  @media (max-width: 600px) {
+    .pyr-level { width: 100% !important; }
+  }
+
+  /* ===== FORMULA BOX ===== */
+  .formula-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 2px solid var(--blue);
+    border-radius: 14px;
+    padding: 16px 20px; text-align: center;
+    margin: 14px 0 4px;
+  }
+  .formula-main {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem; font-weight: 700; color: var(--blue);
+  }
+  .formula-note { font-size: 0.82rem; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+  /* ===== REFERENCE TABLE ===== */
+  .ref-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  .ref-table th {
+    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 10px 14px;
+    text-align: left; color: var(--muted);
+    border-bottom: 2px solid var(--border);
+    background: #f8fafc;
+  }
+  .ref-table td {
+    padding: 10px 14px; font-size: 0.86rem;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.5;
+  }
+  .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table tr:hover td { background: #f8fafc; }
+  .ref-term { font-weight: 800; color: var(--blue); white-space: nowrap; }
+
+  /* ===== SELF-CHECK (details/summary) ===== */
+  .qa {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .qa summary {
+    padding: 13px 18px;
+    font-weight: 800; font-size: 0.9rem;
+    cursor: pointer; list-style: none;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before { content: '❓'; flex-shrink: 0; }
+  .qa[open] summary::before { content: '✅'; }
+  .qa[open] summary { background: #f8fafc; }
+  .qa-answer {
+    padding: 12px 18px 15px;
+    font-size: 0.86rem; line-height: 1.6; color: var(--text);
+    border-top: 1px solid var(--border);
+  }
+  .qa-answer strong { color: var(--green); }
+
+  /* ===== TIPS ===== */
+  .tips-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px; margin-top: 8px;
+  }
+  .tip-card {
+    background: var(--card); border-radius: 14px; padding: 16px 18px;
+    border: 2px solid var(--border); display: flex; gap: 12px;
+  }
+  .tip-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .tip-title { font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
+  .tip-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== PHRASE BOX ===== */
+  .phrase-box {
+    background: var(--yellow-light); border: 2px solid var(--yellow);
+    border-radius: 16px; padding: 22px; margin-top: 8px;
+  }
+  .phrase-box h3 {
+    font-size: 0.95rem; font-weight: 900; color: var(--yellow);
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  }
+  .phrases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 8px; }
+  .phrase {
+    background: white; border-radius: 8px; padding: 9px 12px;
+    font-size: 0.83rem; border-left: 3px solid var(--yellow); line-height: 1.45;
+  }
+  .phrase strong { color: var(--text); }
+
+  footer {
+    text-align: center; padding: 28px 24px;
+    color: var(--muted); font-size: 0.82rem;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar">💡</div>
+    <h1>Mis on <span>majandusteadus?</span></h1>
+    <p class="hero-sub">Majandus · 1. peatükk · Põhimõisted järelvastamiseks — kõik ühes kohas, lühikeste plokkidena</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">teemaplokki</div></div>
+      <div class="stat"><div class="stat-num">19</div><div class="stat-label">mõistet</div></div>
+      <div class="stat"><div class="stat-num">8</div><div class="stat-label">enesekontrolli</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <a class="backlink" href="index.html">← Tagasi õppematerjalide kogusse</a>
+
+  <!-- ===== OSA 1: MIS ON MAJANDUSTEADUS ===== -->
+  <div class="section-label">💡 1. osa — Majandusteaduse põhiidee</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">📖</div>
+      <div>
+        <div class="section-title">Mis on majandusteadus? <span class="badge badge-blue">Põhimõiste</span></div>
+        <div class="section-subtitle">Definitsioon ja majandusteaduse põhiprobleem</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="key-box">
+        <div class="key-label">📌 Õpi see definitsioon peast</div>
+        <div class="key-text"><strong>Majandusteadus</strong> uurib, kuidas inimesed — tegutsedes üksi või rühmiti — otsustavad kasutada <strong>nappe ressursse</strong> oma <strong>vajaduste rahuldamiseks</strong>.</div>
+      </div>
+
+      <p class="lead">Lihtsamalt: inimeste vajadusi on alati rohkem, kui on ressursse nende täitmiseks. Seega tuleb pidevalt <strong>valida</strong>. Majandusteadus ongi teadus sellest, kuidas neid valikuid tehakse.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">⚖️</span>Nappus</div>
+          <div class="c-def">Nappus tähendab, et vajadused on <strong>suuremad</strong> kui nende rahuldamiseks kättesaadavad ressursid. See on majandusteaduse <strong>põhiprobleem</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> raha, aega ja loodusvarasid on alati vähem, kui inimesed sooviksid.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🎯</span>Vajadused</div>
+          <div class="c-def">See, mida inimene oma eluks ja heaoluks vajab või soovib. Majandus tegelebki vajaduste rahuldamisega.</div>
+          <div class="c-example"><strong>Näide:</strong> toit, eluase, turvalisus, suhtlemine, eneseteostus — vt Maslow' hierarhiat allpool.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 2: MASLOW ===== -->
+  <div class="section-label">🪜 2. osa — Vajadused: Maslow' hierarhia</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🪜</div>
+      <div>
+        <div class="section-title">Maslow' vajaduste hierarhia <span class="badge badge-purple">Joonis 1.2</span></div>
+        <div class="section-subtitle">Inimese vajadused 5 tasandil — alt üles</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="pyramid">
+        <div class="pyr-level pyr-l5">
+          <div class="pyr-num">5</div>
+          <div>
+            <div class="pyr-name">Eneseteostusvajadus</div>
+            <div class="pyr-ex">enese väljendamine, teostamine</div>
+          </div>
+        </div>
+        <div class="pyr-level pyr-l4">
+          <div class="pyr-num">4</div>
+          <div>
+            <div class="pyr-name">Eristumis- ja tunnustusvajadus</div>
+            <div class="pyr-ex">kompetentsus, heakskiit, tunnustus</div>
+          </div>
+        </div>
+        <div class="pyr-level pyr-l3">
+          <div class="pyr-num">3</div>
+          <div>
+            <div class="pyr-name">Kuuluvus- ja armastusvajadus</div>
+            <div class="pyr-ex">kiindumus, omaksvõtt, kuuluvus</div>
+          </div>
+        </div>
+        <div class="pyr-level pyr-l2">
+          <div class="pyr-num">2</div>
+          <div>
+            <div class="pyr-name">Turvalisusvajadus</div>
+            <div class="pyr-ex">rahulikkus, ohutus, hirmu puudumine</div>
+          </div>
+        </div>
+        <div class="pyr-level pyr-l1">
+          <div class="pyr-num">1</div>
+          <div>
+            <div class="pyr-name">Füsioloogilised vajadused</div>
+            <div class="pyr-ex">toit, vesi, õhk</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pyr-note">
+        🔑 <strong>Reegel:</strong> madalama tasandi vajadused (1) rahuldatakse <strong>esimesena</strong>. Alles siis, kui need on täidetud, liigutakse kõrgemate tasandite poole. Kõige alus on füsioloogilised vajadused, kõige tipus eneseteostus.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 3: TOOTMISTEGURID ===== -->
+  <div class="section-label">🏭 3. osa — Tootmistegurid (ressursid)</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">🧱</div>
+      <div>
+        <div class="section-title">4 ressurssi ehk tootmistegurid <span class="badge badge-green">Joonis 1.3</span></div>
+        <div class="section-subtitle">Mille abil tooteid ja teenuseid luuakse</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p class="lead">Tootmiseks on vaja ressursse. Majandusteaduses nimetatakse neid <strong>tootmisteguriteks</strong> ja neid on <strong>neli</strong>.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🌲</span>Loodusressursid</div>
+          <div class="c-def">Ehk <strong>loodusvarad</strong> — looduskeskkonna osa, mida inimene oma eluks ja majandustegevuseks kasutab.</div>
+          <div class="c-example"><strong>Näide:</strong> maa, vesi, mets, nafta, puhas õhk.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">👷</span>Inimressursid</div>
+          <div class="c-def">Ehk <strong>tööjõud</strong> — inimesed, kes pakuvad majandusele oma jõupingutusi, oskusi ja teadmisi.</div>
+          <div class="c-example"><strong>Näide:</strong> õpetaja, ehitaja, arst, programmeerija.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏗️</span>Kapital</div>
+          <div class="c-def">Hooned, tööriistad ja masinad, mida inimesed toodete valmistamiseks ja teenuste osutamiseks loovad ja kasutavad.</div>
+          <div class="c-example"><strong>Näide:</strong> tehas, arvuti, traktor, tööriistad.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🚀</span>Ettevõtlikkus</div>
+          <div class="c-def">Loov ja uuenduslik mõtlemine ning majandusoskused, mida on vaja ettevõtte asutamiseks ja juhtimiseks.</div>
+          <div class="c-example"><strong>Näide:</strong> inimene, kes paneb kokku idee, raha ja töötajad ning käivitab uue firma.</div>
+        </div>
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">📦</span>Tootmistegurid (kokkuvõttev mõiste)</div>
+          <div class="c-def"><strong>Tootmistegurid = loodusvarad + tööjõud + kapital + ettevõtlikkus.</strong> Need on kõik neli ressurssi koos, mida tootmiseks vaja läheb.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 4: TOOTMINE, KASUM, SÄÄSTUD ===== -->
+  <div class="section-label">⚙️ 4. osa — Tootmine, kasum ja säästud</div>
+
+  <div class="section-block theme-orange">
+    <div class="section-header">
+      <div class="section-emoji">⚙️</div>
+      <div>
+        <div class="section-title">Tootmine ja kasum <span class="badge badge-orange">Tähtis</span></div>
+        <div class="section-subtitle">Kuidas ressurssidest saavad tooted ja kasum</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔧</span>Tootmine</div>
+          <div class="c-def">Protsess, mille käigus kasutatakse ressursse toodete valmistamiseks (ja teenuste osutamiseks).</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">📈</span>Tootmisvõimaluste piir</div>
+          <div class="c-def">Näitab, kui palju on <strong>üldse võimalik toota</strong>, kasutades kõiki olemasolevaid ressursse.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">💰</span>Kasum</div>
+          <div class="c-def">Kasum on <strong>tootmise stiimul</strong>. Ettevõtluses on kasum jätkusuutlikkuse alus — ilma kasumita ei saa ettevõte tegutsemist jätkata.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏦</span>Säästud</div>
+          <div class="c-def">Osa sissetulekust, mida <strong>kohe</strong> toodete ja teenuste ostmiseks ei kulutata.</div>
+          <div class="c-example"><strong>Näide:</strong> kui teenid 100 € ja kulutad 80 €, on säästud 20 €.</div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <div class="formula-main">KASUM = KOGUTULU − KOGUKULU</div>
+        <div class="formula-note">Kasum tekib siis, kui <strong>kogutulu &gt; kogukulu</strong> (ettevõte saab rohkem, kui kulutab). Kui kulud on tuludest suuremad, tekib hoopis kahjum.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 5: VALIKUD ===== -->
+  <div class="section-label">🔀 5. osa — Valikud: alternatiivkulu ja stiimulid</div>
+
+  <div class="section-block theme-teal">
+    <div class="section-header">
+      <div class="section-emoji">🔀</div>
+      <div>
+        <div class="section-title">Valikute tegemine <span class="badge badge-teal">Mõtteviis</span></div>
+        <div class="section-subtitle">Iga valik tähendab millestki loobumist</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <p class="lead">Kuna ressursse napib, tuleb pidevalt valida. Iga valikuga kaasneb <strong>loobumine</strong> millestki muust.</p>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">💸</span>Alternatiivkulu</div>
+          <div class="c-def">Ehk <strong>loobumiskulu</strong> — kõige suurema väärtusega alternatiivi maksumus, millest valikut tehes loobuti.</div>
+          <div class="c-example"><strong>Näide:</strong> kui kasutad laupäeva õppimiseks, on alternatiivkulu parim asi, millest loobusid — näiteks sõpradega väljas käimine.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🎁</span>Stiimulid</div>
+          <div class="c-def">Positiivsed või negatiivsed <strong>tasud</strong> mingi valiku tegemise või kindlal viisil käitumise eest. Stiimulid mõjutavad inimeste otsuseid.</div>
+          <div class="c-example"><strong>Näide:</strong> hea hinne või palgalisa = positiivne stiimul; trahv = negatiivne stiimul.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 6: TURG JA VAHETUS ===== -->
+  <div class="section-label">🤝 6. osa — Turg ja vahetus</div>
+
+  <div class="section-block theme-blue">
+    <div class="section-header">
+      <div class="section-emoji">🤝</div>
+      <div>
+        <div class="section-title">Turg ja vahetus <span class="badge badge-blue">Kuidas majandus toimib</span></div>
+        <div class="section-subtitle">Kuidas ostjad ja müüjad omavahel tehinguid teevad</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">♻️</span>Vabatahtlik vahetus</div>
+          <div class="c-def">Kauplemisprotsess, kus asjade vahetamisest loodavad kasu saada <strong>mõlemad osapooled</strong>.</div>
+          <div class="c-example"><strong>Näide:</strong> ostja saab vajaliku toote, müüja saab raha — mõlemad võidavad.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🏪</span>Turg</div>
+          <div class="c-def">Majanduse toimimise korraldus, mis võimaldab ostjatel ja müüjatel teha <strong>vahetustehinguid</strong>.</div>
+        </div>
+        <div class="concept-card wide">
+          <div class="c-term"><span class="c-emoji">🌐</span>Turumajandus</div>
+          <div class="c-def">Majandussüsteem, mis kasutab tootmise organiseerimiseks ja koordineerimiseks <strong>vabatahtlikku vahetust</strong>. Otsused tootmise kohta sünnivad turul, ostjate ja müüjate koostöös.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== OSA 7: MIKRO JA MAKRO ===== -->
+  <div class="section-label">🔬 7. osa — Majandusteaduse kaks haru</div>
+
+  <div class="section-block theme-purple">
+    <div class="section-header">
+      <div class="section-emoji">🔬</div>
+      <div>
+        <div class="section-title">Mikro- ja makroökonoomika <span class="badge badge-purple">Joonis lk 19</span></div>
+        <div class="section-subtitle">Väike pilt vs suur pilt</div>
+      </div>
+    </div>
+    <div class="section-body">
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🔍</span>Mikroökonoomika</div>
+          <div class="c-def">Uurib <strong>üksiktarbijaid ja ettevõtteid</strong> — see on majanduse "väike pilt".</div>
+          <div class="c-example"><strong>Mäluabi:</strong> <em>mikro</em> = väike. Ühe inimese või ühe firma otsused.</div>
+        </div>
+        <div class="concept-card">
+          <div class="c-term"><span class="c-emoji">🌍</span>Makroökonoomika</div>
+          <div class="c-def">Õpetus turu <strong>üldisest tasakaalust</strong> ehk majandusest tervikuna — see on majanduse "suur pilt".</div>
+          <div class="c-example"><strong>Mäluabi:</strong> <em>makro</em> = suur. Kogu riigi või maailma majandus.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== MÕISTETE KIIRVIIDE ===== -->
+  <div class="section-label">📋 Mõistete kiirviide</div>
+
+  <div class="section-block theme-green">
+    <div class="section-header">
+      <div class="section-emoji">📋</div>
+      <div>
+        <div class="section-title">Kõik mõisted ühes tabelis</div>
+        <div class="section-subtitle">Kui teema on selge, piisab kordamiseks ainult sellest tabelist</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <table class="ref-table">
+        <thead>
+          <tr><th>Mõiste</th><th>Lühike seletus</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ref-term">Majandusteadus</span></td><td>Uurib, kuidas inimesed otsustavad kasutada nappe ressursse vajaduste rahuldamiseks.</td></tr>
+          <tr><td><span class="ref-term">Nappus</span></td><td>Vajadused on suuremad kui nende rahuldamiseks olemasolevad ressursid.</td></tr>
+          <tr><td><span class="ref-term">Vajadused</span></td><td>See, mida inimene eluks ja heaoluks vajab; Maslow jagas need 5 tasandiks.</td></tr>
+          <tr><td><span class="ref-term">Loodusressursid</span></td><td>Loodusvarad — looduskeskkonna osa, mida inimene majanduseks kasutab.</td></tr>
+          <tr><td><span class="ref-term">Inimressursid</span></td><td>Tööjõud — inimesed, kes pakuvad jõupingutusi, oskusi ja teadmisi.</td></tr>
+          <tr><td><span class="ref-term">Kapital</span></td><td>Hooned, tööriistad, masinad tootmiseks ja teenuste osutamiseks.</td></tr>
+          <tr><td><span class="ref-term">Ettevõtlikkus</span></td><td>Loov mõtlemine ja oskused, mida vaja ettevõtte asutamiseks ja juhtimiseks.</td></tr>
+          <tr><td><span class="ref-term">Tootmistegurid</span></td><td>Loodusvarad + tööjõud + kapital + ettevõtlikkus.</td></tr>
+          <tr><td><span class="ref-term">Tootmine</span></td><td>Protsess, kus ressurssidest valmistatakse tooteid.</td></tr>
+          <tr><td><span class="ref-term">Tootmisvõimaluste piir</span></td><td>Näitab, kui palju on üldse võimalik toota kõigi ressurssidega.</td></tr>
+          <tr><td><span class="ref-term">Kasum</span></td><td>Tootmise stiimul; kogutulu − kogukulu. Ettevõtte jätkusuutlikkuse alus.</td></tr>
+          <tr><td><span class="ref-term">Säästud</span></td><td>Osa sissetulekust, mida kohe ostmiseks ei kulutata.</td></tr>
+          <tr><td><span class="ref-term">Alternatiivkulu</span></td><td>Loobumiskulu — parima alternatiivi väärtus, millest valides loobuti.</td></tr>
+          <tr><td><span class="ref-term">Stiimulid</span></td><td>Positiivsed/negatiivsed tasud valiku või käitumise eest.</td></tr>
+          <tr><td><span class="ref-term">Vabatahtlik vahetus</span></td><td>Kauplemine, kust mõlemad osapooled saavad kasu.</td></tr>
+          <tr><td><span class="ref-term">Turg</span></td><td>Majanduse korraldus, mis võimaldab ostjatel ja müüjatel vahetustehinguid teha.</td></tr>
+          <tr><td><span class="ref-term">Turumajandus</span></td><td>Kasutab tootmise korraldamiseks vabatahtlikku vahetust.</td></tr>
+          <tr><td><span class="ref-term">Mikroökonoomika</span></td><td>Uurib üksiktarbijaid ja ettevõtteid (väike pilt).</td></tr>
+          <tr><td><span class="ref-term">Makroökonoomika</span></td><td>Õpetus majandusest tervikuna, turu üldisest tasakaalust (suur pilt).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== ENESEKONTROLL ===== -->
+  <div class="section-label">🧠 Enesekontroll — proovi enne, siis vaata vastust</div>
+
+  <details class="qa">
+    <summary>Mida majandusteadus uurib?</summary>
+    <div class="qa-answer">Majandusteadus uurib, kuidas inimesed — tegutsedes üksi või rühmiti — otsustavad kasutada <strong>nappe ressursse</strong> oma <strong>vajaduste rahuldamiseks</strong>.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on nappus ja miks see on majandusteaduse põhiprobleem?</summary>
+    <div class="qa-answer">Nappus tähendab, et vajadusi on <strong>rohkem</strong> kui ressursse nende täitmiseks. Just seetõttu tuleb pidevalt valida — ja valikute uurimine ongi majandusteaduse põhiküsimus.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Nimeta Maslow' vajaduste hierarhia 5 tasandit alt üles.</summary>
+    <div class="qa-answer">1) Füsioloogilised vajadused, 2) Turvalisusvajadus, 3) Kuuluvus- ja armastusvajadus, 4) Eristumis- ja tunnustusvajadus, 5) Eneseteostusvajadus. <strong>Madalamad rahuldatakse esimesena.</strong></div>
+  </details>
+
+  <details class="qa">
+    <summary>Millised on neli tootmistegurit?</summary>
+    <div class="qa-answer"><strong>Loodusvarad, tööjõud (inimressursid), kapital ja ettevõtlikkus.</strong> Need neli kokku ongi tootmistegurid.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mille poolest erinevad kapital ja loodusressursid?</summary>
+    <div class="qa-answer"><strong>Loodusressursid</strong> on loodusest pärit (maa, vesi, mets). <strong>Kapital</strong> on inimeste loodud — hooned, masinad ja tööriistad, mida kasutatakse tootmiseks.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Kuidas arvutatakse kasum?</summary>
+    <div class="qa-answer"><strong>Kasum = kogutulu − kogukulu.</strong> Kasum tekib, kui kogutulu on kogukulust suurem. Kasum on tootmise stiimul ja ettevõtte jätkusuutlikkuse alus.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mis on alternatiivkulu? Too näide.</summary>
+    <div class="qa-answer">Alternatiivkulu (loobumiskulu) on <strong>parima alternatiivi väärtus, millest valides loobuti</strong>. Näide: kui ostad telefoni, on alternatiivkulu see, mida oleksid saanud sama raha eest muidu teha.</div>
+  </details>
+
+  <details class="qa">
+    <summary>Mille poolest erinevad mikro- ja makroökonoomika?</summary>
+    <div class="qa-answer"><strong>Mikroökonoomika</strong> uurib üksiktarbijaid ja ettevõtteid (väike pilt). <strong>Makroökonoomika</strong> uurib majandust tervikuna ehk turu üldist tasakaalu (suur pilt).</div>
+  </details>
+
+  <!-- ===== FRAASIPANK ===== -->
+  <div class="section-label">✍️ Fraasipank — valmis definitsioonid järelvastamiseks</div>
+
+  <div class="phrase-box">
+    <h3>📝 Valmislaused — kasuta järelvastamisel!</h3>
+    <div class="phrases-grid">
+      <div class="phrase"><strong>Majandusteadus</strong> uurib, kuidas inimesed kasutavad nappe ressursse vajaduste rahuldamiseks.</div>
+      <div class="phrase"><strong>Nappus</strong> tähendab, et vajadusi on rohkem kui ressursse — seepärast tuleb valida.</div>
+      <div class="phrase"><strong>Maslow</strong> jagas vajadused viide tasandisse; madalamad rahuldatakse esimesena.</div>
+      <div class="phrase"><strong>Tootmistegurid</strong> on loodusvarad, tööjõud, kapital ja ettevõtlikkus.</div>
+      <div class="phrase"><strong>Kapital</strong> on inimeste loodud — hooned, masinad ja tööriistad.</div>
+      <div class="phrase"><strong>Tootmine</strong> on protsess, kus ressurssidest valmistatakse tooteid.</div>
+      <div class="phrase"><strong>Kasum</strong> = kogutulu − kogukulu; see on tootmise stiimul.</div>
+      <div class="phrase"><strong>Säästud</strong> on osa sissetulekust, mida kohe ei kulutata.</div>
+      <div class="phrase"><strong>Alternatiivkulu</strong> on parima alternatiivi väärtus, millest loobuti.</div>
+      <div class="phrase"><strong>Stiimulid</strong> on positiivsed või negatiivsed tasud, mis mõjutavad valikuid.</div>
+      <div class="phrase"><strong>Turg</strong> võimaldab ostjatel ja müüjatel teha vahetustehinguid.</div>
+      <div class="phrase"><strong>Vabatahtlikust vahetusest</strong> saavad kasu mõlemad osapooled.</div>
+      <div class="phrase"><strong>Mikroökonoomika</strong> uurib üksiktarbijaid ja ettevõtteid.</div>
+      <div class="phrase"><strong>Makroökonoomika</strong> uurib majandust tervikuna.</div>
+    </div>
+  </div>
+
+  <!-- ===== NIPID ===== -->
+  <div class="section-label">💡 Õppimise nipid</div>
+
+  <div class="tips-row">
+    <div class="tip-card">
+      <div class="tip-icon">🎯</div>
+      <div>
+        <div class="tip-title">Õpi 1. osa definitsioon peast</div>
+        <div class="tip-text">Majandusteaduse definitsioon (sinine kast) on kogu peatüki tuum. Kui see on peas, on ülejäänu lihtsam.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🪜</div>
+      <div>
+        <div class="tip-title">Maslow — alt üles</div>
+        <div class="tip-text">Pea meeles järjekord: <strong>toit → turvalisus → kuuluvus → tunnustus → eneseteostus</strong>. Madalamad enne.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">✋</div>
+      <div>
+        <div class="tip-title">4 tootmistegurit = 4 sõrme</div>
+        <div class="tip-text">Loe maha: loodusvarad, tööjõud, kapital, ettevõtlikkus. Neli sõrme — kontrolli alati, et kõik neli on meeles.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🧠</div>
+      <div>
+        <div class="tip-title">Mikro = väike, makro = suur</div>
+        <div class="tip-text">Sõnaalgus annab vihje: <strong>mikro</strong> (üks inimene/firma) vs <strong>makro</strong> (kogu majandus).</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">❓</div>
+      <div>
+        <div class="tip-title">Tee enesekontroll ära</div>
+        <div class="tip-text">Vasta enesekontrolli küsimustele <strong>oma sõnadega</strong>, alles siis ava vastus. Nii näed, mis veel selgeks vajab.</div>
+      </div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📋</div>
+      <div>
+        <div class="tip-title">Kiirviide = viimane kordamine</div>
+        <div class="tip-text">Vahetult enne järelvastamist loe üle ainult mõistete kiirviide ja fraasipank.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Illimari majanduse õppematerjalid · 1. peatükk — Mis on majandusteadus? · 2026
+</footer>
+
+</body>
+</html>
